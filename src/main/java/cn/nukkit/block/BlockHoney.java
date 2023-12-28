@@ -2,6 +2,8 @@ package cn.nukkit.block;
 
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.level.Sound;
@@ -14,11 +16,11 @@ import java.util.Random;
 
 import static cn.nukkit.potion.Effect.getEffect;
 
-
+@PowerNukkitOnly
 public class BlockHoney extends BlockSolid {
     private static final Random RANDOM = new Random();
 
-
+    @PowerNukkitOnly
     public BlockHoney() {
         super();
     }
@@ -102,19 +104,22 @@ public class BlockHoney extends BlockSolid {
         return z + 0.9;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getLightFilter() {
         return 1;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public boolean useDefaultFallDamage() {
         return false;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public void onEntityFallOn(Entity entity, float fallDistance) {
         int jumpBoost = entity.hasEffect(Effect.JUMP_BOOST)? (getEffect(Effect.JUMP_BOOST).getAmplifier() + 1) : 0;
@@ -127,7 +132,7 @@ public class BlockHoney extends BlockSolid {
         }
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public boolean canSticksBlock() {
         return true;

@@ -2,6 +2,8 @@ package cn.nukkit.positiontracking;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemCompassLodestone;
@@ -31,8 +33,8 @@ import java.util.stream.IntStream;
  * A position tracking db service. It holds file resources that needs to be closed when not needed anymore. 
  * @author joserobjr
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 @ParametersAreNonnullByDefault
 @Log4j2
 public class PositionTrackingService implements Closeable {
@@ -48,8 +50,8 @@ public class PositionTrackingService implements Closeable {
      * @param folder The folder that will hold the position tracking db files
      * @throws FileNotFoundException If the folder does not exists and can't be created 
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTrackingService(File folder) throws FileNotFoundException {
         if (!folder.isDirectory() && !folder.mkdirs()) {
             throw new FileNotFoundException("Failed to create the folder "+folder);
@@ -85,8 +87,9 @@ public class PositionTrackingService implements Closeable {
         PositionTracking position = getPosition(trackingHandler);
         return position != null && position.getLevelName().equals(player.getLevelName());
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean hasTrackingDevice(Player player, int trackingHandler) throws IOException {
         for (Inventory inventory: inventories(player)) {
             if (hasTrackingDevice(player, inventory, trackingHandler)) {
@@ -114,8 +117,9 @@ public class PositionTrackingService implements Closeable {
         PositionTrackingDBServerBroadcastPacket packet = destroyPacket(trackingHandler);
         player.dataPacket(packet);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     public synchronized PositionTracking startTracking(Player player, int trackingHandler, boolean validate) throws IOException {
         Preconditions.checkArgument(trackingHandler >= 0, "Tracking handler must be positive");
@@ -155,9 +159,10 @@ public class PositionTrackingService implements Closeable {
         packet.setPosition(0, 0, 0);
         packet.setStatus(2);
         return packet;
-    }
+    } 
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean stopTracking(Player player) {
         Map<PositionTrackingStorage, IntSet> toRemove = tracking.remove(player);
         if (toRemove != null && player.isOnline()) {
@@ -170,7 +175,8 @@ public class PositionTrackingService implements Closeable {
         return toRemove != null;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean stopTracking(Player player, int trackingHandler) {
         Map<PositionTrackingStorage, IntSet> tracking = this.tracking.get(player);
         if (tracking == null) {
@@ -189,7 +195,8 @@ public class PositionTrackingService implements Closeable {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean isTracking(Player player, int trackingHandler, boolean validate) throws IOException {
         Map<PositionTrackingStorage, IntSet> tracking = this.tracking.get(player);
         if (tracking == null) {
@@ -208,7 +215,8 @@ public class PositionTrackingService implements Closeable {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized void forceRecheckAllPlayers() {
         tracking.keySet().removeIf(p-> !p.isOnline());
         Map<Player, IntList> toRemove = new HashMap<>(2);
@@ -283,7 +291,8 @@ public class PositionTrackingService implements Closeable {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void forceRecheck(Player player) {
         Map<PositionTrackingStorage, IntSet> tracking = this.tracking.get(player);
         if (tracking != null) {
@@ -353,8 +362,8 @@ public class PositionTrackingService implements Closeable {
      * @return The trackingHandler assigned to the position or an empty OptionalInt if none was found and this storage is full
      * @throws IOException If an error occurred while reading or writing the file
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized int addOrReusePosition(NamedPosition position) throws IOException {
         checkClosed();
         OptionalInt trackingHandler = findTrackingHandler(position);
@@ -370,8 +379,8 @@ public class PositionTrackingService implements Closeable {
      * @return The trackingHandler assigned to the position or an empty OptionalInt if none was found and this storage is full
      * @throws IOException If an error occurred while reading or writing the file
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized int addNewPosition(NamedPosition position) throws IOException {
         return addNewPosition(position, true);
     }
@@ -383,8 +392,8 @@ public class PositionTrackingService implements Closeable {
      * @return The trackingHandler assigned to the position or an empty OptionalInt if none was found and this storage is full
      * @throws IOException If an error occurred while reading or writing the file
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized int addNewPosition(NamedPosition position, boolean enabled) throws IOException {
         checkClosed();
         int next = 1;
@@ -402,7 +411,8 @@ public class PositionTrackingService implements Closeable {
         return trackingStorage.addNewPosition(position, enabled).orElseThrow(InternalError::new);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public OptionalInt findTrackingHandler(NamedPosition position) throws IOException {
         IntList handlers = findTrackingHandlers(position, true, 1);
@@ -412,7 +422,8 @@ public class PositionTrackingService implements Closeable {
         return OptionalInt.empty();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean invalidateHandler(int trackingHandler) throws IOException {
         checkClosed();
         PositionTrackingStorage storage = getStorageForHandler(trackingHandler);
@@ -455,13 +466,15 @@ public class PositionTrackingService implements Closeable {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     public PositionTracking getPosition(int trackingHandle) throws IOException {
         return getPosition(trackingHandle, true);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     public PositionTracking getPosition(int trackingHandle, boolean onlyEnabled) throws IOException {
         checkClosed();
@@ -473,14 +486,16 @@ public class PositionTrackingService implements Closeable {
         return trackingStorage.getPosition(trackingHandle, onlyEnabled);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean isEnabled(int trackingHandler) throws IOException {
         checkClosed();
         PositionTrackingStorage trackingStorage = getStorageForHandler(trackingHandler);
         return trackingStorage != null && trackingStorage.isEnabled(trackingHandler);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean setEnabled(int trackingHandler, boolean enabled) throws IOException {
         checkClosed();
         PositionTrackingStorage trackingStorage = getStorageForHandler(trackingHandler);
@@ -499,12 +514,14 @@ public class PositionTrackingService implements Closeable {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean hasPosition(int trackingHandler) throws IOException {
         return hasPosition(trackingHandler, true);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public synchronized boolean hasPosition(int trackingHandler, boolean onlyEnabled) throws IOException {
         checkClosed();
         Integer startIndex = findStorageForHandler(trackingHandler);
@@ -519,19 +536,22 @@ public class PositionTrackingService implements Closeable {
         return loadStorage(startIndex).hasPosition(trackingHandler, onlyEnabled);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public synchronized IntList findTrackingHandlers(NamedPosition pos) throws IOException {
         return findTrackingHandlers(pos, true);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public synchronized IntList findTrackingHandlers(NamedPosition pos, boolean onlyEnabled) throws IOException {
         return findTrackingHandlers(pos, onlyEnabled, Integer.MAX_VALUE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public synchronized IntList findTrackingHandlers(NamedPosition pos, boolean onlyEnabled, int limit) throws IOException {
         checkClosed();

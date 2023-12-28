@@ -1,12 +1,14 @@
 package cn.nukkit.item;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.CreatureSpawnEvent;
 import cn.nukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import cn.nukkit.level.Level;
-import cn.nukkit.level.format.IChunk;
+import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.vibration.VibrationEvent;
 import cn.nukkit.level.vibration.VibrationType;
 import cn.nukkit.math.BlockFace;
@@ -22,7 +24,7 @@ import java.util.Random;
  * @author MagicDroidX (Nukkit Project)
  */
 public class ItemSpawnEgg extends Item {
-
+    
     public ItemSpawnEgg() {
         this(0, 1);
     }
@@ -32,20 +34,24 @@ public class ItemSpawnEgg extends Item {
     }
 
     public ItemSpawnEgg(Integer meta, int count) {
-        super(SPAWN_EGG, meta, count, "Spawn Egg");
+        this(SPAWN_EGG, meta, count, "Spawn Egg");
         updateName();
     }
 
-    public ItemSpawnEgg(String id) {
-        super(id, 0, 1);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    protected ItemSpawnEgg(int id, Integer meta, int count, String name) {
+        super(id, meta, count, name);
     }
 
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         updateName();
     }
 
+    @PowerNukkitOnly
+    @Since("FUTURE")
     protected void updateName() {
         String entityName = getEntityName();
         if (entityName == null) {
@@ -66,7 +72,7 @@ public class ItemSpawnEgg extends Item {
             return false;
         }
 
-        IChunk chunk = level.getChunk((int) block.getX() >> 4, (int) block.getZ() >> 4);
+        FullChunk chunk = level.getChunk((int) block.getX() >> 4, (int) block.getZ() >> 4);
 
         if (chunk == null) {
             return false;
@@ -113,12 +119,14 @@ public class ItemSpawnEgg extends Item {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getEntityNetworkId() {
-        return this.aux;
+        return this.meta;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.19.21-r1")
     @Nullable
     public String getEntityName() {
         String saveId = Entity.getSaveId(getEntityNetworkId());

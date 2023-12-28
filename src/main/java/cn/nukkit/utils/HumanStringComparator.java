@@ -1,5 +1,7 @@
 package cn.nukkit.utils;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -8,8 +10,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-
-@NoArgsConstructor(onConstructor = @__())
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
+@NoArgsConstructor(onConstructor = @__(@PowerNukkitOnly))
 public class HumanStringComparator implements Comparator<String> {
     private static final HumanStringComparator INSTANCE = new HumanStringComparator();
     private static final int LEFT = -1;
@@ -219,7 +222,8 @@ public class HumanStringComparator implements Comparator<String> {
         return list;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static HumanStringComparator getInstance() {
         return INSTANCE;
     }

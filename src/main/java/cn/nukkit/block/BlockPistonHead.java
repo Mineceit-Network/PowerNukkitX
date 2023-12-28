@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
@@ -12,7 +15,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = BlockPistonBase.PROPERTIES;
 
     public BlockPistonHead() {
@@ -28,7 +32,8 @@ public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
         return PISTON_ARM_COLLISION;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -56,7 +61,7 @@ public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
     }
 
     @Override
-
+    @PowerNukkitDifference(info = "Remove BlockEntity of piston on break.", since = "1.4.0.0-PN")
     public boolean onBreak(Item item) {
         this.level.setBlock(this, Block.get(BlockID.AIR), true, true);
         Block side = getSide(getBlockFace().getOpposite());
@@ -70,12 +75,12 @@ public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
         return true;
     }
 
-
+    @Since("FUTURE")
     public BlockFace getFacing() {
         return getBlockFace();
     }
 
-
+    @PowerNukkitOnly
     @Override
     public BlockFace getBlockFace() {
         BlockFace face = BlockFace.fromIndex(this.getDamage());
@@ -89,7 +94,7 @@ public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean canBePulled() {
         return false;
     }
@@ -99,7 +104,8 @@ public class BlockPistonHead extends BlockTransparentMeta implements Faceable {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;

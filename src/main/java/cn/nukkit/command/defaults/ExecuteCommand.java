@@ -2,6 +2,8 @@ package cn.nukkit.command.defaults;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.ExecutorCommandSender;
@@ -28,7 +30,8 @@ import java.util.stream.Collectors;
 
 import static cn.nukkit.utils.Utils.getLevelBlocks;
 
-
+@PowerNukkitXOnly
+@Since("1.19.20-r2")
 public class ExecuteCommand extends VanillaCommand {
 
     protected static final String SCORE_SCOPE_SEPARATOR = "..";

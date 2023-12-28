@@ -1,5 +1,7 @@
 package cn.nukkit.utils;
 
+import cn.nukkit.api.PowerNukkitOnly;
+
 import java.util.concurrent.TimeUnit;
 
 /**

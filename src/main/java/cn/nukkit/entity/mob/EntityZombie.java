@@ -1,6 +1,9 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntitySmite;
 import cn.nukkit.entity.EntityWalkable;
@@ -93,25 +96,26 @@ public class EntityZombie extends EntityMob implements EntityWalkable, EntitySmi
         return 1.9f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Zombie";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;
     }
 
-
+    @PowerNukkitXOnly
     @Override
     public boolean onUpdate(int currentTick) {
         //husk not burn
@@ -122,7 +126,7 @@ public class EntityZombie extends EntityMob implements EntityWalkable, EntitySmi
         return super.onUpdate(currentTick);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public double getFloatingForceFactor() {
         return 0.7;

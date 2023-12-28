@@ -1,11 +1,9 @@
 package cn.nukkit.block;
 
-import cn.nukkit.block.property.CommonBlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemSeedsBeetroot;
 import cn.nukkit.item.enchantment.Enchantment;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,19 +12,17 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since 2015/11/22
  */
 public class BlockBeetroot extends BlockCrops {
-    public static final BlockProperties PROPERTIES = new BlockProperties(BEETROOT, CommonBlockProperties.GROWTH);
+    public BlockBeetroot() {
+        this(0);
+    }
+
+    public BlockBeetroot(int meta) {
+        super(meta);
+    }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
-    public BlockBeetroot() {
-        this(PROPERTIES.getDefaultState());
-    }
-
-    public BlockBeetroot(BlockState blockstate) {
-        super(blockstate);
+    public int getId() {
+        return BEETROOT_BLOCK;
     }
 
     @Override

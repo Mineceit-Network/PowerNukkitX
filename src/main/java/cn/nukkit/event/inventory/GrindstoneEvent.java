@@ -19,6 +19,8 @@
 package cn.nukkit.event.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.Cancellable;
 import cn.nukkit.event.HandlerList;
 import cn.nukkit.inventory.GrindstoneInventory;
@@ -29,12 +31,13 @@ import org.jetbrains.annotations.NotNull;
  * @author joserobjr
  * @since 2021-03-21
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class GrindstoneEvent extends InventoryEvent implements Cancellable {
     private static final HandlerList handlers = new HandlerList();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static HandlerList getHandlers() {
         return handlers;
     }
@@ -45,7 +48,8 @@ public class GrindstoneEvent extends InventoryEvent implements Cancellable {
     private int experienceDropped;
     private final @NotNull Player player;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public GrindstoneEvent(GrindstoneInventory inventory, @NotNull Item firstItem, @NotNull Item resultItem, @NotNull Item secondItem, int cost, @NotNull Player player) {
         super(inventory);
         this.firstItem = firstItem;
@@ -55,35 +59,41 @@ public class GrindstoneEvent extends InventoryEvent implements Cancellable {
         this.player = player;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Item getFirstItem() {
         return this.firstItem;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Item getResultItem() {
         return this.resultItem;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Item getSecondItem() {
         return this.secondItem;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getExperienceDropped() {
         return this.experienceDropped;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setExperienceDropped(int experienceDropped) {
         this.experienceDropped = experienceDropped;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Player getPlayer() {
         return this.player;

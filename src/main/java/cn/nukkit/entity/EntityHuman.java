@@ -1,6 +1,8 @@
 package cn.nukkit.entity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.data.Skin;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -43,7 +45,8 @@ public class EntityHuman extends EntityHumanType {
         return 1.8f;
     }
 
-
+    @Since("1.5.1.0-PN")
+    @PowerNukkitOnly
     @Override
     public float getSwimmingHeight() {
         return getWidth();
@@ -101,7 +104,8 @@ public class EntityHuman extends EntityHumanType {
         super.initEntity();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Human";
@@ -228,7 +232,7 @@ public class EntityHuman extends EntityHumanType {
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected void onBlock(Entity entity, EntityDamageEvent event, boolean animate) {
         super.onBlock(entity, event, animate);

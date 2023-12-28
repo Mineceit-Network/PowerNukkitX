@@ -2,6 +2,9 @@ package cn.nukkit.inventory.transaction;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.inventory.CraftItemEvent;
 import cn.nukkit.inventory.*;
 import cn.nukkit.inventory.transaction.action.DamageAnvilAction;
@@ -32,12 +35,12 @@ public class CraftingTransaction extends InventoryTransaction {
     @DeprecationDetails(since = "FUTURE", reason = "When the recipe is not a CraftingRecipe, this is set to null instead of the recipe",
             by = "PowerNukkit", replaceWith = "getTransactionRecipe()")
     @Nullable
-
+    @Since("FUTURE")
     protected CraftingRecipe recipe;
 
     private Recipe transactionRecipe;
 
-
+    @PowerNukkitOnly
     protected int craftingType;
     
     private boolean readyToExecute;
@@ -104,18 +107,20 @@ public class CraftingTransaction extends InventoryTransaction {
     @Deprecated
     @DeprecationDetails(since = "FUTURE", reason = "When the recipe is not a CraftingRecipe, returns null instead of the recipe",
         by = "PowerNukkit", replaceWith = "getTransactionRecipe()")
-
+    @Since("FUTURE")
     @Nullable
     public CraftingRecipe getRecipe() {
         return recipe;
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public Recipe getTransactionRecipe() {
         return transactionRecipe;
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     protected void setTransactionRecipe(Recipe recipe) {
         this.transactionRecipe = recipe;
         this.recipe = (recipe instanceof CraftingRecipe)? (CraftingRecipe) recipe: null;
@@ -204,7 +209,7 @@ public class CraftingTransaction extends InventoryTransaction {
     }
 
     @Override
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "No longer closes the inventory")
     protected void sendInventories() {
         super.sendInventories();
     }
@@ -251,7 +256,7 @@ public class CraftingTransaction extends InventoryTransaction {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
     public boolean checkForCraftingPart(List<InventoryAction> actions) {
         for (InventoryAction action : actions) {
             if (action instanceof SlotChangeAction) {
@@ -265,12 +270,14 @@ public class CraftingTransaction extends InventoryTransaction {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setReadyToExecute(boolean readyToExecute) {
         this.readyToExecute = readyToExecute;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isReadyToExecute() {
         return readyToExecute;
     }

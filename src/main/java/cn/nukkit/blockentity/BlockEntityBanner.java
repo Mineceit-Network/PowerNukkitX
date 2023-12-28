@@ -1,5 +1,6 @@
 package cn.nukkit.blockentity;
 
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -15,7 +16,7 @@ public class BlockEntityBanner extends BlockEntitySpawnable {
         super(chunk, nbt);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();

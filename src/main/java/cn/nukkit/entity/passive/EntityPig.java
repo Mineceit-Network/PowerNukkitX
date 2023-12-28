@@ -1,5 +1,7 @@
 package cn.nukkit.entity.passive;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.entity.ai.behavior.Behavior;
 import cn.nukkit.entity.ai.behaviorgroup.BehaviorGroup;
@@ -94,7 +96,8 @@ public class EntityPig extends EntityAnimal implements EntityWalkable {
         super.initEntity();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Pig";

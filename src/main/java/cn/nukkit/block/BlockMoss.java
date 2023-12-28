@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.value.DoublePlantType;
 import cn.nukkit.blockproperty.value.TallGrassType;
 import cn.nukkit.item.Item;
@@ -18,8 +20,8 @@ import java.util.Random;
  * @author CoolLoong
  * @since 02.12.2022
  */
-
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockMoss extends BlockSolid {
 
     public BlockMoss() {

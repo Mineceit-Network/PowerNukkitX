@@ -2,6 +2,9 @@ package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.NPCCommandSender;
 import cn.nukkit.dialog.element.ElementDialogButton;
 import cn.nukkit.dialog.window.FormWindowDialog;
@@ -21,12 +24,13 @@ import cn.nukkit.network.protocol.NPCRequestPacket;
 /**
  * @author good777LUCKY
  */
-
-
+@Since("1.4.0.0-PN")
+@PowerNukkitOnly
 public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityInteractable {
     //todo: Implement automatic steering of NPC entities
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public static final int NETWORK_ID = 51;
 
     public static final String KEY_DIALOG_TITLE = "DialogTitle";
@@ -38,7 +42,8 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
 
     protected int variant = 0;
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public EntityNPCEntity(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
@@ -68,13 +73,15 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
         return player.isCreative() ? "action.interact.edit" : "action.interact.talk";
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "NPC";
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public void initEntity() {
         super.initEntity();
@@ -135,7 +142,8 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
         this.dialog.setBindEntity(this);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public void saveNBT() {
         super.saveNBT();
@@ -146,7 +154,8 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
         this.namedTag.putInt("Variant", this.variant);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public boolean onInteract(Player player, Item item, Vector3 clickedPos) {
         //对于创造模式玩家，NPC发送过去的dialog的sceneName必须为空，否则客户端会不允许修改对话框内容
@@ -155,7 +164,8 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
         return true;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public boolean attack(EntityDamageEvent source) {
         if (source instanceof EntityDamageByEntityEvent event && event.getDamager() instanceof Player damager && damager.isCreative()) {
@@ -164,18 +174,21 @@ public class EntityNPCEntity extends EntityLiving implements EntityNPC, EntityIn
         return false;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public int getVariant() {
         return this.variant;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void setVariant(int variant) {
         this.variant = variant;
         this.setDataProperty(new IntEntityData(DATA_VARIANT, variant));
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public FormWindowDialog getDialog() {
         return dialog;
     }

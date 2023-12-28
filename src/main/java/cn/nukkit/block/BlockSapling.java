@@ -2,6 +2,9 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BlockProperty;
@@ -30,14 +33,16 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Angelic47 (Nukkit Project)
  */
 public class BlockSapling extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<WoodType> SAPLING_TYPE = new ArrayBlockProperty<>("sapling_type", true, WoodType.class);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BooleanBlockProperty AGED = new BooleanBlockProperty("age_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(SAPLING_TYPE, AGED);
 
     @Deprecated
@@ -89,29 +94,34 @@ public class BlockSapling extends BlockFlowable implements BlockFlowerPot.Flower
         return SAPLING;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public WoodType getWoodType() {
         return getPropertyValue(SAPLING_TYPE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setWoodType(WoodType woodType) {
         setPropertyValue(SAPLING_TYPE, woodType);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isAged() {
         return getBooleanValue(AGED);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setAged(boolean aged) {
         setBooleanValue(AGED, aged);
     }
@@ -155,7 +165,7 @@ public class BlockSapling extends BlockFlowable implements BlockFlowerPot.Flower
         return false;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will break on block update if the supporting block is invalid")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -320,7 +330,8 @@ public class BlockSapling extends BlockFlowable implements BlockFlowerPot.Flower
         return block.getId() == this.getId() && (block.getDamage() & 0x07) == (type & 0x07);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isSameType(Vector3 pos, WoodType type) {
         Block block = this.level.getBlock(pos);
         return block.getId() == this.getId() && ((BlockSapling) block).getWoodType() == type;

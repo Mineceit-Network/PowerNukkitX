@@ -1,5 +1,7 @@
 package cn.nukkit.command.function;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.data.CommandEnum;
 import lombok.Getter;
 
@@ -12,7 +14,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 @Getter
 public class FunctionManager {
 

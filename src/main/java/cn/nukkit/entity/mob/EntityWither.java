@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityFlyable;
 import cn.nukkit.entity.EntitySmite;
 import cn.nukkit.level.format.FullChunk;
@@ -38,25 +40,27 @@ public class EntityWither extends EntityMob implements EntityFlyable, EntitySmit
         super.initEntity();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Wither";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public boolean isBoss() {
         return true;

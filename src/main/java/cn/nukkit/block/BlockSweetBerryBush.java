@@ -2,6 +2,8 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.block.BlockGrowEvent;
@@ -21,18 +23,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
 public class BlockSweetBerryBush extends BlockFlowable {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(BlockCrops.GROWTH);
 
-
+    @PowerNukkitOnly
     public BlockSweetBerryBush() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockSweetBerryBush(int meta) {
         super(meta);
     }
@@ -42,7 +44,8 @@ public class BlockSweetBerryBush extends BlockFlowable {
         return SWEET_BERRY_BUSH;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -164,8 +167,9 @@ public class BlockSweetBerryBush extends BlockFlowable {
         }
         return false;
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static boolean isSupportValid(Block block) {
         switch (block.getId()) {
             case GRASS:

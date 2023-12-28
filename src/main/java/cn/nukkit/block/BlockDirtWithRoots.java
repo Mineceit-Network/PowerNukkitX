@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
 import cn.nukkit.item.ItemTool;
@@ -13,27 +15,21 @@ import org.jetbrains.annotations.NotNull;
  * @author CoolLoong
  * @since 02.12.2022
  */
-
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockDirtWithRoots extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:dirt_with_roots");
 
     public BlockDirtWithRoots() {
-        super(PROPERTIES.getDefaultState());
     }
 
-    public BlockDirtWithRoots(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return DIRT_WITH_ROOTS;
     }
 
     @Override
     public String getName() {
         return "Dirt With Roots";
-    }
-
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
     }
 
     @Override

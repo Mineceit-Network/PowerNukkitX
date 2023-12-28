@@ -1,5 +1,7 @@
 package cn.nukkit.inventory;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 
 import java.util.ArrayList;
@@ -17,7 +19,8 @@ public interface Recipe {
 
     RecipeType getType();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     static boolean matchItemList(List<Item> haveItems, List<Item> needItems) {
         for (Item needItem : new ArrayList<>(needItems)) {
             for (Item haveItem : new ArrayList<>(haveItems)) {

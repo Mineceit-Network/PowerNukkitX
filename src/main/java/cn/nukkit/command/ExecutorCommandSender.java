@@ -2,6 +2,9 @@ package cn.nukkit.command;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.lang.CommandOutputContainer;
 import cn.nukkit.lang.TextContainer;
@@ -17,8 +20,8 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 //used for executing commands in place of an entity
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class ExecutorCommandSender implements CommandSender {
 
     private final CommandSender executor;
@@ -45,7 +48,8 @@ public class ExecutorCommandSender implements CommandSender {
         executor.sendMessage(message);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public void sendCommandOutput(CommandOutputContainer container) {
         executor.sendCommandOutput(container);
     }
@@ -87,7 +91,8 @@ public class ExecutorCommandSender implements CommandSender {
         return (executeLocation == null ? entity : executeLocation).clone();
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Location getLocation() {

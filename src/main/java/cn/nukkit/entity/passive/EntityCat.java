@@ -2,6 +2,9 @@ package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.*;
 import cn.nukkit.entity.ai.behavior.Behavior;
 import cn.nukkit.entity.ai.behaviorgroup.BehaviorGroup;
@@ -158,8 +161,8 @@ public class EntityCat extends EntityAnimal implements EntityWalkable, EntityOwn
 
     //攻击选择器
     //流浪猫会攻击兔子,小海龟
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r1")
     @Override
     public boolean attackTarget(Entity entity) {
         return switch (entity.getNetworkId()) {
@@ -272,7 +275,8 @@ public class EntityCat extends EntityAnimal implements EntityWalkable, EntityOwn
         return Item.EMPTY_ARRAY;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Cat";
@@ -285,8 +289,8 @@ public class EntityCat extends EntityAnimal implements EntityWalkable, EntityOwn
      * Bound cat breeding items
      * WIKI understands that only raw salmon and raw cod can be used to breed
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r1")
     @Override
     public boolean isBreedingItem(Item item) {
         return item.getId() == ItemID.RAW_SALMON ||
@@ -300,8 +304,8 @@ public class EntityCat extends EntityAnimal implements EntityWalkable, EntityOwn
      * Obtain healing amount of items that can heal cats
      * WIKI understands that only raw salmon and raw cod can restore the cat's blood recovery 2
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r1")
     public int getHealingAmount(Item item) {
         return switch (item.getId()) {
             case ItemID.RAW_FISH, ItemID.RAW_SALMON -> 2;

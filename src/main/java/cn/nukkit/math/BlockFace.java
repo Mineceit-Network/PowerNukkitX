@@ -1,5 +1,8 @@
 package cn.nukkit.math;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import com.google.common.collect.Iterators;
 
 import java.util.*;
@@ -148,8 +151,8 @@ public enum BlockFace {
      *
      * @return index
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public int getDUNESWIndex() {
         switch (getIndex()) {
             case 1:
@@ -173,8 +176,8 @@ public enum BlockFace {
      *
      * @return index
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public int getDUSWNEIndex() {
         switch (getIndex()) {
             case 1:
@@ -323,18 +326,25 @@ public enum BlockFace {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public CompassRoseDirection getCompassRoseDirection() {
-        return switch (this) {
-            case NORTH -> CompassRoseDirection.NORTH;
-            case SOUTH -> CompassRoseDirection.SOUTH;
-            case WEST -> CompassRoseDirection.WEST;
-            case EAST -> CompassRoseDirection.EAST;
-            default -> null;
-        };
+        switch (this) {
+            case NORTH:
+                return CompassRoseDirection.NORTH;
+            case SOUTH:
+                return CompassRoseDirection.SOUTH;
+            case WEST:
+                return CompassRoseDirection.WEST;
+            case EAST:
+                return CompassRoseDirection.EAST;
+            default:
+                return null;
+        }
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     public Set<BlockFace> getEdges() {
         EnumSet<BlockFace> blockFaces = EnumSet.noneOf(BlockFace.class);
         if (axis.isVertical()) {
@@ -433,7 +443,8 @@ public enum BlockFace {
 
         private BlockFace[] faces;
 
-
+        @PowerNukkitOnly
+        @Since("1.4.0.0-PN")
         public BlockFace random() {
             return faces[ThreadLocalRandom.current().nextInt(faces.length)];
         }

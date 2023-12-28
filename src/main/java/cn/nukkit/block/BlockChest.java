@@ -1,6 +1,10 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityChest;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -24,10 +28,11 @@ import java.util.Map;
 /**
  * @author Angelic47 (Nukkit Project)
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
 public class BlockChest extends BlockTransparentMeta implements Faceable, BlockEntityHolder<BlockEntityChest> {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.CARDINAL_DIRECTION);
 
     public BlockChest() {
@@ -38,14 +43,16 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
         super(meta);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityChest> getBlockEntityClass() {
         return BlockEntityChest.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -62,7 +69,8 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
         return CHEST;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -79,7 +87,7 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
         return 2.5;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -158,8 +166,8 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
      * 尝试与旁边箱子连接
      * @return 是否连接成功
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     protected boolean tryPair() {
         BlockEntityChest blockEntity = getBlockEntity();
         if (blockEntity == null)
@@ -179,8 +187,8 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
      * @return 找到的可配对箱子。若没找到，则为null
      */
     @Nullable
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     protected BlockEntityChest findPair() {
         BlockFace[] universe = CommonBlockProperties.CARDINAL_DIRECTION.getUniverse();
         BlockFace thisFace = this.getPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION);
@@ -196,7 +204,7 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
         return null;
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public boolean cloneTo(Position pos) {
         if (!super.cloneTo(pos)) return false;
@@ -271,7 +279,7 @@ public class BlockChest extends BlockTransparentMeta implements Faceable, BlockE
         return canMove();
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean canBePulled() {
         return canMove();

@@ -1,5 +1,7 @@
 package cn.nukkit.event.inventory;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntityFurnace;
 import cn.nukkit.event.Cancellable;
 import cn.nukkit.event.HandlerList;
@@ -20,8 +22,8 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
     private final BlockEntityFurnace furnace;
     private final Item source;
     private Item result;
-
-
+    @Since("1.19.50-r3")
+    @PowerNukkitXOnly
     private float xp;
 
     public FurnaceSmeltEvent(BlockEntityFurnace furnace, Item source, Item result, float xp) {

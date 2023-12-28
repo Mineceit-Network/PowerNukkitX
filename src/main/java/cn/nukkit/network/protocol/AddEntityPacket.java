@@ -1,5 +1,7 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Attribute;
 import cn.nukkit.entity.data.EntityMetadata;
 import cn.nukkit.entity.item.*;
@@ -168,8 +170,8 @@ public class AddEntityPacket extends DataPacket {
     public float headYaw;
     //todo: check what's the usage of this
     public float bodyYaw = -1;
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r1")
     public Attribute[] attributes = Attribute.EMPTY_ARRAY;
     public EntityMetadata metadata = new EntityMetadata();
     public PropertySyncData syncedProperties = new PropertySyncData(new int[]{}, new float[]{});

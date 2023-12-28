@@ -1,5 +1,7 @@
 package cn.nukkit.dispenser;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.level.Sound;
@@ -29,7 +31,7 @@ public final class DispenseBehaviorRegister {
         behaviors.remove(id);
     }
 
-
+    @PowerNukkitOnly
     public static void init() {
         registerBehavior(ItemID.SHEARS, new ShearsDispenseBehavior());
         registerBehavior(ItemID.CHEST_BOAT, new ChestBoatDispenseBehavior());
@@ -74,7 +76,7 @@ public final class DispenseBehaviorRegister {
                         .normalize();
             }
 
-
+            @Since("1.19.60-r1")
             @Override
             protected Sound getShootingSound() {
                 return Sound.MOB_BLAZE_SHOOT;
@@ -114,7 +116,7 @@ public final class DispenseBehaviorRegister {
                 return super.getMotion() * 1.25;
             }
 
-
+            @Since("1.19.60-r1")
             @Override
             protected Sound getShootingSound() {
                 return Sound.ITEM_TRIDENT_THROW;

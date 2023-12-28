@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.value.StoneSlab1Type;
 import cn.nukkit.item.ItemTool;
@@ -8,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-
+@PowerNukkitDifference(info = "Extends BlockDoubleSlabBase only in PowerNukkit")
 public class BlockDoubleSlabStone extends BlockDoubleSlabBase {
     public static final int STONE = 0;
     public static final int SANDSTONE = 1;
@@ -32,7 +35,8 @@ public class BlockDoubleSlabStone extends BlockDoubleSlabBase {
         return DOUBLE_STONE_SLAB;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -54,30 +58,32 @@ public class BlockDoubleSlabStone extends BlockDoubleSlabBase {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public StoneSlab1Type getSlabType() {
         return getPropertyValue(StoneSlab1Type.PROPERTY);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getSingleSlabId() {
         return STONE_SLAB;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setSlabType(StoneSlab1Type type) {
         setPropertyValue(StoneSlab1Type.PROPERTY, type);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public String getSlabName() {
         return getSlabType().getEnglishName();
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }

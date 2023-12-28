@@ -1,6 +1,8 @@
 package cn.nukkit.entity;
 
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.ServerException;
 
@@ -23,8 +25,8 @@ public class Attribute implements Cloneable {
      * <p>
      * Convenient execution of {@link Collection#toArray()}
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final Attribute[] EMPTY_ARRAY = new Attribute[0];
 
     /**

@@ -1,8 +1,9 @@
 package cn.nukkit.level.generator.populator.impl.structure.village.structure;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.*;
-import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.passive.EntityVillagerV1;
@@ -34,7 +35,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class VillagePieces { //TODO: mossyStoneSelector (zombie village)
 
     private static final BlockState PLANKS = new BlockState(Block.PLANKS, BlockPlanks.OAK);

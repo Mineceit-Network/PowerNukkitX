@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemDiamond;
 import cn.nukkit.item.ItemTool;
@@ -12,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-
+@PowerNukkitDifference(since = "FUTURE", info = "Extends BlockOre instead of BlockSolid only in PowerNukkit")
 public class BlockOreDiamond extends BlockOre {
 
 
@@ -26,7 +29,7 @@ public class BlockOreDiamond extends BlockOre {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_IRON;
     }
@@ -36,7 +39,8 @@ public class BlockOreDiamond extends BlockOre {
         return "Diamond Ore";
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @Nullable
     @Override
     protected MinecraftItemID getRawMaterial() {

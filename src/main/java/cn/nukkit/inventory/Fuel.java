@@ -1,8 +1,10 @@
 package cn.nukkit.inventory;
 
+import cn.nukkit.api.PowerNukkitXDifference;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
+import cn.nukkit.item.StringItem;
 import it.unimi.dsi.fastutil.objects.Object2IntAVLTreeMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +15,7 @@ import java.util.TreeMap;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-@
+@PowerNukkitXDifference(info = "Add blocks and items.", since = "1.19.50-r3")
 public abstract class Fuel {
     public static final Map<Integer, Short> duration = new TreeMap<>();
     public static final Object2IntMap<String> durationByStringId = new Object2IntAVLTreeMap<>();

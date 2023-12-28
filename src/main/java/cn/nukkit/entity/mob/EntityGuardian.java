@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySwimmable;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -27,7 +29,8 @@ public class EntityGuardian extends EntityMob implements EntitySwimmable {
         super.initEntity();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Guardian";
@@ -43,7 +46,7 @@ public class EntityGuardian extends EntityMob implements EntitySwimmable {
         return 0.85f;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;

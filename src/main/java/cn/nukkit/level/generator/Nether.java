@@ -1,6 +1,7 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.event.level.ChunkPrePopulateEvent;
@@ -45,7 +46,6 @@ public class Nether extends Generator {
     }
 
     public Nether(Map<String, Object> options) {
-        super(options);
         //Nothing here. Just used for future update.
     }
 
@@ -62,6 +62,11 @@ public class Nether extends Generator {
     @Override
     public String getName() {
         return "nether";
+    }
+
+    @Override
+    public Map<String, Object> getSettings() {
+        return new HashMap<>();
     }
 
     @Override
@@ -216,7 +221,7 @@ public class Nether extends Generator {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean shouldGenerateStructures() {
         return true;

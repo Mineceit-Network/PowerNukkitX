@@ -1,6 +1,8 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockItemFrame;
@@ -28,7 +30,7 @@ public class BlockEntityItemFrame extends BlockEntitySpawnable {
         super(chunk, nbt);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -108,7 +110,7 @@ public class BlockEntityItemFrame extends BlockEntitySpawnable {
 
         if (!item.isNull()) {
             CompoundTag itemTag = NBTIO.putItemHelper(item);
-            int networkDamage = item.getAux();
+            int networkDamage = item.getDamage();
             String namespacedId = item.getNamespaceId();
             if (namespacedId != null) {
                 itemTag.remove("id");
@@ -116,7 +118,7 @@ public class BlockEntityItemFrame extends BlockEntitySpawnable {
                 itemTag.putString("Name", namespacedId);
             }
             if (item instanceof ItemBlock itemBlock) {
-                itemTag.putCompound("Block", NBTIO.putBlockHelper(itemBlock.getBlockItem()));
+                itemTag.putCompound("Block", NBTIO.putBlockHelper(itemBlock.getBlock()));
             }
             tag.putCompound("Item", itemTag)
                     .putByte("ItemRotation", this.getItemRotation());
@@ -128,7 +130,7 @@ public class BlockEntityItemFrame extends BlockEntitySpawnable {
         return this.getItem() == null || this.getItem().getId() == 0 ? 0 : this.getItemRotation() % 8 + 1;
     }
 
-
+    @Since("1.4.0.0-PN")
     public boolean dropItem(Player player) {
         Item before = this.getItem();
         if (before == null || before.isNull()) {
@@ -142,7 +144,8 @@ public class BlockEntityItemFrame extends BlockEntitySpawnable {
         return after == null || after.isNull();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     public EntityItem dropItemAndGetEntity(@Nullable Player player) {
         Level level = getValidLevel();

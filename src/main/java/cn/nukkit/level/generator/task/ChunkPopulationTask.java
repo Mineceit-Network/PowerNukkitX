@@ -1,12 +1,15 @@
 package cn.nukkit.level.generator.task;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.generator.populator.type.Populator;
 import cn.nukkit.math.NukkitRandom;
 import cn.nukkit.scheduler.AsyncTask;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class ChunkPopulationTask extends AsyncTask {
 
     private final ChunkManager level;

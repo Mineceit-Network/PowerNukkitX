@@ -1,6 +1,9 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +14,8 @@ import java.util.Set;
 
 import static cn.nukkit.inventory.BaseInventory.AIR_ITEM;
 
-
+@Since("1.19.50-r3")
+@PowerNukkitXOnly
 public class InventorySlice implements Inventory {
     @NotNull
     private final Inventory rawInv;
@@ -172,7 +176,7 @@ public class InventorySlice implements Inventory {
     @Override
     public boolean contains(Item item) {
         int count = Math.max(1, item.getCount());
-        boolean checkDamage = item.hasMeta() && item.getAux() >= 0;
+        boolean checkDamage = item.hasMeta() && item.getDamage() >= 0;
         boolean checkTag = item.getCompoundTag() != null;
         for (Item i : this.getContents().values()) {
             if (item.equals(i, checkDamage, checkTag)) {
@@ -189,7 +193,7 @@ public class InventorySlice implements Inventory {
     @Override
     public Map<Integer, Item> all(Item item) {
         Map<Integer, Item> slots = new HashMap<>();
-        boolean checkDamage = item.hasMeta() && item.getAux() >= 0;
+        boolean checkDamage = item.hasMeta() && item.getDamage() >= 0;
         boolean checkTag = item.getCompoundTag() != null;
         for (Map.Entry<Integer, Item> entry : this.getContents().entrySet()) {
             if (item.equals(entry.getValue(), checkDamage, checkTag)) {
@@ -328,13 +332,13 @@ public class InventorySlice implements Inventory {
         rawInv.onSlotChange(index + startSlot, before, send);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void addListener(InventoryListener listener) {
         rawInv.addListener(((inventory, oldItem, slot) -> listener.onInventoryChanged(this, oldItem, slot - startSlot)));
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void removeListener(InventoryListener listener) {
         rawInv.removeListener(((inventory, oldItem, slot) -> listener.onInventoryChanged(this, oldItem, slot - startSlot)));

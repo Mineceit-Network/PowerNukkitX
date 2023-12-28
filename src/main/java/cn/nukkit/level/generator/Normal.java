@@ -1,6 +1,7 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockStone;
@@ -147,7 +148,6 @@ public class Normal extends Generator {
 
     public Normal(Map<String, Object> options) {
         //Nothing here. Just used for future update.
-        super(options);
     }
 
     @Override
@@ -168,6 +168,11 @@ public class Normal extends Generator {
     @Override
     public String getName() {
         return "normal";
+    }
+
+    @Override
+    public Map<String, Object> getSettings() {
+        return Collections.emptyMap();
     }
 
     public Biome pickBiome(int x, int z) {
@@ -417,7 +422,7 @@ public class Normal extends Generator {
         biome.populateChunk(this.level, event.getBiomePopulators(), chunkX, chunkZ, this.nukkitRandom);
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean shouldGenerateStructures() {
         return true;

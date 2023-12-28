@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityFlyable;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -44,20 +46,22 @@ public class EntityEnderDragon extends EntityMob implements EntityFlyable {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Deprecated
     @Override
     public boolean applyNameTag(Item item) {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Ender Dragon";
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @Override
     public boolean isBoss() {
         return true;

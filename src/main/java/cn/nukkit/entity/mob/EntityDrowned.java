@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySmite;
 import cn.nukkit.entity.EntitySwimmable;
 import cn.nukkit.entity.EntityWalkable;
@@ -40,7 +42,8 @@ public class EntityDrowned extends EntityMob implements EntitySwimmable, EntityW
         return 1.9f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Drowned";
@@ -51,13 +54,13 @@ public class EntityDrowned extends EntityMob implements EntitySwimmable, EntityW
         return new Item[]{Item.get(Item.ROTTEN_FLESH)};
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;

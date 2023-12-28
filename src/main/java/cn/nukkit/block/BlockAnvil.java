@@ -1,9 +1,14 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
-import cn.nukkit.block.property.CommonPropertyMap;
-import cn.nukkit.block.property.enums.Damage;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.ArrayBlockProperty;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BlockProperty;
+import cn.nukkit.blockproperty.CommonBlockProperties;
+import cn.nukkit.blockproperty.value.AnvilDamage;
 import cn.nukkit.inventory.AnvilInventory;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
@@ -16,34 +21,52 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
-import static cn.nukkit.block.property.CommonBlockProperties.DAMAGE;
-
 /**
  * @author Pub4Game
  * @since 27.12.2015
  */
-public class BlockAnvil extends BlockFallable implements Faceable {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:anvil", DAMAGE, CommonBlockProperties.MINECRAFT_CARDINAL_DIRECTION);
+@PowerNukkitDifference(info = "Extends BlockFallableMeta instead of BlockFallable", since = "1.4.0.0-PN")
+public class BlockAnvil extends BlockFallableMeta implements Faceable {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperty<AnvilDamage> DAMAGE = new ArrayBlockProperty<>("damage", false, AnvilDamage.class);
+
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperties PROPERTIES = new BlockProperties(
+            CommonBlockProperties.CARDINAL_DIRECTION.exportingToItems(true), DAMAGE.exportingToItems(true)
+    );
+
+    public BlockAnvil() {
+        // Does nothing
+    }
+
+    public BlockAnvil(int meta) {
+        super(meta);
+    }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
+    public int getId() {
+        return ANVIL;
+    }
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-    public BlockAnvil() {
-        this(PROPERTIES.getDefaultState());
-    }
-
-    public BlockAnvil(BlockState blockstate) {
-        super(blockstate);
-    }
-
-    public Damage getAnvilDamage() {
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    public AnvilDamage getAnvilDamage() {
         return getPropertyValue(DAMAGE);
     }
 
-
-    public void setAnvilDamage(Damage anvilDamage) {
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    public void setAnvilDamage(AnvilDamage anvilDamage) {
         setPropertyValue(DAMAGE, anvilDamage);
     }
 
@@ -52,7 +75,7 @@ public class BlockAnvil extends BlockFallable implements Faceable {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -80,10 +103,10 @@ public class BlockAnvil extends BlockFallable implements Faceable {
 
     @Override
     public String getName() {
-        return getAnvilDamage().name();
+        return getAnvilDamage().getEnglishName();
     }
 
-
+    @PowerNukkitDifference(info = "Just like sand, it can now be placed anywhere and removed the sound for the player who placed, was duplicated", since = "1.3.0.0-PN")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         setBlockFace(player != null ? player.getDirection().rotateY() : BlockFace.SOUTH);
@@ -109,7 +132,7 @@ public class BlockAnvil extends BlockFallable implements Faceable {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
@@ -119,23 +142,24 @@ public class BlockAnvil extends BlockFallable implements Faceable {
         return false;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public void setBlockFace(BlockFace face) {
-        setPropertyValue(CommonBlockProperties.MINECRAFT_CARDINAL_DIRECTION, CommonPropertyMap.CARDINAL_BLOCKFACE.inverse().get(face));
+        setPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION, face);
     }
 
     @Override
     public BlockFace getBlockFace() {
-        return CommonPropertyMap.CARDINAL_BLOCKFACE.get(getPropertyValue(CommonBlockProperties.MINECRAFT_CARDINAL_DIRECTION));
+        return getPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION);
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed the returned bounding box")
     @Override
     protected AxisAlignedBB recalculateBoundingBox() {
         BlockFace face = getBlockFace().rotateY();
-        double xOffset = Math.abs(face.getXOffset()) * (2 / 16.0);
-        double zOffset = Math.abs(face.getZOffset()) * (2 / 16.0);
+        double xOffset = Math.abs(face.getXOffset()) * (2/16.0);
+        double zOffset = Math.abs(face.getZOffset()) * (2/16.0);
         return new SimpleAxisAlignedBB(x + xOffset, y, z + zOffset, x + 1 - xOffset, y + 1, z + 1 - zOffset);
     }
 }

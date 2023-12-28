@@ -1,14 +1,18 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockMossCarpet extends BlockCarpet {
-
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public static final BlockProperties PROPERTIES = CommonBlockProperties.EMPTY_PROPERTIES;
 
     @Override
@@ -31,7 +35,7 @@ public class BlockMossCarpet extends BlockCarpet {
         return "Moss Carpet";
     }
 
-
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

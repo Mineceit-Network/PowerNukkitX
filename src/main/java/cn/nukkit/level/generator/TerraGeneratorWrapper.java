@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.level.ChunkPrePopulateEvent;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.DimensionData;
@@ -19,17 +21,19 @@ import java.util.Map;
  * Terra generator wrapper class for nk bottom layer<br/>
  * The specific reasons for this are detailed in {@link cn.nukkit.level.terra.TerraGenerator}
  */
-
-
+@Since("1.19.50-r2")
+@PowerNukkitXOnly
 public class TerraGeneratorWrapper extends Generator {
 
     //所有terra实例
     protected static final Map<Integer, TerraGenerator> generators = new Int2ObjectOpenHashMap<>();
     //共享的Terra实例
     protected volatile TerraGenerator terra;
+    protected final Map<String, Object> option;
+
 
     public TerraGeneratorWrapper(Map<String, Object> option) {
-        super(option);
+        this.option = option;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class TerraGeneratorWrapper extends Generator {
         if (this.terra == null) {
             synchronized (generators) {
                 if (this.terra == null) {
-                    this.terra = new TerraGenerator(this.options, getLevel());
+                    this.terra = new TerraGenerator(this.option, getLevel());
                     generators.put(getLevel().getId(), this.terra);
                 }
             }

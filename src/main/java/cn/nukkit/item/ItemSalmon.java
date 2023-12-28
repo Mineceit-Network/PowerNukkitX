@@ -5,11 +5,17 @@ package cn.nukkit.item;
  * @since 2016/1/14
  */
 public class ItemSalmon extends ItemFish {
+
     public ItemSalmon() {
-        super(SALMON, 0, 1);
+        this(0, 1);
     }
 
-    protected ItemSalmon(String id, Integer meta, int count) {
-        super(id, meta, count);
+    public ItemSalmon(Integer meta) {
+        this(meta, 1);
     }
+
+    public ItemSalmon(Integer meta, int count) {
+        super(RAW_SALMON, meta, count, "Raw Salmon");
+    }
+
 }

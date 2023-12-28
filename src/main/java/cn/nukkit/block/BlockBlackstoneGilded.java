@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemTool;
@@ -7,10 +9,11 @@ import cn.nukkit.item.enchantment.Enchantment;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockBlackstoneGilded extends BlockSolid {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockBlackstoneGilded() {
         // Does nothing
     }

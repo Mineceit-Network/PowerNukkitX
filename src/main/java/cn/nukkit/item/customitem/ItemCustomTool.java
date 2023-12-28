@@ -1,5 +1,8 @@
 package cn.nukkit.item.customitem;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.*;
 import cn.nukkit.nbt.tag.CompoundTag;
 import org.jetbrains.annotations.NotNull;
@@ -9,8 +12,8 @@ import javax.annotation.Nullable;
 /**
  * @author lt_name
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public abstract class ItemCustomTool extends ItemTool implements ItemDurable, CustomItem {
     private final String id;
     private final String textureName;
@@ -36,7 +39,8 @@ public abstract class ItemCustomTool extends ItemTool implements ItemDurable, Cu
         return textureName;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public String getNamespaceId() {
         return id;

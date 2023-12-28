@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -15,8 +17,8 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author daoge_cmd
  */
-
-
+@PowerNukkitXOnly
+@Since("1.20.10-r1")
 public class BlockPinkPetals extends BlockFlowable {
 
     public static final IntBlockProperty GROWTH = new IntBlockProperty("growth", false, 7, 0);

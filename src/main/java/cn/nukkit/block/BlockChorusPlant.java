@@ -1,6 +1,7 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemTool;
@@ -12,24 +13,19 @@ import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockChorusPlant extends BlockTransparent {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:chorus_plant");
 
     public BlockChorusPlant() {
-        super(PROPERTIES.getDefaultState());
+        // Nothing
     }
 
-    public BlockChorusPlant(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return CHORUS_PLANT;
     }
 
     @Override
     public String getName() {
         return "Chorus Plant";
-    }
-
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
     }
 
     @Override
@@ -106,13 +102,13 @@ public class BlockChorusPlant extends BlockTransparent {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean sticksToPiston() {
         return false;
     }

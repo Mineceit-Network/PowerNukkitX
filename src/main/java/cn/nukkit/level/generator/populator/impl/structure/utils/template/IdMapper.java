@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.template;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -9,7 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class IdMapper<T> implements Iterable<T> {
 
     private final HashMap<T, Integer> tToId;

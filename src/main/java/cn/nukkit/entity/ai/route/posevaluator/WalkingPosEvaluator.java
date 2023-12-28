@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.route.posevaluator;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFence;
 import cn.nukkit.block.BlockFenceGate;
@@ -13,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 用于标准陆地行走实体的方块评估器
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class WalkingPosEvaluator implements IPosEvaluator {
     @Override
     public boolean evalStandingBlock(@NotNull EntityIntelligent entity, @NotNull Block block) {

@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.redstone.RedstoneUpdateEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
@@ -11,7 +14,7 @@ import cn.nukkit.utils.RedstoneComponent;
  * @author CreeperFace
  * @since 10.4.2017
  */
-
+@PowerNukkitDifference(info = "Implements RedstoneComponent and uses methods from it.", since = "1.4.0.0-PN")
 public class BlockRedstoneTorchUnlit extends BlockTorch implements RedstoneComponent {
 
     public BlockRedstoneTorchUnlit() {
@@ -88,7 +91,8 @@ public class BlockRedstoneTorchUnlit extends BlockTorch implements RedstoneCompo
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     protected boolean isPoweredFromSide() {
         BlockFace face = getBlockFace().getOpposite();
         if (this.getSide(face) instanceof BlockPistonBase && this.getSide(face).isGettingPower()) {

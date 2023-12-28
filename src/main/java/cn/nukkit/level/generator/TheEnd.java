@@ -1,6 +1,7 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.event.level.ChunkPrePopulateEvent;
 import cn.nukkit.level.ChunkManager;
@@ -93,7 +94,6 @@ public class TheEnd extends Generator {
 
     public TheEnd(Map<String, Object> options) {
         // Nothing here. Just used for future update.
-        super(options);
     }
 
     @Override
@@ -109,6 +109,11 @@ public class TheEnd extends Generator {
     @Override
     public String getName() {
         return "the_end";
+    }
+
+    @Override
+    public Map<String, Object> getSettings() {
+        return new HashMap<>();
     }
 
     @Override
@@ -286,7 +291,7 @@ public class TheEnd extends Generator {
         return islandHeight1;
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean shouldGenerateStructures() {
         return true;

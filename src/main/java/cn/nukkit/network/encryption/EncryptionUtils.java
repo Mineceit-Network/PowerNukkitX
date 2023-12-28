@@ -1,5 +1,6 @@
 package cn.nukkit.network.encryption;
 
+import cn.nukkit.api.PowerNukkitXOnly;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -26,7 +27,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 
-
+@PowerNukkitXOnly
 public final class EncryptionUtils {
 
     private static final ECPublicKey MOJANG_PUBLIC_KEY;

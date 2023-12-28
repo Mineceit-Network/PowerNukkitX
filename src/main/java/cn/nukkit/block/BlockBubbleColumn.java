@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.entity.Entity;
@@ -19,21 +21,23 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
 public class BlockBubbleColumn extends BlockTransparentMeta {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty DRAG_DOWN = new BooleanBlockProperty("drag_down", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(DRAG_DOWN);
 
-
+    @PowerNukkitOnly
     public BlockBubbleColumn() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockBubbleColumn(int meta) {
         super(meta);
     }
@@ -43,7 +47,8 @@ public class BlockBubbleColumn extends BlockTransparentMeta {
         return BUBBLE_COLUMN;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -55,7 +60,7 @@ public class BlockBubbleColumn extends BlockTransparentMeta {
         return "Bubble Column";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;
@@ -106,7 +111,8 @@ public class BlockBubbleColumn extends BlockTransparentMeta {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;

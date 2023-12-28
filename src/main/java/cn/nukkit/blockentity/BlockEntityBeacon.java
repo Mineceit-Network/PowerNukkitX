@@ -1,6 +1,8 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.inventory.BeaconInventory;
@@ -27,7 +29,7 @@ public class BlockEntityBeacon extends BlockEntitySpawnable {
         scheduleUpdate();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -69,7 +71,7 @@ public class BlockEntityBeacon extends BlockEntitySpawnable {
 
     private long currentTick = 0;
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public boolean onUpdate() {
         //Only apply effects every 4 secs
@@ -233,7 +235,7 @@ public class BlockEntityBeacon extends BlockEntitySpawnable {
         }
     }
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public boolean updateCompoundTag(CompoundTag nbt, Player player) {
         if (!nbt.getString("id").equals(BlockEntity.BEACON)) {

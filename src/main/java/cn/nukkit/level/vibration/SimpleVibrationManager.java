@@ -1,6 +1,8 @@
 package cn.nukkit.level.vibration;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.level.VibrationArriveEvent;
@@ -16,7 +18,8 @@ import cn.nukkit.network.protocol.LevelEventPacket;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r3")
 public class SimpleVibrationManager implements VibrationManager {
 
     protected Set<VibrationListener> listeners = new CopyOnWriteArraySet<>();

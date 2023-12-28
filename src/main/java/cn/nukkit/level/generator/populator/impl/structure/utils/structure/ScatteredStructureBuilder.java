@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.structure;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.ChunkManager;
@@ -14,7 +16,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import java.util.Map;
 import java.util.Map.Entry;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class ScatteredStructureBuilder {
 
     /**

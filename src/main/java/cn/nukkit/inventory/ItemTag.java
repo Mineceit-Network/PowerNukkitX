@@ -1,6 +1,8 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.utils.Config;
 import cn.nukkit.utils.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -9,7 +11,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@PowerNukkitXOnly
+@Since("1.19.50-r2")
 public final class ItemTag {
     public final static Identifier ARROW = new Identifier("minecraft:arrow");
     public final static Identifier BANNER = new Identifier("minecraft:banner");
@@ -116,8 +119,8 @@ public final class ItemTag {
      * @param namespaceId The item namespaceId
      * @param tags        The tags to register
      */
-
-
+    @Since("1.19.50-r3")
+    @PowerNukkitXOnly
     public static void registerItemTag(String namespaceId, Collection<String> tags) {
         var tagSet = ITEM_2_TAGS.get(namespaceId);
         if (tagSet != null) tagSet.addAll(tags);

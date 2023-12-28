@@ -13,20 +13,21 @@ import cn.nukkit.network.protocol.CompletedUsingItemPacket;
  * @author MagicDroidX (Nukkit Project)
  */
 public abstract class ItemEdible extends Item {
-    public ItemEdible(String id) {
+
+    public ItemEdible(int id, Integer meta, int count, String name) {
+        super(id, meta, count, name);
+    }
+
+    public ItemEdible(int id) {
         super(id);
     }
 
-    public ItemEdible(String id, Integer meta) {
+    public ItemEdible(int id, Integer meta) {
         super(id, meta);
     }
 
-    public ItemEdible(String id, Integer meta, int count) {
+    public ItemEdible(int id, Integer meta, int count) {
         super(id, meta, count);
-    }
-
-    public ItemEdible(String id, Integer meta, int count, String name) {
-        super(id, meta, count, name);
     }
 
     @Override
@@ -60,7 +61,7 @@ public abstract class ItemEdible extends Item {
         }
 
         if (food.eatenBy(player)) {
-            player.completeUsingItem(this.getRuntimeId(), CompletedUsingItemPacket.ACTION_EAT);
+            player.completeUsingItem(this.getNetworkId(), CompletedUsingItemPacket.ACTION_EAT);
 
             if (player.isAdventure() || player.isSurvival()) {
                 --this.count;

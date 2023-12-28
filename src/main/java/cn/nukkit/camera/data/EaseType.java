@@ -1,5 +1,7 @@
 package cn.nukkit.camera.data;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import lombok.Getter;
 
 /**
@@ -7,8 +9,8 @@ import lombok.Getter;
  * @date 2023/6/10
  * PowerNukkitX Project
  */
-
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 @Getter
 public enum EaseType {
     LINEAR("linear"),

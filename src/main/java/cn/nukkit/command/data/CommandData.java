@@ -1,8 +1,12 @@
 package cn.nukkit.command.data;
 
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+
 import java.util.*;
 
-@
+@PowerNukkitXDifference(since = "1.19.50-r1", info = "Use List<Flag> instead")
 public class CommandData implements Cloneable {
 
     public String description = "description";
@@ -12,7 +16,7 @@ public class CommandData implements Cloneable {
     public EnumSet<Flag> flags = EnumSet.of(Flag.NOT_CHEAT);
     public int permission;
 
-
+    @Since("1.20.10-r1")
     public List<ChainedSubCommandData> subcommands = new ArrayList<>();
 
     @Override
@@ -25,8 +29,8 @@ public class CommandData implements Cloneable {
     }
 
     // Bit flags
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r1")
     public enum Flag {
         NONE(0x00),
         TEST_USAGE(0x01),

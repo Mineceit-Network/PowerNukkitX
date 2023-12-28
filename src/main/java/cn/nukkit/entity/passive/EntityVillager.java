@@ -1,6 +1,10 @@
 package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.EntityAgeable;
 import cn.nukkit.entity.EntityIntelligent;
@@ -41,8 +45,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
      * 例如[0,10,20,30,40] 村民达到1级所需经验0,2级为10,这里的经验是{@link EntityVillager#tradeExp}.
      */
     public int[] tierExpRequirement;
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     protected TradeInventory inventory;
     /**
      * 用于控制该村民是否可以交易
@@ -133,13 +137,15 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
         return 1.9f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "VillagerV2";
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     @Override
     public void initEntity() {
         this.setMaxHealth(20);
@@ -205,8 +211,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * 获取村民职业id对应的displayName硬编码
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     private String getProfessionName(int profession) {
         return switch (profession) {
             case 1 -> "entity.villager.farmer";
@@ -229,8 +235,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @return 村民的职业id
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public int getProfession() {
         return profession;
     }
@@ -240,8 +246,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
      *
      * @param profession 请查看{@link EntityVillager#profession}
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public void setProfession(int profession) {
         this.profession = profession;
         this.setDataProperty(new IntEntityData(DATA_VARIANT, profession));
@@ -251,8 +257,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * 这个方法插件一般不用
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public void setTradingPlayer(Long eid) {
         this.setDataProperty(new LongEntityData(DATA_TRADING_PLAYER_EID, eid));
     }
@@ -260,8 +266,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @return 该村民是否可以交易
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public boolean getCanTrade() {
         return canTrade;
     }
@@ -271,8 +277,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
      *
      * @param canTrade true 可以交易
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public void setCanTrade(boolean canTrade) {
         this.canTrade = canTrade;
         this.namedTag.putBoolean("canTrade", canTrade);
@@ -281,8 +287,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @return 交易UI的显示名称
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public String getDisplayName() {
         return displayName;
     }
@@ -290,8 +296,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @param displayName 设置交易UI的显示名称
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
         this.namedTag.putString("displayName", displayName);
@@ -300,8 +306,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @return 该村民的交易等级
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public int getTradeTier() {
         return tradeTier;
     }
@@ -309,8 +315,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
     /**
      * @param tradeTier <p>村民的交易等级(1-{@link EntityVillager#maxTradeTier})</p>
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     public void setTradeTier(int tradeTier) {
         this.tradeTier = --tradeTier;
         this.namedTag.putInt("tradeTier", this.tradeTier);
@@ -348,7 +354,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
         this.namedTag.putInt("tradeExp", this.tradeTier);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     @Override
     public boolean onInteract(Player player, Item item, Vector3 clickedPos) {
         if (this.getCanTrade()) {
@@ -358,24 +365,28 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
         } else return false;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r1")
     @Override
     public TradeInventory getInventory() {
         return inventory;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public int getTradeSeed() {
         return tradeSeed;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     protected void setTradeSeed(int tradeSeed) {
         this.tradeSeed = tradeSeed;
         this.namedTag.putInt("tradeSeed", tradeSeed);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public void addExperience(int xp) {
         this.tradeExp += xp;
         this.setDataProperty(new IntEntityData(DATA_TRADE_EXPERIENCE, this.tradeExp));
@@ -387,7 +398,7 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
         }
     }
 
-    @
+    @PowerNukkitXDifference
     @Override
     public boolean onUpdate(int tick) {
         if (tick % 100 == 0) {
@@ -430,8 +441,8 @@ public class EntityVillager extends EntityIntelligent implements InventoryHolder
         }
         return super.onUpdate(tick);
     }
-
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public void applyProfession(Profession profession) {
         setDisplayName(profession.getName());
         recipes = profession.buildTrades(getTradeSeed());

@@ -18,6 +18,8 @@
 
 package cn.nukkit.entity.mob;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.item.Item;
@@ -31,14 +33,15 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author joserobjr
  * @since 2021-01-13
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class EntityIronGolem extends EntityMob implements EntityWalkable {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final int NETWORK_ID = 20;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public EntityIronGolem(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
@@ -48,7 +51,8 @@ public class EntityIronGolem extends EntityMob implements EntityWalkable {
         return NETWORK_ID;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Iron Golem";
@@ -78,7 +82,7 @@ public class EntityIronGolem extends EntityMob implements EntityWalkable {
         Item[] drops;
         if (flowerAmount > 0) {
             drops = new Item[2];
-            drops[1] = Item.getBlockItem(BlockID.RED_FLOWER, 0, flowerAmount);
+            drops[1] = Item.getBlock(BlockID.RED_FLOWER, 0, flowerAmount);
         } else {
             drops = new Item[1];
         }

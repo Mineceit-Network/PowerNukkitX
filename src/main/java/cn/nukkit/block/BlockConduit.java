@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityConduit;
 import cn.nukkit.item.Item;
@@ -11,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-
+@PowerNukkitOnly
 public class BlockConduit extends BlockTransparent implements BlockEntityHolder<BlockEntityConduit> {
-
+    @PowerNukkitOnly
     public BlockConduit() {
         // Does nothing
     }
@@ -28,21 +30,23 @@ public class BlockConduit extends BlockTransparent implements BlockEntityHolder<
         return "Conduit";
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityConduit> getBlockEntityClass() {
         return BlockEntityConduit.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.CONDUIT;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;
@@ -60,7 +64,7 @@ public class BlockConduit extends BlockTransparent implements BlockEntityHolder<
 
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, @Nullable Player player) {
-        if (item.getBlockItem() != null && item.getBlockId() == CONDUIT && target.getId() == CONDUIT) {
+        if (item.getBlock() != null && item.getBlockId() == CONDUIT && target.getId() == CONDUIT) {
             return false;
         }
 

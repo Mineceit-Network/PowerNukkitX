@@ -1,10 +1,13 @@
 package cn.nukkit.level.generator.populator.impl.structure.jungletemple.loot;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.generator.populator.impl.structure.utils.loot.RandomizableContainer;
 import com.google.common.collect.Maps;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class JungleTempleDispenser extends RandomizableContainer {
 
     private static final JungleTempleDispenser INSTANCE = new JungleTempleDispenser();

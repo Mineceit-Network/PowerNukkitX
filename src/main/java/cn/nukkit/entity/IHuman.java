@@ -1,6 +1,8 @@
 package cn.nukkit.entity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.data.IntPositionEntityData;
 import cn.nukkit.entity.data.Skin;
 import cn.nukkit.inventory.*;
@@ -17,7 +19,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-
+@PowerNukkitXOnly
+@Since("1.19.63-r1")
 public interface IHuman extends InventoryHolder {
     default void initHumanEntity(Entity human) {
         boolean isIntelligentHuman = this instanceof EntityIntelligentHuman;

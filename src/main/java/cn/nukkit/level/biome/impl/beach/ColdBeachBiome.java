@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.beach;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.biome.type.SandyBiome;
 import cn.nukkit.level.generator.populator.impl.WaterIcePopulator;
 
@@ -12,7 +14,8 @@ public class ColdBeachBiome extends SandyBiome {
         this.setHeightVariation(0.025f);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getCoverBlock() {
         if (useNewRakNetCover()) {

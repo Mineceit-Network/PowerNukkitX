@@ -1,6 +1,8 @@
 package cn.nukkit.plugin;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
 import cn.nukkit.event.plugin.PluginDisableEvent;
 import cn.nukkit.event.plugin.PluginEnableEvent;
 import cn.nukkit.utils.PluginException;
@@ -27,7 +29,7 @@ public class JavaPluginLoader implements PluginLoader {
 
     private final Map<String, Class> classes = new HashMap<>();
 
-
+    @PowerNukkitXOnly
     @Getter
     protected final Map<String, PluginClassLoader> classLoaders = new HashMap<>();
 
@@ -126,8 +128,8 @@ public class JavaPluginLoader implements PluginLoader {
         }
     }
 
-    
-    
+    @PowerNukkitDifference(info = "Made impossible to disable special the PowerNukkitPlugin", since = "1.3.0.0-PN")
+    @PowerNukkitDifference(info = "Made impossible to disable special the PowerNukkitX Internal Plugin", since = "1.19.60-r1")
     @Override
     public void disablePlugin(Plugin plugin) {
         if (plugin instanceof PluginBase && plugin.isEnabled()) {

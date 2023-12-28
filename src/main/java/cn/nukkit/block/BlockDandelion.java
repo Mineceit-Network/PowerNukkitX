@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.value.SmallFlowerType;
@@ -18,7 +20,8 @@ public class BlockDandelion extends BlockFlower {
         super(0);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -35,13 +38,15 @@ public class BlockDandelion extends BlockFlower {
         return get(RED_FLOWER);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public void setFlowerType(SmallFlowerType flowerType) {
         setOnSingleFlowerType(SmallFlowerType.DANDELION, flowerType);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public SmallFlowerType getFlowerType() {
         return SmallFlowerType.DANDELION;

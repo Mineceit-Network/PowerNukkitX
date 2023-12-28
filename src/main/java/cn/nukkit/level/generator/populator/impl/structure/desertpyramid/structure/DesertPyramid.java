@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.desertpyramid.structure;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.ChunkManager;
@@ -11,7 +13,8 @@ import cn.nukkit.math.NukkitRandom;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class DesertPyramid extends ScatteredStructurePiece {
 
     public DesertPyramid(BlockVector3 pos) {

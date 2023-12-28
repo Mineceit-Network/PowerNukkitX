@@ -1,9 +1,12 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityBeehive;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemTool;
@@ -18,23 +21,34 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static cn.nukkit.block.property.CommonBlockProperties.HONEY_LEVEL;
+import static cn.nukkit.blockproperty.CommonBlockProperties.DIRECTION;
 
+@PowerNukkitOnly
+public class BlockBeehive extends BlockSolidMeta implements Faceable, BlockEntityHolder<BlockEntityBeehive> {
+    public @PowerNukkitOnly static final IntBlockProperty HONEY_LEVEL = new IntBlockProperty("honey_level", false, 5);
+    public @PowerNukkitOnly static final BlockProperties PROPERTIES = new BlockProperties(DIRECTION, HONEY_LEVEL);
 
-public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHolder<BlockEntityBeehive> {
-    public static final BlockProperties PROPERTIES = new BlockProperties(BEEHIVE, CommonBlockProperties.DIRECTION, HONEY_LEVEL);
+    @PowerNukkitOnly
+    public BlockBeehive() {
+        this(0);
+    }
+
+    @PowerNukkitOnly
+    protected BlockBeehive(int meta) {
+        super(meta);
+    }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
+    public int getId() {
+        return BEEHIVE;
+    }
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
         return PROPERTIES;
-    }
-
-    public BlockBeehive() {
-        this(PROPERTIES.getDefaultState());
-    }
-
-    public BlockBeehive(BlockState blockstate) {
-        super(blockstate);
     }
 
     @Override
@@ -42,12 +56,16 @@ public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHol
         return "Beehive";
     }
 
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.BEEHIVE;
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityBeehive> getBlockEntityClass() {
@@ -125,20 +143,20 @@ public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHol
         return true;
     }
 
-
+    @PowerNukkitOnly
     public void honeyCollected(Player player) {
         honeyCollected(player, level.getServer().getDifficulty() > 0 && !player.isCreative());
     }
 
-
+    @PowerNukkitOnly
     public void honeyCollected(Player player, boolean angerBees) {
         setHoneyLevel(0);
-        if (!down().getId().equals(BlockID.CAMPFIRE) && angerBees) {
+        if (down().getId() != CAMPFIRE_BLOCK && angerBees) {
             angerBees(player);
         }
     }
 
-
+    @PowerNukkitOnly
     public void angerBees(Player player) {
         BlockEntityBeehive beehive = getBlockEntity();
         if (beehive != null) {
@@ -168,7 +186,8 @@ public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHol
         return true;
     }
 
-
+    @Since("1.2.1.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean mustSilkTouch(Vector3 vector, int layer, BlockFace face, Item item, Player player) {
         if (player != null) {
@@ -180,7 +199,8 @@ public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHol
         return super.mustSilkTouch(vector, layer, face, item, player);
     }
 
-
+    @Since("1.2.1.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean mustDrop(Vector3 vector, int layer, BlockFace face, Item item, Player player) {
         return mustSilkTouch(vector, layer, face, item, player) || super.mustDrop(vector, layer, face, item, player);
@@ -193,38 +213,39 @@ public class BlockBeehive extends BlockSolid implements Faceable, BlockEntityHol
     
     @Override
     public Item[] getDrops(Item item) {
-        return new Item[]{Item.getBlockItem(BlockID.BEEHIVE)};
+        return new Item[]{ Item.getBlock(BlockID.BEEHIVE) };
     }
-
+    
     @Override
     public BlockFace getBlockFace() {
-        return BlockFace.fromHorizontalIndex(getPropertyValue(CommonBlockProperties.DIRECTION));
+        return getPropertyValue(DIRECTION);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.3.0.0-PN")
     @Override
     public void setBlockFace(BlockFace face) {
-        setPropertyValue(CommonBlockProperties.DIRECTION,face.getHorizontalIndex());
+        setPropertyValue(DIRECTION, face);
     }
 
-
+    @PowerNukkitOnly
     public void setHoneyLevel(int honeyLevel) {
         setPropertyValue(HONEY_LEVEL, honeyLevel);
     }
 
-
+    @PowerNukkitOnly
     public int getHoneyLevel() {
         return getPropertyValue(HONEY_LEVEL);
     }
 
-
+    @PowerNukkitOnly
     public boolean isEmpty() {
-        return getHoneyLevel() == HONEY_LEVEL.getMin();
+        return getHoneyLevel() == HONEY_LEVEL.getMinValue();
     }
 
-
+    @PowerNukkitOnly
     public boolean isFull() {
-        return getPropertyValue(HONEY_LEVEL) == HONEY_LEVEL.getMax();
+        return getPropertyValue(HONEY_LEVEL) == HONEY_LEVEL.getMaxValue();
     }
     
     @Override

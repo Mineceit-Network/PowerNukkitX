@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityEndPortal;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -38,14 +41,16 @@ public class BlockEndPortal extends BlockFlowable implements BlockEntityHolder<B
         return END_PORTAL;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public Class<? extends BlockEntityEndPortal> getBlockEntityClass() {
         return BlockEntityEndPortal.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -57,7 +62,8 @@ public class BlockEndPortal extends BlockFlowable implements BlockEntityHolder<B
         return BlockEntityHolder.setBlockAndCreateEntity(this) != null;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -94,7 +100,7 @@ public class BlockEndPortal extends BlockFlowable implements BlockEntityHolder<B
         return true;
     }
 
-
+    @PowerNukkitDifference(since = "1.2.1.0-PN", info = "NukkitX returns null")
     @Override
     public AxisAlignedBB getCollisionBoundingBox() {
         return this;
@@ -130,7 +136,8 @@ public class BlockEndPortal extends BlockFlowable implements BlockEntityHolder<B
         return getY() + (12.0 / 16.0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static void spawnObsidianPlatform(Position position) {
         Level level = position.getLevel();
         int x = position.getFloorX();

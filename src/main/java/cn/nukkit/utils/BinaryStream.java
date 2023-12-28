@@ -1,6 +1,6 @@
 package cn.nukkit.utils;
 
-import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.*;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.blockstate.BlockStateRegistry;
@@ -410,7 +410,7 @@ public class BinaryStream {
         return new SerializedImage(width, height, data);
     }
 
-    @
+    @PowerNukkitXDifference(info = "Remove the name from the tag, this function will be removed in the future")
     public Item getSlot() {
         int networkId = getVarInt();
         if (networkId == 0) {
@@ -509,7 +509,7 @@ public class BinaryStream {
             item = readUnknownItem(Item.get(id, damage, count, nbt));
         } else if (stringId != null) {
             final Item tmp = Item.fromString(stringId);
-            tmp.setAux(damage);
+            tmp.setDamage(damage);
             tmp.setCount(count);
             tmp.setCompoundTag(nbt);
             item = readUnknownItem(tmp);
@@ -581,14 +581,14 @@ public class BinaryStream {
 
     private Item createFakeUnknownItem(Item item) {
         boolean hasCompound = item.hasCompoundTag();
-        Item fallback = Item.getBlockItem(FALLBACK_ID, 0, item.getCount());
+        Item fallback = Item.getBlock(FALLBACK_ID, 0, item.getCount());
         CompoundTag tag = item.getNamedTag();
         if (tag == null) {
             tag = new CompoundTag();
         }
         tag.putCompound("PowerNukkitUnknown", new CompoundTag()
                 .putInt("OriginalItemId", item.getId())
-                .putInt("OriginalMeta", item.getAux())
+                .putInt("OriginalMeta", item.getDamage())
                 .putBoolean("HasCustomName", item.hasCustomName())
                 .putBoolean("HasDisplayTag", tag.contains("display"))
                 .putBoolean("HasCompound", hasCompound)
@@ -596,7 +596,7 @@ public class BinaryStream {
 
         fallback.setNamedTag(tag);
         String suffix = "" + TextFormat.RESET + TextFormat.GRAY + TextFormat.ITALIC +
-                " (" + item.getId() + ":" + item.getAux() + ")";
+                " (" + item.getId() + ":" + item.getDamage() + ")";
         if (fallback.hasCustomName()) {
             fallback.setCustomName(fallback.getCustomName() + suffix);
         } else {
@@ -609,6 +609,8 @@ public class BinaryStream {
         this.putSlot(item, false);
     }
 
+    @PowerNukkitXDifference(info = "Remove the name from the tag, this function will be removed in the future")
+    @Since("1.4.0.0-PN")
     public void putSlot(Item item, boolean instanceItem) {
         if (item == null || item.getId() == 0) {
             putByte((byte) 0);
@@ -623,27 +625,21 @@ public class BinaryStream {
             item = createFakeUnknownItem(item);
             networkId = RuntimeItems.getRuntimeMapping().getNetworkId(item);
         }
-        putVarInt(networkId);//write item runtimeId
+        putVarInt(networkId);//write runtimeId
         putLShort(item.getCount());//write item count
 
         int legacyData = 0;
         if (item.getId() > 256) { // Not a block
             //不是item_mappings.json中的物品才会写入damage值，因为item_mappings.json的作用是将旧的物品id:damage转换到最新的无damage值的物品
-            if (item instanceof ItemDurable || !RuntimeItems.getRuntimeMapping().toRuntime(item.getId(), item.getAux()).hasDamage()) {
-                legacyData = item.getAux();
+            if (item instanceof ItemDurable || !RuntimeItems.getRuntimeMapping().toRuntime(item.getId(), item.getDamage()).hasDamage()) {
+                legacyData = item.getDamage();
             }
         } else if (item instanceof StringItem) {
-            legacyData = item.getAux();
+            legacyData = item.getDamage();
         }
 
         putUnsignedVarInt(legacyData);//write damage value
 
-        /*
-        cloudbrust protocol use this,maybe server auth inventory need this
-        if (item.isUsingNetId()) {
-            VarInts.writeInt(buffer, item.getNetId());
-        }
-        */
         if (!instanceItem) {
             putBoolean(true); // hasNetId
             putVarInt(0); // netId
@@ -655,7 +651,7 @@ public class BinaryStream {
 
         int data = 0;
         if (item instanceof ItemDurable || item.getId() < 256) {
-            data = item.getAux();
+            data = item.getDamage();
         }
 
         ByteBuf userDataBuf = ByteBufAllocator.DEFAULT.ioBuffer();
@@ -743,8 +739,8 @@ public class BinaryStream {
         this.putBoolean(true); // isValid? - true
 
         int networkId = RuntimeItems.getRuntimeMapping().getNetworkId(ingredient);
-        int damage = ingredient.hasMeta() ? ingredient.getAux() : 0x7fff;
-        if (RuntimeItems.getRuntimeMapping().toRuntime(ingredient.getId(), ingredient.getAux()).hasDamage()) {
+        int damage = ingredient.hasMeta() ? ingredient.getDamage() : 0x7fff;
+        if (RuntimeItems.getRuntimeMapping().toRuntime(ingredient.getId(), ingredient.getDamage()).hasDamage()) {
             damage = 0;
         }
 
@@ -753,7 +749,8 @@ public class BinaryStream {
         this.putVarInt(ingredient.getCount());
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r2")
     public void putRecipeIngredient(ItemDescriptor itemDescriptor) {
         ItemDescriptorType type = itemDescriptor.getType();
         this.putByte((byte) type.ordinal());
@@ -766,8 +763,8 @@ public class BinaryStream {
                     return;
                 }
                 int networkId = RuntimeItems.getRuntimeMapping().getNetworkId(ingredient);
-                int damage = ingredient.hasMeta() ? ingredient.getAux() : 0x7fff;
-                if (RuntimeItems.getRuntimeMapping().toRuntime(ingredient.getId(), ingredient.getAux()).hasDamage()) {
+                int damage = ingredient.hasMeta() ? ingredient.getDamage() : 0x7fff;
+                if (RuntimeItems.getRuntimeMapping().toRuntime(ingredient.getId(), ingredient.getDamage()).hasDamage()) {
                     damage = 0;
                 }
                 this.putLShort(networkId);
@@ -905,17 +902,20 @@ public class BinaryStream {
         this.putLFloat(z);
     }
 
-
+    @Since("1.19.70-r1")
+    @PowerNukkitXOnly
     public Vector2f getVector2f() {
         return new Vector2f(this.getLFloat(4), this.getLFloat(4));
     }
 
-
+    @Since("1.19.70-r1")
+    @PowerNukkitXOnly
     public void putVector2f(Vector2f v) {
         this.putVector2f(v.x, v.y);
     }
 
-
+    @Since("1.19.70-r1")
+    @PowerNukkitXOnly
     public void putVector2f(float x, float y) {
         this.putLFloat(x);
         this.putLFloat(y);
@@ -989,7 +989,8 @@ public class BinaryStream {
         );
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public <T> void putArray(Collection<T> collection, Consumer<T> writer) {
         if (collection == null) {
             putUnsignedVarInt(0);
@@ -999,7 +1000,8 @@ public class BinaryStream {
         collection.forEach(writer);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public <T> void putArray(T[] collection, Consumer<T> writer) {
         if (collection == null) {
             putUnsignedVarInt(0);
@@ -1011,7 +1013,8 @@ public class BinaryStream {
         }
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r1")
     public <T> void putArray(Collection<T> array, BiConsumer<BinaryStream, T> biConsumer) {
         this.putUnsignedVarInt(array.size());
         for (T val : array) {
@@ -1034,8 +1037,8 @@ public class BinaryStream {
     }
 
     @SneakyThrows(IOException.class)
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public CompoundTag getTag() {
         ByteArrayInputStream is = new ByteArrayInputStream(buffer, offset, buffer.length);
         int initial = is.available();
@@ -1047,8 +1050,8 @@ public class BinaryStream {
     }
 
     @SneakyThrows(IOException.class)
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public void putTag(CompoundTag tag) {
         put(NBTIO.write(tag));
     }

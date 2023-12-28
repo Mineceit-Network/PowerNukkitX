@@ -61,7 +61,7 @@ public class EntityBoat extends EntityVehicle {
     @Deprecated
     @DeprecationDetails(since = "1.4.0.0-PN", by = "PowerNukkit",
             reason = "Unreliable direct field access", replaceWith = "getVariant(), setVariant(int)")
-
+    @Since("1.4.0.0-PN")
     public int woodID;
     protected boolean sinking = true;
     private int ticksInWater;
@@ -547,7 +547,7 @@ public class EntityBoat extends EntityVehicle {
         return false;
     }
 
-    
+    @PowerNukkitDifference(info = "Fixes a dupe issue when attacking too quickly", since = "1.3.1.2-PN")
     @Override
     public void kill() {
         if (!isAlive()) {
@@ -567,7 +567,8 @@ public class EntityBoat extends EntityVehicle {
         }
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     protected void dropItem() {
         this.level.dropItem(this, Item.get(ItemID.BOAT, this.woodID));
     }
@@ -579,18 +580,22 @@ public class EntityBoat extends EntityVehicle {
         this.namedTag.putByte("woodID", this.woodID); // Compatibility with Cloudburst Nukkit
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getVariant() {
         return this.woodID;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setVariant(int variant) {
         this.woodID = variant;
         this.dataProperties.putInt(DATA_VARIANT, variant);
     }
 
 
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Boat";

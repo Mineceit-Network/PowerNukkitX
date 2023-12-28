@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityBanner;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -27,7 +30,7 @@ import static cn.nukkit.blockproperty.CommonBlockProperties.GROUND_SIGN_DIRECTIO
 /**
  * @author PetteriM1
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
 @Log4j2
 public class BlockBanner extends BlockTransparentMeta implements Faceable, BlockEntityHolder<BlockEntityBanner> {
     public BlockBanner() {
@@ -43,21 +46,24 @@ public class BlockBanner extends BlockTransparentMeta implements Faceable, Block
         return STANDING_BANNER;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return BlockSignPost.PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.BANNER;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityBanner> getBlockEntityClass() {
@@ -94,7 +100,7 @@ public class BlockBanner extends BlockTransparentMeta implements Faceable, Block
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -126,7 +132,7 @@ public class BlockBanner extends BlockTransparentMeta implements Faceable, Block
         }
 
         CompoundTag nbt = BlockEntity.getDefaultCompound(this, BlockEntity.BANNER)
-                .putInt("Base", item.getAux() & 0xf);
+                .putInt("Base", item.getDamage() & 0xf);
 
         Tag type = item.getNamedTagEntry("Type");
         if (type instanceof IntTag) {
@@ -166,7 +172,7 @@ public class BlockBanner extends BlockTransparentMeta implements Faceable, Block
         BlockEntityBanner banner = getBlockEntity();
         Item item = Item.get(ItemID.BANNER);
         if (banner != null) {
-            item.setAux(banner.getBaseColor() & 0xf);
+            item.setDamage(banner.getBaseColor() & 0xf);
             int type = banner.namedTag.getInt("Type");
             if (type > 0) {
                 item.setNamedTag((item.hasCompoundTag() ? item.getNamedTag() : new CompoundTag())
@@ -181,30 +187,33 @@ public class BlockBanner extends BlockTransparentMeta implements Faceable, Block
         return item;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public CompassRoseDirection getDirection() {
         return getPropertyValue(GROUND_SIGN_DIRECTION);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setDirection(CompassRoseDirection direction) {
         setPropertyValue(GROUND_SIGN_DIRECTION, direction);
     }
 
-    
+    @PowerNukkitDifference(info = "Was returning the wrong face, it now return the closest face, or the left face if even", since = "1.4.0.0-PN")
     @Override
     public BlockFace getBlockFace() {
         return getDirection().getClosestBlockFace();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.3.0.0-PN")
     @Override
     public void setBlockFace(BlockFace face) {
         setDirection(face.getCompassRoseDirection());
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }

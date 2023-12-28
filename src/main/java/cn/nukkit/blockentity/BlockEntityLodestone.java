@@ -1,6 +1,8 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
@@ -17,17 +19,17 @@ import java.util.OptionalInt;
 /**
  * @author joserobjr
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 @Log4j2
 public class BlockEntityLodestone extends BlockEntitySpawnable {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockEntityLodestone(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -36,7 +38,8 @@ public class BlockEntityLodestone extends BlockEntitySpawnable {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public OptionalInt getTrackingHandler() {
         if (namedTag.containsInt("trackingHandle")) {
@@ -45,7 +48,8 @@ public class BlockEntityLodestone extends BlockEntitySpawnable {
         return OptionalInt.empty();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int requestTrackingHandler() throws IOException {
         OptionalInt opt = getTrackingHandler();
         PositionTrackingService positionTrackingService = getLevel().getServer().getPositionTrackingService();

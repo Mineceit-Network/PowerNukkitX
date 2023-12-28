@@ -1,11 +1,14 @@
 package cn.nukkit.level.terra.delegate;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import com.dfsek.terra.api.inventory.Item;
 import com.dfsek.terra.api.inventory.ItemStack;
 import com.dfsek.terra.api.inventory.item.Damageable;
 import com.dfsek.terra.api.inventory.item.ItemMeta;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public record PNXItemStack(cn.nukkit.item.Item innerItem) implements ItemStack, Damageable {
     @Override
     public int getAmount() {
@@ -46,16 +49,16 @@ public record PNXItemStack(cn.nukkit.item.Item innerItem) implements ItemStack, 
 
     @Override
     public int getDamage() {
-        return innerItem.getAux();
+        return innerItem.getDamage();
     }
 
     @Override
     public void setDamage(int i) {
-        innerItem.setAux(i);
+        innerItem.setDamage(i);
     }
 
     @Override
     public boolean hasDamage() {
-        return innerItem.getAux() != 0;
+        return innerItem.getDamage() != 0;
     }
 }

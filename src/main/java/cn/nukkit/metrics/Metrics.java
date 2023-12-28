@@ -1,5 +1,7 @@
 package cn.nukkit.metrics;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.utils.MainLogger;
 import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
@@ -25,10 +27,10 @@ import java.util.zip.GZIPOutputStream;
  * <p>
  * Check out https://bStats.org/ to learn more about bStats!
  */
-
+@Since("1.4.0.0-PN")
 @Log4j2
 public class Metrics {
-
+    @Since("1.4.0.0-PN")
     public static final int B_STATS_VERSION = 1;
     private static final String VALUES = "values";
 
@@ -57,7 +59,7 @@ public class Metrics {
      * @param logFailedRequests If failed submissions should be logged.
      * @param logger            The server main logger, ignored by PowerNukkit.
      */
-
+    @Since("1.4.0.0-PN")
     public Metrics(String name, String serverUUID, boolean logFailedRequests, @SuppressWarnings("unused") MainLogger logger) {
         this(name, serverUUID, logFailedRequests);
     }
@@ -69,8 +71,8 @@ public class Metrics {
      * @param serverUUID        The unique identifier of this server.
      * @param logFailedRequests If failed submissions should be logged.
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Metrics(String name, String serverUUID, boolean logFailedRequests) {
         this.name = name;
         this.serverUUID = serverUUID;
@@ -85,7 +87,7 @@ public class Metrics {
      *
      * @param chart The chart to add.
      */
-
+    @Since("1.4.0.0-PN")
     public void addCustomChart(CustomChart chart) {
         if (chart == null) {
             throw new IllegalArgumentException("Chart cannot be null!");
@@ -230,7 +232,7 @@ public class Metrics {
     /**
      * Represents a custom chart.
      */
-
+    @Since("1.4.0.0-PN")
     public abstract static class CustomChart {
 
         // The id of the chart
@@ -265,7 +267,7 @@ public class Metrics {
         }
 
         @SuppressWarnings("java:S112")
-
+        @Since("1.4.0.0-PN")
         protected abstract JSONObject getChartData() throws Exception;
 
     }
@@ -273,7 +275,7 @@ public class Metrics {
     /**
      * Represents a custom simple pie.
      */
-
+    @Since("1.4.0.0-PN")
     public static class SimplePie extends CustomChart {
 
         private final Callable<String> callable;
@@ -284,7 +286,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public SimplePie(String chartId, Callable<String> callable) {
             super(chartId);
             this.callable = callable;
@@ -306,7 +308,7 @@ public class Metrics {
     /**
      * Represents a custom advanced pie.
      */
-
+    @Since("1.4.0.0-PN")
     public static class AdvancedPie extends CustomChart {
 
         private final Callable<Map<String, Integer>> callable;
@@ -317,7 +319,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public AdvancedPie(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
@@ -357,7 +359,7 @@ public class Metrics {
      * Represents a custom drill down pie.
      */
     @SuppressWarnings("SpellCheckingInspection")
-
+    @Since("1.4.0.0-PN")
     public static class DrilldownPie extends CustomChart {
 
         private final Callable<Map<String, Map<String, Integer>>> callable;
@@ -368,7 +370,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public DrilldownPie(String chartId, Callable<Map<String, Map<String, Integer>>> callable) {
             super(chartId);
             this.callable = callable;
@@ -408,7 +410,7 @@ public class Metrics {
     /**
      * Represents a custom single line chart.
      */
-
+    @Since("1.4.0.0-PN")
     public static class SingleLineChart extends CustomChart {
 
         private final Callable<Integer> callable;
@@ -419,7 +421,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public SingleLineChart(String chartId, Callable<Integer> callable) {
             super(chartId);
             this.callable = callable;
@@ -442,7 +444,7 @@ public class Metrics {
     /**
      * Represents a custom multi line chart.
      */
-
+    @Since("1.4.0.0-PN")
     public static class MultiLineChart extends CustomChart {
 
         private final Callable<Map<String, Integer>> callable;
@@ -453,7 +455,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public MultiLineChart(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
@@ -469,7 +471,7 @@ public class Metrics {
     /**
      * Represents a custom simple bar chart.
      */
-
+    @Since("1.4.0.0-PN")
     public static class SimpleBarChart extends CustomChart {
 
         private final Callable<Map<String, Integer>> callable;
@@ -480,7 +482,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public SimpleBarChart(String chartId, Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = callable;
@@ -509,7 +511,7 @@ public class Metrics {
     /**
      * Represents a custom advanced bar chart.
      */
-
+    @Since("1.4.0.0-PN")
     public static class AdvancedBarChart extends CustomChart {
 
         private final Callable<Map<String, int[]>> callable;
@@ -520,7 +522,7 @@ public class Metrics {
          * @param chartId  The id of the chart.
          * @param callable The callable which is used to request the chart data.
          */
-
+        @Since("1.4.0.0-PN")
         public AdvancedBarChart(String chartId, Callable<Map<String, int[]>> callable) {
             super(chartId);
             this.callable = callable;

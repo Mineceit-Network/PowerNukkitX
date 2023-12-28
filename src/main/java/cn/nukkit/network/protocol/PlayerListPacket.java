@@ -1,6 +1,8 @@
 package cn.nukkit.network.protocol;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.data.Skin;
 import lombok.ToString;
 
@@ -73,8 +75,8 @@ public class PlayerListPacket extends DataPacket {
         public Skin skin;
         public boolean isTeacher;
         public boolean isHost;
-
-
+        @PowerNukkitXOnly
+        @Since("1.19.50-r3")
         public boolean trustedSkin;
 
         public Entry(UUID uuid) {

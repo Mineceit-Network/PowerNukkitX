@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityDropper;
 import cn.nukkit.dispenser.DispenseBehavior;
@@ -8,15 +10,15 @@ import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 public class BlockDropper extends BlockDispenser {
 
-
+    @PowerNukkitOnly
     public BlockDropper() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockDropper(int meta) {
         super(meta);
     }
@@ -31,27 +33,29 @@ public class BlockDropper extends BlockDispenser {
         return DROPPER;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityDropper> getBlockEntityClass() {
         return BlockEntityDropper.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.DROPPER;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void dispense() {
         super.dispense();
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected DispenseBehavior getDispenseBehavior(Item item) {
         return new DropperDispenseBehavior();
@@ -73,7 +77,7 @@ public class BlockDropper extends BlockDispenser {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }

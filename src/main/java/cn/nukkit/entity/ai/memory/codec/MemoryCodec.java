@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.memory.codec;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.nbt.tag.CompoundTag;
 import lombok.Getter;
@@ -8,7 +10,8 @@ import javax.annotation.Nullable;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-
+@PowerNukkitXOnly
+@Since("1.19.63-r1")
 @Getter
 public class MemoryCodec<Data> implements IMemoryCodec<Data> {
     private final Function<CompoundTag, Data> decoder;

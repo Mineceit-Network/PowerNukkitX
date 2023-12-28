@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.entity.Entity;
@@ -25,11 +28,12 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author MagicDroidX (Nukkit Project)
  */
 public abstract class BlockLiquid extends BlockTransparentMeta {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final IntBlockProperty LIQUID_DEPTH = new IntBlockProperty("liquid_depth", false, 15);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(LIQUID_DEPTH);
 
     private static final byte CAN_FLOW_DOWN = 1;
@@ -43,7 +47,8 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
         super(meta);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -85,7 +90,8 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
@@ -111,7 +117,7 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
         return this;
     }
 
-
+    @PowerNukkitOnly
     public boolean usesWaterLogging() {
         return false;
     }
@@ -494,7 +500,7 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
         entity.resetFallDistance();
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     protected boolean liquidCollide(Block cause, Block result) {
         BlockFromToEvent event = new BlockFromToEvent(this, result);
         this.level.getServer().getPluginManager().callEvent(event);
@@ -523,33 +529,37 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean sticksToPiston() {
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getLiquidDepth() {
         return getPropertyValue(LIQUID_DEPTH);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setLiquidDepth(int liquidDepth) {
         setPropertyValue(LIQUID_DEPTH, liquidDepth);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isSource() {
         return getLiquidDepth() == 0;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getDepthOnTop() {
         int liquidDepth = getLiquidDepth();
         if (liquidDepth > 8) {
@@ -558,24 +568,27 @@ public abstract class BlockLiquid extends BlockTransparentMeta {
         return liquidDepth;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isFlowingDown() {
         return getLiquidDepth() >= 8;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isSourceOrFlowingDown() {
         int liquidDepth = getLiquidDepth();
         return liquidDepth == 0 || liquidDepth == 8;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getLightFilter() {
         return 2;
     }
 
-
+    @Since("1.6.0.0-PNX")
     @Override
     public int getWalkThroughExtraCost() {
         return 20;

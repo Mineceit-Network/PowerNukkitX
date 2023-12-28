@@ -1,5 +1,6 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.Since;
 import cn.nukkit.math.Vector2;
 import cn.nukkit.math.Vector2f;
 import cn.nukkit.math.Vector3f;
@@ -31,7 +32,7 @@ public class PlayerAuthInputPacket extends DataPacket {
     private Vector3f delta;
     // private ItemStackRequest itemStackRequest;
     private Map<PlayerActionType, PlayerBlockActionData> blockActionData = new EnumMap<>(PlayerActionType.class);
-
+    @Since("1.19.70-r1")
     private Vector2f analogMoveVector;
 
     @Override

@@ -1,5 +1,6 @@
 package cn.nukkit.entity.data.profession;
 
+import cn.nukkit.api.PowerNukkitXInternal;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.nbt.tag.Tag;
 
@@ -36,7 +37,7 @@ public abstract class Profession {
         return recipes;
     }
 
-    
+    @PowerNukkitXInternal
     public static void init() {
         registerProfession(new ProfessionFarmer());
         registerProfession(new ProfessionFisherman());

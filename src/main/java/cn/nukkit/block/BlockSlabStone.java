@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.value.StoneSlab1Type;
@@ -11,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
  * @since 26. 11. 2016
  */
 public class BlockSlabStone extends BlockSlab {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(
             StoneSlab1Type.PROPERTY,
             CommonBlockProperties.VERTICAL_HALF
@@ -40,27 +42,28 @@ public class BlockSlabStone extends BlockSlab {
         return STONE_SLAB;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public String getSlabName() {
         return getSlabType().getEnglishName();
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isSameType(BlockSlab slab) {
         return slab.getId() == getId() && getSlabType().equals(slab.getPropertyValue(StoneSlab1Type.PROPERTY));
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
@@ -70,12 +73,14 @@ public class BlockSlabStone extends BlockSlab {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public StoneSlab1Type getSlabType() {
         return getPropertyValue(StoneSlab1Type.PROPERTY);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setSlabType(StoneSlab1Type type) {
         setPropertyValue(StoneSlab1Type.PROPERTY, type);
     }

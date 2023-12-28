@@ -1,6 +1,7 @@
 package cn.nukkit.utils;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Attribute;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.EntityMetadata;
@@ -53,7 +54,7 @@ public class DummyBossBar {
             return this;
         }
 
-
+        @Since("FUTURE")
         public Builder color(BossBarColor color) {
             this.color = color;
             return this;
@@ -96,7 +97,7 @@ public class DummyBossBar {
         }
     }
 
-
+    @Since("FUTURE")
     public void setColor(@Nullable BossBarColor color) {
         final BossBarColor currentColor = this.color;
         if (currentColor == null || !currentColor.equals(color)) {
@@ -105,7 +106,7 @@ public class DummyBossBar {
         }
     }
 
-
+    @Since("FUTURE")
     @Nullable
     public BossBarColor getColor() {
         return this.color;

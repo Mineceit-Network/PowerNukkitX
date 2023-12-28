@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityFurnace;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -22,10 +25,11 @@ import java.util.Map;
 /**
  * @author Angelic47 (Nukkit Project)
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
 public class BlockFurnaceBurning extends BlockSolidMeta implements Faceable, BlockEntityHolder<BlockEntityFurnace> {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.CARDINAL_DIRECTION);
 
     public BlockFurnaceBurning() {
@@ -41,7 +45,8 @@ public class BlockFurnaceBurning extends BlockSolidMeta implements Faceable, Blo
         return LIT_FURNACE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -53,14 +58,16 @@ public class BlockFurnaceBurning extends BlockSolidMeta implements Faceable, Blo
         return "Burning Furnace";
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityFurnace> getBlockEntityClass() {
         return BlockEntityFurnace.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -141,7 +148,7 @@ public class BlockFurnaceBurning extends BlockSolidMeta implements Faceable, Blo
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }

@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.item.EntityEndCrystal;
 import cn.nukkit.level.ChunkManager;
@@ -18,7 +20,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r3")
 public class PopulatorEndObsidianPillar extends Populator {
 
     private final ObsidianPillar obsidianPillar;

@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.executor;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.math.Vector3;
@@ -7,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class FlatRandomRoamExecutor implements EntityControl, IBehaviorExecutor {
 
     protected float speed;

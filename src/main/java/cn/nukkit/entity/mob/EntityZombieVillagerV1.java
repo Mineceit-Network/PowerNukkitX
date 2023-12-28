@@ -1,5 +1,7 @@
 package cn.nukkit.entity.mob;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySmite;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.level.format.FullChunk;
@@ -37,13 +39,14 @@ public class EntityZombieVillagerV1 extends EntityMob implements EntityWalkable,
         return 1.9f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Zombie Villager";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;

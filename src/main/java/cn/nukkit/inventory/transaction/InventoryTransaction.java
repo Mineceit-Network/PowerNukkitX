@@ -1,6 +1,8 @@
 package cn.nukkit.inventory.transaction;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.inventory.InventoryClickEvent;
 import cn.nukkit.event.inventory.InventoryTransactionEvent;
 import cn.nukkit.inventory.Inventory;
@@ -58,7 +60,7 @@ public class InventoryTransaction {
         return inventories;
     }
 
-
+    @Since("1.3.0.0-PN")
     public List<InventoryAction> getActionList() {
         return actions;
     }
@@ -205,7 +207,7 @@ public class InventoryTransaction {
         return !ev.isCancelled();
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Always returns false if the execution is not possible")
     public boolean execute() {
         if (this.hasExecuted() || !this.canExecute()) {
             this.sendInventories();

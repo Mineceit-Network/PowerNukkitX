@@ -39,15 +39,15 @@ public class Network {
 
     private static final ThreadLocal<Inflater> INFLATER_RAW = ThreadLocal.withInitial(() -> new Inflater(true));
     private static final ThreadLocal<Deflater> DEFLATER_RAW = ThreadLocal.withInitial(() -> new Deflater(7, true));
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r3")
     private static final ThreadLocal<LibdeflateCompressor> PNX_DEFLATER_RAW = ThreadLocal.withInitial(() -> new PNXLibDeflater(7));
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r3")
     private static final int BUFFER_LEN = 2 * 1024 * 1024;
     private static final ThreadLocal<byte[]> BUFFER = ThreadLocal.withInitial(() -> new byte[BUFFER_LEN]);
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r3")
     public static boolean libDeflateAvailable = false;
 
     public static final byte CHANNEL_NONE = 0;
@@ -74,11 +74,11 @@ public class Network {
     private String subName;
 
     @Nullable
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.20-r3")
     private final List<NetworkIF> hardWareNetworkInterfaces;
 
-    @
+    @PowerNukkitXDifference(since = "1.19.80-r2", info = "DataPacketManager.registerDefaultProcessors()")
     public Network(Server server) {
         this.registerPackets();
         DataPacketManager.registerDefaultProcessors();
@@ -97,7 +97,7 @@ public class Network {
 
     }
 
-
+    @Since("1.3.0.0-PN")
     public static byte[] inflateRaw(byte[] data) throws IOException, DataFormatException {
         Inflater inflater = INFLATER_RAW.get();
         try {
@@ -120,8 +120,8 @@ public class Network {
         }
     }
 
-
-    @
+    @Since("1.3.0.0-PN")
+    @PowerNukkitXDifference(info = "Uses the LibDeflate deflater", since = "1.19.40-r3")
     public static byte[] deflateRaw(byte[] data, int level) throws IOException {
         if (libDeflateAvailable) {
             var deflater = level == 7 ? PNX_DEFLATER_RAW.get() : new LibdeflateCompressor(level);
@@ -154,8 +154,8 @@ public class Network {
         }
     }
 
-
-    @
+    @Since("1.3.0.0-PN")
+    @PowerNukkitXDifference(info = "Uses the LibDeflate deflater", since = "1.19.40-r3")
     public static byte[] deflateRaw(byte[][] datas, int level) throws IOException {
         if (libDeflateAvailable) {
             var deflater = level == 7 ? PNX_DEFLATER_RAW.get() : new LibdeflateCompressor(level);
@@ -294,8 +294,8 @@ public class Network {
      * @param id    The packet id, non-negative int
      * @param clazz The packet class
      */
-
-
+    @Since("1.19.70-r1")
+    @PowerNukkitXOnly
     public void registerPacketNew(@Nonnegative int id, @NotNull Class<? extends DataPacket> clazz) {
         this.packetPool.put(id, clazz);
     }
@@ -318,14 +318,15 @@ public class Network {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public List<DataPacket> unpackBatchedPackets(BatchPacket packet, CompressionProvider compression) throws ProtocolException {
         List<DataPacket> packets = new ObjectArrayList<>();
         processBatch(packet.payload, packets, compression);
         return packets;
     }
 
-
+    @Since("1.4.0.0-PN")
     public void processBatch(byte[] payload, Collection<DataPacket> packets, CompressionProvider compression) throws ProtocolException {
         byte[] data;
         try {
@@ -382,7 +383,7 @@ public class Network {
      *
      * @param packets
      */
-    
+    @PowerNukkitDifference(info = "Handles exception if on of the packets in the list fails")
     public void processPackets(Player player, List<DataPacket> packets) {
         if (packets.isEmpty()) return;
         packets.forEach(p -> {
@@ -404,13 +405,13 @@ public class Network {
     @DeprecationDetails(since = "1.4.0.0-PN", by = "Cloudburst Nukkit",
             reason = "Changed the id to int without backward compatibility",
             replaceWith = "getPacket(int id)")
-
+    @PowerNukkitOnly
     public DataPacket getPacket(byte id) {
         return getPacket((int) id);
     }
 
     // TODO: 2023/4/30 将低性能的newInstance替换为其他方式以提高数据包创建性能
-
+    @Since("1.4.0.0-PN")
     public DataPacket getPacket(int id) {
         Class<? extends DataPacket> clazz = this.packetPool.get(id);
         if (clazz != null) {

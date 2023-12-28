@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.mesa;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockSand;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.level.biome.type.CoveredBiome;
@@ -86,7 +88,8 @@ public class MesaBiome extends CoveredBiome {
         return y < (71 + Math.round((redSandNoise.noise2D(x, z, true) + 1) * 1.5f)) ? 3 : y - 66;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public BlockState getSurfaceState(int x, int y, int z) {
         if (y < (71 + Math.round((redSandNoise.noise2D(x, z, true) + 1) * 1.5f))) {
@@ -102,7 +105,8 @@ public class MesaBiome extends CoveredBiome {
         return y < (71 + Math.round((redSandNoise.noise2D(x, z, true) + 1) * 1.5f)) ? 2 : 0;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public BlockState getGroundState(int x, int y, int z) {
         return STATE_RED_SANDSTONE;

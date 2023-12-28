@@ -1,6 +1,8 @@
 package cn.nukkit.network.protocol.v575;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.customblock.CustomBlockDefinition;
 import cn.nukkit.item.RuntimeItems;
 import cn.nukkit.level.GameRules;
@@ -95,10 +97,10 @@ public class StartGamePacket_v575 extends DataPacket {
     public boolean isTrial = false;
     @Deprecated
     public boolean isMovementServerAuthoritative;
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r3")
     public Integer serverAuthoritativeMovement;
-
+    @Since("1.3.0.0-PN")
     public boolean isInventoryServerAuthoritative;
 
     public long currentTick;

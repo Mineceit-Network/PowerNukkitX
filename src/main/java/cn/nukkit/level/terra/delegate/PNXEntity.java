@@ -1,10 +1,13 @@
 package cn.nukkit.level.terra.delegate;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import com.dfsek.terra.api.entity.Entity;
 import com.dfsek.terra.api.util.vector.Vector3;
 import com.dfsek.terra.api.world.ServerWorld;
 
-
+@PowerNukkitXOnly
+@Since("1.19.20-r4")
 public class PNXEntity implements Entity {
     private final cn.nukkit.entity.Entity nukkitEntity;
     private ServerWorld world;

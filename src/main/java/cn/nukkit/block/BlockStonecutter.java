@@ -1,5 +1,6 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.ItemTool;
 
 public class BlockStonecutter extends BlockSolid {
@@ -34,7 +35,7 @@ public class BlockStonecutter extends BlockSolid {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
@@ -44,7 +45,7 @@ public class BlockStonecutter extends BlockSolid {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;

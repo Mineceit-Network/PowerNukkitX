@@ -1,5 +1,6 @@
 package cn.nukkit.blockentity;
 
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.entity.Entity;
@@ -42,7 +43,7 @@ public class BlockEntityEndGateway extends BlockEntitySpawnable {
         scheduleUpdate();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();

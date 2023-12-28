@@ -1,7 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityChiseledBookshelf;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -22,7 +23,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class BlockChiseledBookshelf extends BlockBookshelf implements BlockEntityHolder<BlockEntityChiseledBookshelf>, Faceable {
     public static final IntBlockProperty BOOKS_STORED = new IntBlockProperty("books_stored", false, 63);
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.DIRECTION, BOOKS_STORED);
@@ -89,7 +91,7 @@ public class BlockChiseledBookshelf extends BlockBookshelf implements BlockEntit
         return BlockEntity.CHISELED_BOOKSHELF;
     }
 
-
+    @Since("1.20.0-r2")
     @Override
     public void onPlayerRightClick(@NotNull Player player, Item item, BlockFace face, Vector3 clickPoint) {
         BlockFace blockFace = getBlockFace();
@@ -130,7 +132,7 @@ public class BlockChiseledBookshelf extends BlockBookshelf implements BlockEntit
 
     @Override
     public BlockFace getBlockFace() {
-        return BlockFace.fromHorizontalIndex(getPropertyValue(CommonBlockProperties.DIRECTION));
+        return getPropertyValue(CommonBlockProperties.DIRECTION);
     }
 
     @Override

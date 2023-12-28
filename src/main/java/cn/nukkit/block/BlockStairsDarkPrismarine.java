@@ -1,15 +1,16 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitOnly
 public class BlockStairsDarkPrismarine extends BlockStairs {
-
+    @PowerNukkitOnly
     public BlockStairsDarkPrismarine() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockStairsDarkPrismarine(int meta) {
         super(meta);
     }
@@ -35,7 +36,7 @@ public class BlockStairsDarkPrismarine extends BlockStairs {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }

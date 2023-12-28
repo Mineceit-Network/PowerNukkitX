@@ -2,12 +2,14 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.event.block.BlockGrowEvent;
 import cn.nukkit.item.Item;
-import cn.nukkit.item.ItemSugarCane;
+import cn.nukkit.item.ItemSugarcane;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.particle.BoneMealParticle;
 import cn.nukkit.math.BlockFace;
@@ -19,10 +21,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BlockSugarcane extends BlockFlowable {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty AGE = CommonBlockProperties.AGE_15;
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(AGE);
 
     public BlockSugarcane() {
@@ -43,7 +47,8 @@ public class BlockSugarcane extends BlockFlowable {
         return REEDS;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -52,7 +57,7 @@ public class BlockSugarcane extends BlockFlowable {
 
     @Override
     public Item toItem() {
-        return new ItemSugarCane();
+        return new ItemSugarcane();
     }
 
     @Override

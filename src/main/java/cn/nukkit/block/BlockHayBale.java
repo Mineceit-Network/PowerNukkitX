@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -18,8 +20,8 @@ import static cn.nukkit.potion.Effect.getEffect;
  * @since 2015/11/24
  */
 public class BlockHayBale extends BlockSolidMeta implements Faceable {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = BlockBone.PROPERTIES;
 
     public BlockHayBale() {
@@ -35,7 +37,8 @@ public class BlockHayBale extends BlockSolidMeta implements Faceable {
         return HAY_BALE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -93,13 +96,15 @@ public class BlockHayBale extends BlockSolidMeta implements Faceable {
         return BlockFace.fromHorizontalIndex(this.getDamage() & 0x07);
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public boolean useDefaultFallDamage() {
         return false;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public void onEntityFallOn(Entity entity, float fallDistance) {
         int jumpBoost = entity.hasEffect(Effect.JUMP_BOOST)? (getEffect(Effect.JUMP_BOOST).getAmplifier() + 1) : 0;

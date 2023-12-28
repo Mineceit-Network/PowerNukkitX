@@ -1,10 +1,12 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
-import cn.nukkit.level.format.IChunk;
+import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.BlockVector3;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -13,10 +15,11 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public interface BlockEntityHolder<E extends BlockEntity> {
-
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Nullable
     default E getBlockEntity() {
         Level level = getLevel();
@@ -38,18 +41,20 @@ public interface BlockEntityHolder<E extends BlockEntity> {
         }
         return null;
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     default E createBlockEntity() {
         return createBlockEntity(null);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     default E createBlockEntity(@Nullable CompoundTag initialData, @Nullable Object... args) {
         String typeName = getBlockEntityType();
-        IChunk chunk = getChunk();
+        FullChunk chunk = getChunk();
         if (chunk == null) {
             throw new LevelException("Undefined Level or chunk reference");
         }
@@ -79,7 +84,8 @@ public interface BlockEntityHolder<E extends BlockEntity> {
         return entityClass.cast(created);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     default E getOrCreateBlockEntity() {
         E blockEntity = getBlockEntity();
@@ -89,53 +95,64 @@ public interface BlockEntityHolder<E extends BlockEntity> {
         return createBlockEntity();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     Class<? extends E> getBlockEntityClass();
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     String getBlockEntityType();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
-    IChunk getChunk();
+    FullChunk getChunk();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     int getFloorX();
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     int getFloorY();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     int getFloorZ();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     Location getLocation();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     Level getLevel();
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     static <E extends BlockEntity, H extends BlockEntityHolder<E>> E setBlockAndCreateEntity(@NotNull H holder) {
         return setBlockAndCreateEntity(holder, true, true);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     static <E extends BlockEntity, H extends BlockEntityHolder<E>> E setBlockAndCreateEntity(
             @NotNull H holder, boolean direct, boolean update) {
         return setBlockAndCreateEntity(holder, direct, update, null);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     static <E extends BlockEntity, H extends BlockEntityHolder<E>> E setBlockAndCreateEntity(
             @NotNull H holder, boolean direct, boolean update, @Nullable CompoundTag initialData,
             @Nullable Object... args) {
-        Block block = holder.getBlock();
+        Block block = holder.getBlock(); 
         Level level = block.getLevel();
         Block layer0 = level.getBlock(block, 0);
         Block layer1 = level.getBlock(block, 1);
@@ -153,7 +170,8 @@ public interface BlockEntityHolder<E extends BlockEntity> {
         return null;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     default Block getBlock() {
         if (this instanceof Position) {
             return ((Position) this).getLevelBlock();

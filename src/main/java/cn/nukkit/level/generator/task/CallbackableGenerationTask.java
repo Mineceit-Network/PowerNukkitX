@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.task;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.generic.BaseFullChunk;
@@ -10,6 +12,8 @@ import cn.nukkit.level.generator.populator.impl.structure.utils.structure.Scatte
 import cn.nukkit.scheduler.AsyncTask;
 
 
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class CallbackableGenerationTask extends AsyncTask {
 
     private final Level world;

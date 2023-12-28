@@ -1,13 +1,19 @@
 package cn.nukkit.inventory.transaction;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.entity.passive.EntityVillager;
 import cn.nukkit.inventory.transaction.action.InventoryAction;
 import cn.nukkit.inventory.transaction.action.SlotChangeAction;
 import cn.nukkit.inventory.transaction.action.TradeAction;
+import cn.nukkit.nbt.tag.CompoundTag;
+import cn.nukkit.nbt.tag.Tag;
 
 import java.util.List;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r1")
 public class TradingTransaction extends InventoryTransaction {
     public TradingTransaction(Player source, List<InventoryAction> actions) {
         super(source, actions);

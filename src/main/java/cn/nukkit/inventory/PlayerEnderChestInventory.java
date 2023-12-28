@@ -1,6 +1,7 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
 import cn.nukkit.block.BlockEnderChest;
 import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.EntityHumanType;
@@ -21,7 +22,7 @@ public class PlayerEnderChestInventory extends BaseInventory {
         return (EntityHuman) this.holder;
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onOpen(Player who) {
         if (who != this.getHolder()) {
@@ -60,7 +61,7 @@ public class PlayerEnderChestInventory extends BaseInventory {
         }
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onClose(Player who) {
         ContainerClosePacket containerClosePacket = new ContainerClosePacket();

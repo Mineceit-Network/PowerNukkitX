@@ -1,5 +1,8 @@
 package cn.nukkit.event.entity;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.Cancellable;
 import cn.nukkit.event.HandlerList;
@@ -122,22 +125,26 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         };
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public boolean isBreakShield() {
         return breakShield;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public void setBreakShield(boolean breakShield) {
         this.breakShield = breakShield;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public int getShieldBreakCoolDown() {
         return ShieldBreakCoolDown;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public void setShieldBreakCoolDown(int shieldBreakCoolDown) {
         ShieldBreakCoolDown = shieldBreakCoolDown;
     }
@@ -245,56 +252,56 @@ public class EntityDamageEvent extends EntityEvent implements Cancellable {
         /**
          * Damage caused by Wither
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         WITHER,
         /**
          * Damage caused by thorns
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         THORNS,
         /**
          * Damage caused by falling block
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         FALLING_BLOCK,
         /**
          * Damage caused by flying into wall
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         FLYING_INTO_WALL,
         /**
          * Damage caused when an entity steps on a hot block, like {@link cn.nukkit.block.BlockID#MAGMA}
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         HOT_FLOOR,
         /**
          * Damage caused by fireworks
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         FIREWORKS,
         /**
          * Damage caused by temperature
          */
-
-
+        @PowerNukkitOnly
+        @Since("1.5.2.0-PN")
         FREEZING,
         /**
          * Damage caused by no reason (eg: /damage command with cause NONE)
          */
-
-
+        @PowerNukkitXOnly
+        @Since("1.6.0.0-PNX")
         NONE,
         /**
          * Damage caused by a lot of (>24) entities colliding together
          */
-
-
+        @PowerNukkitXOnly
+        @Since("1.6.0.0-PNX")
         COLLIDE
     }
 }

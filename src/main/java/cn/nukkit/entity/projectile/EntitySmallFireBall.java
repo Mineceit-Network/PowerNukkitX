@@ -1,5 +1,8 @@
 package cn.nukkit.entity.projectile;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockFire;
 import cn.nukkit.block.BlockID;
@@ -17,7 +20,8 @@ import cn.nukkit.level.vibration.VibrationType;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class EntitySmallFireBall extends EntityProjectile {
 
     public static final int NETWORK_ID = 94;
@@ -86,7 +90,8 @@ public class EntitySmallFireBall extends EntityProjectile {
         this.close();
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     protected void onCollideWithBlock(Position position, Vector3 motion) {
         this.level.getVibrationManager().callVibrationEvent(new VibrationEvent(this, this.clone(), VibrationType.PROJECTILE_LAND));

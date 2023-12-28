@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
@@ -10,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockMangroveLeaves extends BlockLeaves {
 
     public static final BlockProperties PROPERTIES = new BlockProperties(PERSISTENT, UPDATE);
@@ -70,7 +74,8 @@ public class BlockMangroveLeaves extends BlockLeaves {
         return true;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

@@ -3,6 +3,8 @@ package cn.nukkit.scoreboard.manager;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.data.CommandEnum;
 import cn.nukkit.entity.EntityLiving;
 import cn.nukkit.event.scoreboard.ScoreboardObjectiveChangeEvent;
@@ -18,7 +20,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-
+@PowerNukkitXOnly
+@Since("1.19.30-r1")
 @Getter
 public class ScoreboardManager implements IScoreboardManager{
 

@@ -1,5 +1,7 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.camera.data.Ease;
 import cn.nukkit.camera.data.Time;
 import cn.nukkit.camera.instruction.CameraInstruction;
@@ -12,7 +14,8 @@ import lombok.Setter;
 import javax.annotation.Nonnegative;
 import java.awt.*;
 
-
+@Since("1.19.70-r1")
+@PowerNukkitXOnly
 @Getter
 @Setter
 public class CameraInstructionPacket extends DataPacket {
@@ -27,7 +30,7 @@ public class CameraInstructionPacket extends DataPacket {
     }
 
     @Nonnegative
-
+    @Since("1.19.70-r1")
     @Override
     public int packetId() {
         return ProtocolInfo.CAMERA_INSTRUCTION_PACKET;
@@ -60,7 +63,7 @@ public class CameraInstructionPacket extends DataPacket {
         });
     }
 
-
+    @Since("1.20.0-r2")
     public void setInstruction(CameraInstruction instruction) {
         if (instruction instanceof SetInstruction se) {
             this.setInstruction = se;

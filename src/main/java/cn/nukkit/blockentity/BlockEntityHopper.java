@@ -1,6 +1,9 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockComposter;
 import cn.nukkit.block.BlockHopper;
@@ -48,13 +51,13 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
     //由容器矿车检测漏斗并通知更新，这样子能大幅优化性能
     @Getter
     @Setter
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     private InventoryHolder minecartInvPickupFrom = null;
     @Getter
     @Setter
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     private InventoryHolder minecartInvPushTo = null;
 
     public BlockEntityHopper(FullChunk chunk, CompoundTag nbt) {
@@ -67,7 +70,7 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
         this.scheduleUpdate();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -92,12 +95,14 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
         checkDisabled();
     }
 
-
+    @Since("1.20.0-r1")
+    @PowerNukkitXOnly
     protected SimpleAxisAlignedBB generatePickupArea() {
         return new SimpleAxisAlignedBB(this.x, this.y, this.z, this.x + 1, this.y + 2, this.z + 1);
     }
 
-
+    @Since("1.20.0-r1")
+    @PowerNukkitXOnly
     protected void checkDisabled() {
         if (getBlock() instanceof BlockHopper blockHopper) {
             disabled = !(blockHopper).isEnabled();
@@ -107,13 +112,14 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
     /**
      * @return How much ticks does it take for the hopper to transfer an item
      */
-
-
+    @Since("1.20.0-r1")
+    @PowerNukkitXOnly
     public int getCooldownTick() {
         return 8;
     }
 
-
+    @Since("1.20.0-r1")
+    @PowerNukkitXOnly
     protected boolean checkBlockStateValid(@NotNull BlockState levelBlockState) {
         return levelBlockState.getBlockId() == BlockID.HOPPER_BLOCK;
     }
@@ -211,12 +217,14 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
         return inventory;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isDisabled() {
         return disabled;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
@@ -261,13 +269,15 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
         return true;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isObservable() {
         return false;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public boolean pullItemsFromMinecart() {
         if (this.inventory.isFull()) {
             return false;
@@ -326,6 +336,8 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
     }
 
 
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public boolean pushItemsIntoMinecart() {
         if (getMinecartInvPushTo() != null) {
             Inventory holderInventory = getMinecartInvPushTo().getInventory();
@@ -419,7 +431,7 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
                                 item.count--;
                                 pushedItem = true;
                             }
-                        } else if (inventory.getSmelting().getId() == itemToAdd.getId() && inventory.getSmelting().getAux() == itemToAdd.getAux() && inventory.getSmelting().getNamespaceId().equals(itemToAdd.getNamespaceId()) && smelting.count < smelting.getMaxStackSize()) {
+                        } else if (inventory.getSmelting().getId() == itemToAdd.getId() && inventory.getSmelting().getDamage() == itemToAdd.getDamage() && inventory.getSmelting().getNamespaceId().equals(itemToAdd.getNamespaceId()) && smelting.count < smelting.getMaxStackSize()) {
                             event = new InventoryMoveItemEvent(this.inventory, inventory, this, itemToAdd, InventoryMoveItemEvent.Action.SLOT_CHANGE);
                             this.server.getPluginManager().callEvent(event);
 
@@ -441,7 +453,7 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
                                 item.count--;
                                 pushedItem = true;
                             }
-                        } else if (fuel.getId() == itemToAdd.getId() && fuel.getAux() == itemToAdd.getAux() && fuel.getNamespaceId().equals(itemToAdd.getNamespaceId()) && fuel.count < fuel.getMaxStackSize()) {
+                        } else if (fuel.getId() == itemToAdd.getId() && fuel.getDamage() == itemToAdd.getDamage() && fuel.getNamespaceId().equals(itemToAdd.getNamespaceId()) && fuel.count < fuel.getMaxStackSize()) {
                             event = new InventoryMoveItemEvent(this.inventory, inventory, this, itemToAdd, InventoryMoveItemEvent.Action.SLOT_CHANGE);
                             this.server.getPluginManager().callEvent(event);
 
@@ -488,7 +500,7 @@ public class BlockEntityHopper extends BlockEntitySpawnable implements Inventory
                                 item.count--;
                                 pushedItem = true;
                             }
-                        } else if (ingredient.getId() == itemToAdd.getId() && ingredient.getAux() == itemToAdd.getAux() && ingredient.getNamespaceId().equals(itemToAdd.getNamespaceId()) && ingredient.count < ingredient.getMaxStackSize()) {
+                        } else if (ingredient.getId() == itemToAdd.getId() && ingredient.getDamage() == itemToAdd.getDamage() && ingredient.getNamespaceId().equals(itemToAdd.getNamespaceId()) && ingredient.count < ingredient.getMaxStackSize()) {
                             event = new InventoryMoveItemEvent(this.inventory, inventory, this, itemToAdd, InventoryMoveItemEvent.Action.SLOT_CHANGE);
                             this.server.getPluginManager().callEvent(event);
 

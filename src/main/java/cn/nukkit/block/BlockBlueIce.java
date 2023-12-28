@@ -1,15 +1,17 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 
+@PowerNukkitOnly
 public class BlockBlueIce extends BlockIcePacked {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:blue_ice");
 
+    @PowerNukkitOnly
     public BlockBlueIce() {
-        super(PROPERTIES.getDefaultState());
     }
-
-    public BlockBlueIce(BlockState blockState) {
-        super(blockState);
+    
+    @Override
+    public int getId() {
+        return BLUE_ICE;
     }
     
     @Override

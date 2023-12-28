@@ -1,26 +1,29 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.item.Item;
 import cn.nukkit.math.AxisAlignedBB;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 public class BlockLight extends BlockTransparentMeta {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty LIGHT_LEVEL = new IntBlockProperty("block_light_level", true, 15);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(LIGHT_LEVEL);
 
-
+    @PowerNukkitOnly
     public BlockLight() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockLight(int meta) {
         super(meta);
     }
@@ -35,7 +38,8 @@ public class BlockLight extends BlockTransparentMeta {
         return LIGHT_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -52,7 +56,7 @@ public class BlockLight extends BlockTransparentMeta {
         return null;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;

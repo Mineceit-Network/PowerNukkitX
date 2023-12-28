@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.nether;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.biome.Biome;
 
 public abstract class NetherBiome extends Biome {
@@ -9,7 +11,8 @@ public abstract class NetherBiome extends Biome {
         return false;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isDry() {
         return true;

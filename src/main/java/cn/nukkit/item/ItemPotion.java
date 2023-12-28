@@ -1,6 +1,9 @@
 package cn.nukkit.item;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.player.PlayerItemConsumeEvent;
 import cn.nukkit.level.vibration.VibrationEvent;
 import cn.nukkit.level.vibration.VibrationType;
@@ -12,6 +15,7 @@ import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class ItemPotion extends Item {
+
     public static final int NO_EFFECTS = 0;
     public static final int MUNDANE = 1;
     public static final int MUNDANE_II = 2;
@@ -64,13 +68,13 @@ public class ItemPotion extends Item {
     }
 
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         updateName();
     }
 
     private void updateName() {
-        int potionId = getAux();
+        int potionId = getDamage();
         if (potionId == Potion.WATER) {
             name = buildName(potionId, "Bottle", true);
         } else {
@@ -135,7 +139,7 @@ public class ItemPotion extends Item {
         if (consumeEvent.isCancelled()) {
             return false;
         }
-        Potion potion = Potion.getPotion(this.getAux()).setSplash(false);
+        Potion potion = Potion.getPotion(this.getDamage()).setSplash(false);
 
         player.level.getVibrationManager().callVibrationEvent(new VibrationEvent(player, player.clone(), VibrationType.DRINKING));
 
@@ -151,13 +155,14 @@ public class ItemPotion extends Item {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Nullable
     public Potion getPotion() {
-        return getPotion(getAux());
+        return getPotion(getDamage());
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public static ItemPotion fromPotion(Potion potion) {
         return new ItemPotion(potion.getId());
     }

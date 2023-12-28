@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.igloo;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.mob.EntityZombieVillager;
@@ -27,7 +29,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorIgloo extends PopulatorStructure {
 
     protected static final ReadableStructureTemplate IGLOO = new ReadOnlyLegacyStructureTemplate().load(loadNBT("structures/igloo/igloo_top_no_trapdoor.nbt"));
@@ -135,7 +138,7 @@ public class PopulatorIgloo extends PopulatorStructure {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

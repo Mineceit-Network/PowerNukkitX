@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.event.block.BlockFadeEvent;
 import cn.nukkit.item.Item;
@@ -12,18 +14,19 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
 public class BlockCoralBlock extends BlockSolidMeta {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = BlockCoral.PROPERTIES;
 
-
+    @PowerNukkitOnly
     public BlockCoralBlock() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockCoralBlock(int meta) {
         super(meta);
     }
@@ -33,19 +36,20 @@ public class BlockCoralBlock extends BlockSolidMeta {
         return CORAL_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     public boolean isDead() {
         return (getDamage() & 0x8) == 0x8;
     }
 
-
+    @PowerNukkitOnly
     public void setDead(boolean dead) {
         if (dead) {
             setDamage(getDamage() | 0x8);

@@ -1,5 +1,7 @@
 package cn.nukkit.entity.passive;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySwimmable;
 import cn.nukkit.entity.ai.behavior.Behavior;
 import cn.nukkit.entity.ai.behaviorgroup.BehaviorGroup;
@@ -18,8 +20,8 @@ import java.util.Set;
 /**
  * 所有鱼的基类
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public abstract class EntityFish extends EntityAnimal implements EntitySwimmable {
 
     public EntityFish(FullChunk chunk, CompoundTag nbt) {

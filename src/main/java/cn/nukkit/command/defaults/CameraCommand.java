@@ -1,6 +1,8 @@
 package cn.nukkit.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.camera.data.CameraPreset;
 import cn.nukkit.camera.data.Ease;
 import cn.nukkit.camera.data.EaseType;
@@ -33,8 +35,8 @@ import java.util.Map;
  * PowerNukkitX Project <br>
  * TODO: 此命令的多语言文本似乎不能正常工作
  */
-
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class CameraCommand extends VanillaCommand {
 
     public static final String[] EASE_TYPES = Arrays.stream(EaseType.values()).map(EaseType::getType).toArray(String[]::new);
@@ -153,6 +155,7 @@ public class CameraCommand extends VanillaCommand {
     }
 
 
+    @Since("1.19.60-r1")
     @Override
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         var list = result.getValue();

@@ -1,6 +1,8 @@
 package cn.nukkit.item;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockCaveVines;
 import cn.nukkit.level.Level;
@@ -12,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * @author Superice666
  */
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class ItemGlowBerries extends ItemEdible {
 
     public ItemGlowBerries() {

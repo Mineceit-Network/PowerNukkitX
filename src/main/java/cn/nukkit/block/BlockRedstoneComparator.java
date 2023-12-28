@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityComparator;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -20,18 +23,21 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author CreeperFace
  */
-
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
+@PowerNukkitDifference(info = "Implements RedstoneComponent and uses methods from it.", since = "1.4.0.0-PN")
 @Log4j2
 public abstract class BlockRedstoneComparator extends BlockRedstoneDiode implements RedstoneComponent, BlockEntityHolder<BlockEntityComparator> {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty OUTPUT_LIT = new BooleanBlockProperty("output_lit_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty OUTPUT_SUBTRACT = new BooleanBlockProperty("output_subtract_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.CARDINAL_DIRECTION, OUTPUT_SUBTRACT, OUTPUT_LIT);
 
     public BlockRedstoneComparator() {
@@ -42,21 +48,24 @@ public abstract class BlockRedstoneComparator extends BlockRedstoneDiode impleme
         super(meta);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityComparator> getBlockEntityClass() {
         return BlockEntityComparator.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -142,7 +151,7 @@ public abstract class BlockRedstoneComparator extends BlockRedstoneDiode impleme
         return getMode() == Mode.SUBTRACT ? Math.max(this.calculateInputStrength() - this.getPowerOnSides(), 0) : this.calculateInputStrength();
     }
 
-    
+    @PowerNukkitDifference(info = "Trigger observer.", since = "1.4.0.0-PN")
     @Override
     public boolean onActivate(@NotNull Item item, Player player) {
         if (getMode() == Mode.SUBTRACT) {
@@ -170,7 +179,7 @@ public abstract class BlockRedstoneComparator extends BlockRedstoneDiode impleme
         return super.onUpdate(type);
     }
 
-    
+    @PowerNukkitDifference(info = "Trigger observer.", since = "1.4.0.0-PN")
     private void onChange() {
         if (!this.level.getServer().isRedstoneEnabled()) {
             return;

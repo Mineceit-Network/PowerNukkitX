@@ -1,11 +1,14 @@
 package cn.nukkit.level.generator.populator.impl.structure.oceanruin.loot;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.generator.populator.impl.structure.utils.loot.RandomizableContainer;
 import com.google.common.collect.Maps;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class RuinBigChest extends RandomizableContainer {
 
     private static final RuinBigChest INSTANCE = new RuinBigChest();

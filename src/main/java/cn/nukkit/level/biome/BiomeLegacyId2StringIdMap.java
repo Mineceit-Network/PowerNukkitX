@@ -1,6 +1,8 @@
 package cn.nukkit.level.biome;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -13,10 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
 
-
-/**
- * Map between legacy integer biome id and new string id
- */
+@PowerNukkitOnly("Map between legacy integer biome id and new string id")
+@Since("1.6.0.0-PNX")
 @Log4j2
 public final class BiomeLegacyId2StringIdMap {
     public static final BiomeLegacyId2StringIdMap INSTANCE = new BiomeLegacyId2StringIdMap();

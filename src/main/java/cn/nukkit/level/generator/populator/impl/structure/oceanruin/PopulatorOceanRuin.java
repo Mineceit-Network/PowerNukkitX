@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.oceanruin;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.ChunkPosition;
@@ -28,7 +30,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.function.Consumer;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorOceanRuin extends PopulatorStructure {
 
     protected static final List<ChunkPosition> ADJACENT_CHUNKS = Lists.newArrayList(
@@ -263,7 +266,7 @@ public class PopulatorOceanRuin extends PopulatorStructure {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

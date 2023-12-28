@@ -1,16 +1,21 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockStemCrimson extends BlockStem {
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockStemCrimson() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockStemCrimson(int meta) {
         super(meta);
     }
@@ -25,10 +30,10 @@ public class BlockStemCrimson extends BlockStem {
         return "Crimson Stem";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public BlockState getStrippedState() {
-        return getBlockState().withBlockId(STRIPPED_CRIMSON_STEM);
+        return getCurrentState().withBlockId(STRIPPED_CRIMSON_STEM);
     }
 
 }

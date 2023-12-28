@@ -1,5 +1,7 @@
 package cn.nukkit.entity.projectile;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.ItemEgg;
 import cn.nukkit.level.format.FullChunk;
@@ -69,7 +71,7 @@ public class EntityEgg extends EntityProjectile {
         return hasUpdate;
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected void addHitEffect() {
         int particles = ThreadLocalRandom.current().nextInt(10) + 5;
@@ -79,7 +81,8 @@ public class EntityEgg extends EntityProjectile {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Egg";

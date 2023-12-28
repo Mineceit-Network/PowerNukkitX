@@ -1,5 +1,7 @@
 package cn.nukkit.plugin.js;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.plugin.CommonJSPlugin;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +13,8 @@ import java.net.URLClassLoader;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+@PowerNukkitXOnly
+@Since("1.19.20-r2")
 public class JSClassLoader extends URLClassLoader {
     public final static Map<String, Class<?>> javaClassCache = new ConcurrentHashMap<>();
 

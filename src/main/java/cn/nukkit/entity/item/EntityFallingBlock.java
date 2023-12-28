@@ -1,5 +1,7 @@
 package cn.nukkit.entity.item;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockLava;
@@ -13,6 +15,7 @@ import cn.nukkit.event.entity.EntityDamageEvent;
 import cn.nukkit.event.entity.EntityDamageEvent.DamageCause;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.GameRule;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.particle.DestroyBlockParticle;
 import cn.nukkit.math.SimpleAxisAlignedBB;
@@ -28,8 +31,8 @@ public class EntityFallingBlock extends Entity {
     public static final int NETWORK_ID = 66;
     protected int blockId;
     protected int damage;
-    protected boolean breakOnLava;
-    protected boolean breakOnGround;
+    protected @PowerNukkitOnly boolean breakOnLava;
+    protected @PowerNukkitOnly boolean breakOnGround;
 
     public EntityFallingBlock(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -260,6 +263,8 @@ public class EntityFallingBlock extends Entity {
     }
 
 
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Falling Block";

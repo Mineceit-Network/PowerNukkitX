@@ -1,18 +1,22 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.ItemTool;
-import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockBlackstone extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:blackstone");
 
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockBlackstone() {
-        super(PROPERTIES.getDefaultState());
+        // Does nothing
     }
 
-    protected BlockBlackstone(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return BLACKSTONE;
     }
 
     @Override
@@ -21,16 +25,12 @@ public class BlockBlackstone extends BlockSolid {
     }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
-    @Override
     public int getToolType() {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;

@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.Vector3;
@@ -9,23 +11,19 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 @ParametersAreNonnullByDefault
 public class BlockAllow extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:allow");
-    public static final BlockState STATE = PROPERTIES.getDefaultState();
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockAllow() {
-        super(PROPERTIES.getDefaultState());
-    }
-
-    public BlockAllow(BlockState blockState) {
-        super(blockState);
+        // Does nothing
     }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
+    public int getId() {
+        return ALLOW;
     }
 
     @Override
@@ -53,7 +51,7 @@ public class BlockAllow extends BlockSolid {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean canBePulled() {
         return false;
@@ -72,7 +70,8 @@ public class BlockAllow extends BlockSolid {
         return super.place(item, block, target, face, fx, fy, fz, player);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isBreakable(Vector3 vector, int layer, BlockFace face, Item item, @Nullable Player player, boolean setBlockDestroy) {
         if (player != null && (!player.isCreative() || !player.isOp())) {

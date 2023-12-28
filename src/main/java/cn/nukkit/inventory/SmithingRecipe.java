@@ -18,6 +18,9 @@
 
 package cn.nukkit.inventory;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import lombok.ToString;
 
@@ -32,8 +35,8 @@ import static cn.nukkit.inventory.Recipe.matchItemList;
  * @author joserobjr
  * @since 2020-09-28
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 @ToString
 public class SmithingRecipe extends ShapelessRecipe {
     //被锻造的物品
@@ -47,8 +50,8 @@ public class SmithingRecipe extends ShapelessRecipe {
     private final List<Item> ingredientsAggregate;
 
     //todo 不知道锻造台是否支持item_tag以及其他类型的配方输入,当前的配方文件中不存在,等待未来检查
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public SmithingRecipe(String recipeId, int priority, Collection<Item> ingredients, Item result) {
         super(recipeId, priority, result, ingredients);
         this.base = (Item) ingredients.toArray()[0];
@@ -85,7 +88,8 @@ public class SmithingRecipe extends ShapelessRecipe {
         return result;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getFinalResult(Item equip) {
         Item finalResult = getResult().clone();
 
@@ -98,12 +102,12 @@ public class SmithingRecipe extends ShapelessRecipe {
             return finalResult;
         }
 
-        int damage = equip.getAux();
+        int damage = equip.getDamage();
         if (damage <= 0) {
             return finalResult;
         }
 
-        finalResult.setAux(Math.min(maxDurability, damage));
+        finalResult.setDamage(Math.min(maxDurability, damage));
         return finalResult;
     }
 
@@ -117,32 +121,38 @@ public class SmithingRecipe extends ShapelessRecipe {
         return RecipeType.SMITHING_TRANSFORM;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.80-r1")
     public Item getTemplate() {
         return template;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getEquipment() {
         return base;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getIngredient() {
         return addition;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public List<Item> getIngredientsAggregate() {
         return ingredientsAggregate;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean matchItems(List<Item> inputList) {
         return matchItems(inputList, 1);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean matchItems(List<Item> inputList, int multiplier) {
         List<Item> haveInputs = new ArrayList<>();
         for (Item item : inputList) {

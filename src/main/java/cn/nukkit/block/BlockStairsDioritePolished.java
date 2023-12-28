@@ -1,15 +1,16 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitOnly
 public class BlockStairsDioritePolished extends BlockStairs {
-
+    @PowerNukkitOnly
     public BlockStairsDioritePolished() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockStairsDioritePolished(int meta) {
         super(meta);
     }

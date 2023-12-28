@@ -3,6 +3,7 @@ package cn.nukkit.network.process.processor;
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
 import cn.nukkit.PlayerHandle;
+import cn.nukkit.Server;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntity;
@@ -109,7 +110,7 @@ public class InventoryTransactionProcessor extends DataPacketProcessor<Inventory
                 Item fromEquipment = smithingInventory.getEquipment().clone();
                 Item toEquipment = fromEquipment.decrement(1);
 
-                Item fromResult = Item.getBlockItem(BlockID.AIR);
+                Item fromResult = Item.getBlock(BlockID.AIR);
                 Item toResult = smithingInventory.getResult().clone();
 
                 NetworkInventoryAction action = new NetworkInventoryAction();
@@ -140,7 +141,7 @@ public class InventoryTransactionProcessor extends DataPacketProcessor<Inventory
                     action = new NetworkInventoryAction();
                     action.setInventorySource(InventorySource.fromContainerWindowId(ContainerIds.INVENTORY));
                     action.inventorySlot = emptyPlayerSlot; // Cursor
-                    action.oldItem = Item.getBlockItem(BlockID.AIR);
+                    action.oldItem = Item.getBlock(BlockID.AIR);
                     action.newItem = toResult.clone();
                     fixedPacket.actions[2] = action;
 
@@ -441,7 +442,7 @@ public class InventoryTransactionProcessor extends DataPacketProcessor<Inventory
                 }
                 if (target.onInteract(player, item, useItemOnEntityData.clickPos) && (player.isSurvival() || player.isAdventure())) {
                     if (item.isTool()) {
-                        if (item.useOn(target) && item.getAux() >= item.getMaxDurability()) {
+                        if (item.useOn(target) && item.getDamage() >= item.getMaxDurability()) {
                             player.getLevel().addSound(player, Sound.RANDOM_BREAK);
                             item = new ItemBlock(Block.get(BlockID.AIR));
                         }
@@ -521,7 +522,7 @@ public class InventoryTransactionProcessor extends DataPacketProcessor<Inventory
                     }
                 }
                 if (item.isTool() && (player.isSurvival() || player.isAdventure())) {
-                    if (item.useOn(target) && item.getAux() >= item.getMaxDurability()) {
+                    if (item.useOn(target) && item.getDamage() >= item.getMaxDurability()) {
                         player.getLevel().addSound(player, Sound.RANDOM_BREAK);
                         player.getInventory().setItemInHand(Item.get(0));
                     } else {
@@ -549,7 +550,7 @@ public class InventoryTransactionProcessor extends DataPacketProcessor<Inventory
                 boolean spamBug = (playerHandle.getLastRightClickPos() != null && System.currentTimeMillis() - playerHandle.getLastRightClickTime() < 100.0 && blockVector.distanceSquared(playerHandle.getLastRightClickPos()) < 0.00001);
                 playerHandle.setLastRightClickPos(blockVector.asVector3());
                 playerHandle.setLastRightClickTime(System.currentTimeMillis());
-                if (spamBug && player.getInventory().getItemInHand().getBlockItem().getId() == 0) {
+                if (spamBug && player.getInventory().getItemInHand().getBlock().getId()==0) {
                     return;
                 }
                 player.setDataFlag(Entity.DATA_FLAGS, Entity.DATA_FLAG_ACTION, false);

@@ -1,20 +1,24 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.ItemTool;
 
 /**
  * @author GoodLucky777
  */
-
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockSlabBrickDeepslate extends BlockSlab {
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockSlabBrickDeepslate() {
         this(0);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockSlabBrickDeepslate(int meta) {
         super(meta, DEEPSLATE_BRICK_SLAB);
     }

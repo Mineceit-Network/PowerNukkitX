@@ -2,6 +2,9 @@ package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockBrewingStand;
 import cn.nukkit.block.BlockID;
@@ -53,7 +56,7 @@ public class BlockEntityBrewingStand extends BlockEntitySpawnable implements Rec
         }
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -186,8 +189,8 @@ public class BlockEntityBrewingStand extends BlockEntitySpawnable implements Rec
         return ingredients.contains(ingredient.getId());
     }
 
-    
-    
+    @PowerNukkitDifference(info = "Fixed a lot of issues involving the brewing processes", since = "1.3.1.2-PN")
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public boolean onUpdate() {
         if (closed) {
@@ -243,7 +246,7 @@ public class BlockEntityBrewingStand extends BlockEntitySpawnable implements Rec
                 Item result = recipe.getResult();
                 result.setCount(previous.getCount());
                 if (recipe instanceof ContainerRecipe) {
-                    result.setAux(previous.getAux());
+                    result.setDamage(previous.getDamage());
                 }
                 inventory.setItem(i + 1, result);
                 mixed = true;
@@ -348,7 +351,7 @@ public class BlockEntityBrewingStand extends BlockEntitySpawnable implements Rec
         }
     }
 
-    
+    @PowerNukkitDifference(info = "Will stop the processing if there are no other matching recipe", since = "1.3.1.2-PN")
     public void updateBlock() {
         Block block = this.getLevelBlock();
 
@@ -403,14 +406,14 @@ public class BlockEntityBrewingStand extends BlockEntitySpawnable implements Rec
 
         return nbt;
     }
-
-
+    @PowerNukkitXOnly
+    @Since("1.20.10-r2")
     @Override
     public Inventory getIngredientView() {
         return new InventorySlice(this.inventory, 0, 1);
     }
-
-
+    @PowerNukkitXOnly
+    @Since("1.20.10-r2")
     @Override
     public Inventory getProductView() {
         return new InventorySlice(this.inventory, 1, 4);

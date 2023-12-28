@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.executor;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.math.Vector3;
 
@@ -8,8 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * 3D随机漫游
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class SpaceRandomRoamExecutor extends FlatRandomRoamExecutor {
 
     protected int maxYRoamRange;

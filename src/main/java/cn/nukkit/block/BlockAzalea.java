@@ -1,7 +1,11 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
+import cn.nukkit.blockproperty.value.WoodType;
 import cn.nukkit.event.level.StructureGrowEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
@@ -21,20 +25,32 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author LoboMetalurgico
  * @since 13/06/2021
  */
+
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockAzalea extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:azalea");
 
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
 
+    public static final BlockProperties PROPERTIES = CommonBlockProperties.EMPTY_PROPERTIES;
+
+    @PowerNukkitOnly
     public BlockAzalea() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockAzalea(BlockState blockstate) {
-        super(blockstate);
+
+    @PowerNukkitOnly
+    public BlockAzalea(int meta) {
+        super(meta);
+    }
+
+
+    @PowerNukkitOnly
+    @Since("FUTURE")
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return PROPERTIES;
     }
 
     @Override
@@ -42,6 +58,12 @@ public class BlockAzalea extends BlockFlowable implements BlockFlowerPot.FlowerP
         return "Azalea";
     }
 
+    @Override
+    public int getId() {
+        return AZALEA;
+    }
+
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -143,9 +165,11 @@ public class BlockAzalea extends BlockFlowable implements BlockFlowerPot.FlowerP
         return true;
     }
 
-    public boolean isSameType(Vector3 pos) {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public boolean isSameType(Vector3 pos, WoodType type) {
         Block block = this.level.getBlock(pos);
-        return block.getId().equals(this.getId()) && block.getProperties() == this.getProperties();
+        return block.getId() == this.getId() && ((BlockSapling) block).getWoodType() == type;
     }
 
     private void grow() {
@@ -166,6 +190,6 @@ public class BlockAzalea extends BlockFlowable implements BlockFlowerPot.FlowerP
         for (Block block : ev.getBlockList()) {
             this.level.setBlock(block, block);
         }
-        this.level.setBlock(this, Block.get(OAK_LOG));
+        this.level.setBlock(this, Block.get(LOG));
     }
 }

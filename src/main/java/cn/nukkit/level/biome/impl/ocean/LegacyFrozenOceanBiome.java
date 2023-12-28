@@ -1,5 +1,6 @@
 package cn.nukkit.level.biome.impl.ocean;
 
+import cn.nukkit.api.PowerNukkitDifference;
 import cn.nukkit.level.generator.populator.impl.WaterIcePopulator;
 
 /**
@@ -7,7 +8,7 @@ import cn.nukkit.level.generator.populator.impl.WaterIcePopulator;
  * <p>
  * This biome does not generate naturally
  */
-
+@PowerNukkitDifference(info = "Old FrozenOceanBiome renamed to LegacyFrozenOceanBiome", since = "1.4.0.0-PN")
 public class LegacyFrozenOceanBiome extends OceanBiome {
 
     public LegacyFrozenOceanBiome() {

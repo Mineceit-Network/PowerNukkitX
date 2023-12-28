@@ -1,6 +1,12 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.Event;
 import cn.nukkit.event.block.BlockRedstoneEvent;
@@ -9,6 +15,7 @@ import cn.nukkit.event.player.PlayerInteractEvent;
 import cn.nukkit.event.player.PlayerInteractEvent.Action;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.level.Level;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.BlockFace;
@@ -17,22 +24,36 @@ import cn.nukkit.network.protocol.LevelSoundEventPacket;
 import cn.nukkit.utils.RedstoneComponent;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.nukkit.block.property.CommonBlockProperties.REDSTONE_SIGNAL;
+import static cn.nukkit.blockproperty.CommonBlockProperties.REDSTONE_SIGNAL;
 
 /**
  * @author Snake1999
  * @since 2016/1/11
  */
-
+@PowerNukkitDifference(info = "Implements RedstoneComponent and uses methods from it.", since = "1.4.0.0-PN")
 public abstract class BlockPressurePlateBase extends BlockFlowable implements RedstoneComponent {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperties PROPERTIES = CommonBlockProperties.REDSTONE_SIGNAL_BLOCK_PROPERTY;
+
     protected float onPitch;
     protected float offPitch;
 
-    protected BlockPressurePlateBase(BlockState blockState) {
-        super(blockState);
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return PROPERTIES;
     }
 
-    protected abstract int computeRedstoneStrength();
+    protected BlockPressurePlateBase() {
+        this(0);
+    }
+
+    protected BlockPressurePlateBase(int meta) {
+        super(meta);
+    }
 
     @Override
     public boolean canPassThrough() {
@@ -83,19 +104,20 @@ public abstract class BlockPressurePlateBase extends BlockFlowable implements Re
         return getRedstonePower() == 0;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public static boolean isSupportValid(Block block, BlockFace blockFace) {
         return BlockLever.isSupportValid(block, blockFace) || block instanceof BlockFence;
     }
 
-    
-    
+    @PowerNukkitDifference(info = "Allow to be placed on top of the walls", since = "1.3.0.0-PN")
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed support logic")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -113,8 +135,8 @@ public abstract class BlockPressurePlateBase extends BlockFlowable implements Re
         return 0;
     }
 
-    
-    
+    @PowerNukkitDifference(info = "Allow to be placed on top of the walls", since = "1.3.0.0-PN")
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed support logic")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         if (!isSupportValid(down(), BlockFace.UP)) {
@@ -207,14 +229,16 @@ public abstract class BlockPressurePlateBase extends BlockFlowable implements Re
     }
 
     public void setRedstonePower(int power) {
-        setPropertyValue(REDSTONE_SIGNAL, power);
+        setIntValue(REDSTONE_SIGNAL, power);
     }
 
     protected void playOnSound() {
-        this.level.addLevelSoundEvent(this.add(0.5, 0.1, 0.5), LevelSoundEventPacket.SOUND_POWER_ON, getBlockState().blockStateHash());
+        this.level.addLevelSoundEvent(this.add(0.5, 0.1, 0.5), LevelSoundEventPacket.SOUND_POWER_ON, GlobalBlockPalette.getOrCreateRuntimeId(this.getId(), this.getDamage()));
     }
 
     protected void playOffSound() {
-        this.level.addLevelSoundEvent(this.add(0.5, 0.1, 0.5), LevelSoundEventPacket.SOUND_POWER_OFF, getBlockState().blockStateHash());
+        this.level.addLevelSoundEvent(this.add(0.5, 0.1, 0.5), LevelSoundEventPacket.SOUND_POWER_OFF, GlobalBlockPalette.getOrCreateRuntimeId(this.getId(), this.getDamage()));
     }
+
+    protected abstract int computeRedstoneStrength();
 }

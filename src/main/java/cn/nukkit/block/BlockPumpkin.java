@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
@@ -16,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
  * @since 2015/12/8
  */
 public class BlockPumpkin extends BlockSolidMeta implements Faceable {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(
             CommonBlockProperties.CARDINAL_DIRECTION
     );
@@ -40,7 +42,7 @@ public class BlockPumpkin extends BlockSolidMeta implements Faceable {
         return PUMPKIN;
     }
 
-
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -102,13 +104,13 @@ public class BlockPumpkin extends BlockSolidMeta implements Faceable {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean sticksToPiston() {
         return false;
     }
@@ -118,7 +120,7 @@ public class BlockPumpkin extends BlockSolidMeta implements Faceable {
         return getPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void setBlockFace(BlockFace face) {
         setPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION, face);

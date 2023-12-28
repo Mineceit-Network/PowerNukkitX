@@ -1,5 +1,7 @@
 package cn.nukkit.utils;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.math.Vector3;
 
@@ -14,7 +16,8 @@ public class BlockUpdateEntry implements Comparable<BlockUpdateEntry> {
     public int priority;
     public long delay;
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean checkBlockWhenUpdate = true;
 
     public final Vector3 pos;

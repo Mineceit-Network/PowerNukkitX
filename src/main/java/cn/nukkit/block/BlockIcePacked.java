@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
 
@@ -7,14 +10,13 @@ import cn.nukkit.item.ItemTool;
  * @author MagicDroidX (Nukkit Project)
  */
 public class BlockIcePacked extends BlockIce {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:packed_ice");
 
     public BlockIcePacked() {
-        super(PROPERTIES.getDefaultState());
     }
 
-    public BlockIcePacked(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return PACKED_ICE;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class BlockIcePacked extends BlockIce {
         return true;
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Returns false ")
     @Override
     public boolean isTransparent() {
         return false;
@@ -59,7 +61,8 @@ public class BlockIcePacked extends BlockIce {
         return 0;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getLightFilter() {
         return 15;

@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.object.tree;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.math.NukkitRandom;
@@ -16,7 +18,8 @@ public class ObjectBigSpruceTree extends ObjectSpruceTree {
         this.baseLeafRadius = baseLeafRadius;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.10-r2")
     public void setRandomTreeHeight(NukkitRandom random) {
         this.treeHeight = random.nextBoundedInt(15) + 20;
     }

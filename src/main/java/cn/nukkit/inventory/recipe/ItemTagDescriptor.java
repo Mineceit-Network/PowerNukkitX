@@ -1,11 +1,14 @@
 package cn.nukkit.inventory.recipe;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.ItemTag;
 import cn.nukkit.item.Item;
 
 import java.util.Objects;
 
-
+@PowerNukkitXOnly
+@Since("1.19.50-r2")
 public class ItemTagDescriptor implements ItemDescriptor {
     private final String itemTag;
     private final int count;

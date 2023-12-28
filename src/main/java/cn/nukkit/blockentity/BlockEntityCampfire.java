@@ -1,6 +1,8 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAir;
 import cn.nukkit.block.BlockCampfire;
@@ -19,7 +21,7 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import java.util.HashSet;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
 public class BlockEntityCampfire extends BlockEntitySpawnable implements InventoryHolder, BlockEntityContainer {
 
     private CampfireInventory inventory;
@@ -27,7 +29,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
     private CampfireRecipe[] recipes;
     private boolean[] keepItem;
 
-
+    @PowerNukkitOnly
     public BlockEntityCampfire(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }
@@ -38,7 +40,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
         scheduleUpdate();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -85,7 +87,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
 
                 int burnTimeLeft = burnTime[slot];
                 if (burnTimeLeft <= 0) {
-                    Item product = Item.get(recipe.getResult().getId(), recipe.getResult().getAux(), item.getCount());
+                    Item product = Item.get(recipe.getResult().getId(), recipe.getResult().getDamage(), item.getCount());
                     CampfireSmeltEvent event = new CampfireSmeltEvent(this, item, product);
                     if (!event.isCancelled()) {
                         inventory.setItem(slot, Item.get(0));
@@ -110,7 +112,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
         return needsUpdate;
     }
 
-
+    @PowerNukkitOnly
     public boolean getKeepItem(int slot) {
         if (slot < 0 || slot >= keepItem.length) {
             return false;
@@ -118,7 +120,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
         return keepItem[slot];
     }
 
-
+    @PowerNukkitOnly
     public void setKeepItem(int slot, boolean keep) {
         if (slot < 0 || slot >= keepItem.length) {
             return;
@@ -145,7 +147,7 @@ public class BlockEntityCampfire extends BlockEntitySpawnable implements Invento
         super.saveNBT();
     }
 
-
+    @PowerNukkitOnly
     public void setRecipe(int index, CampfireRecipe recipe) {
         this.recipes[index] = recipe;
     }

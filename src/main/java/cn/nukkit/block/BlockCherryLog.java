@@ -1,10 +1,13 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockstate.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class BlockCherryLog extends BlockLog {
 
     public BlockCherryLog() {
@@ -53,7 +56,7 @@ public class BlockCherryLog extends BlockLog {
 
     @Override
     public BlockState getStrippedState() {
-        return getBlockState().withBlockId(STRIPPED_CHERRY_LOG);
+        return getCurrentState().withBlockId(STRIPPED_CHERRY_LOG);
     }
 }
 

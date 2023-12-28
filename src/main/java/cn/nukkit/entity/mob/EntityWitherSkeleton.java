@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCanAttack;
 import cn.nukkit.entity.EntitySmite;
@@ -126,19 +128,20 @@ public class EntityWitherSkeleton extends EntityMob implements EntityWalkable, E
         return 2.4f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Wither Skeleton";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;

@@ -1,5 +1,7 @@
 package cn.nukkit.block.customblock.data;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.nbt.tag.CompoundTag;
 import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.NotNull;
@@ -7,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.19.80-r1")
 public class Geometry implements NBTData {
     private final String geometryName;
     private final Map<String, String> boneVisibilities = new LinkedHashMap<>();

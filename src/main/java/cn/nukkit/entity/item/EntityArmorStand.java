@@ -2,6 +2,8 @@ package cn.nukkit.entity.item;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.entity.Entity;
@@ -33,10 +35,12 @@ import cn.nukkit.potion.Effect;
 
 import java.util.Collection;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class EntityArmorStand extends Entity implements EntityInventoryHolder, EntityInteractable, EntityNameable {
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final int NETWORK_ID = 61;
 
     private static final String TAG_MAINHAND = "Mainhand";
@@ -47,7 +51,8 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
     private EntityEquipmentInventory equipmentInventory;
     private EntityArmorInventory armorInventory;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public EntityArmorStand(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
         setMaxHealth(6);
@@ -122,13 +127,13 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPersistent() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void setPersistent(boolean persistent) {
         // Armor stands are always persistent
@@ -245,7 +250,7 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
             }
             return true;
         } else if (!item.isNull()) {
-            Item itemtoAddToArmorStand = Item.getBlockItem(BlockID.AIR);
+            Item itemtoAddToArmorStand = Item.getBlock(BlockID.AIR);
             if (!handItem.isNull()) {
                 if (handItem.equals(item, true, true)) {
                     // Attempted to replace with the same item type
@@ -266,7 +271,7 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
                     itemToSetToPlayerInv.count--;
                 } else {
                     itemtoAddToArmorStand = handItem.clone();
-                    itemToSetToPlayerInv = Item.getBlockItem(BlockID.AIR);
+                    itemToSetToPlayerInv = Item.getBlock(BlockID.AIR);
                 }
                 player.getInventory().setItem(player.getInventory().getHeldItemIndex(), itemToSetToPlayerInv);
             }
@@ -440,7 +445,8 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
         return true;
     }
 
-
+    @Since("1.5.1.0-PN")
+    @PowerNukkitOnly
     @Override
     public String getOriginalName() {
         return "Armor Stand";
@@ -468,7 +474,8 @@ public class EntityArmorStand extends Entity implements EntityInventoryHolder, E
         return this.armorInventory;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public EntityEquipmentInventory getEquipmentInventory() {
         return this.equipmentInventory;
     }

@@ -1,24 +1,19 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.block.BlockFromToEvent;
 import cn.nukkit.event.player.PlayerInteractEvent.Action;
 import cn.nukkit.level.Level;
 import cn.nukkit.network.protocol.LevelEventPacket;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BlockDragonEgg extends BlockFallable {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:dragon_egg");
 
     public BlockDragonEgg() {
-        super(PROPERTIES.getDefaultState());
-    }
-
-    public BlockDragonEgg(BlockState blockState) {
-        super(blockState);
     }
 
     @Override
@@ -27,8 +22,8 @@ public class BlockDragonEgg extends BlockFallable {
     }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
+    public int getId() {
+        return DRAGON_EGG;
     }
 
     @Override
@@ -51,7 +46,7 @@ public class BlockDragonEgg extends BlockFallable {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -65,7 +60,8 @@ public class BlockDragonEgg extends BlockFallable {
         return super.onUpdate(type);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int onTouch(@Nullable Player player, Action action) {
         if (player != null && (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)) {
@@ -106,13 +102,13 @@ public class BlockDragonEgg extends BlockFallable {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean sticksToPiston() {
         return false;
     }

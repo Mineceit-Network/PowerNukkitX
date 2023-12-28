@@ -1,8 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
-import cn.nukkit.block.property.enums.BambooLeafSize;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.event.block.BlockGrowEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
@@ -14,21 +15,34 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitOnly
 public class BlockBambooSapling extends BlockFlowable {
-    public static final BlockProperties PROPERTIES = new BlockProperties(BAMBOO_SAPLING, CommonBlockProperties.AGE_BIT, CommonBlockProperties.SAPLING_TYPE);
+
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
+    public static final BlockProperties PROPERTIES = BlockSapling.PROPERTIES;
+
+    @PowerNukkitOnly
+    public BlockBambooSapling() {
+        this(0);
+    }
+
+    @PowerNukkitOnly
+    public BlockBambooSapling(int meta) {
+        super(meta);
+    }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
+    public int getId() {
+        return BAMBOO_SAPLING;
+    }
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
         return PROPERTIES;
-    }
-
-    public BlockBambooSapling() {
-        this(PROPERTIES.getDefaultState());
-    }
-
-    public BlockBambooSapling(BlockState blockstate) {
-        super(blockstate);
     }
 
     @Override
@@ -43,7 +57,7 @@ public class BlockBambooSapling extends BlockFlowable {
                 level.useBreakOn(this, null, null, true);
             } else {
                 Block up = up();
-                if (up.getId().equals(BAMBOO)) {
+                if (up.getId() == BAMBOO) {
                     BlockBamboo upperBamboo = (BlockBamboo) up;
                     BlockBamboo newState = new BlockBamboo();
                     newState.setThick(upperBamboo.isThick());
@@ -53,9 +67,9 @@ public class BlockBambooSapling extends BlockFlowable {
             return type;
         } else if (type == Level.BLOCK_UPDATE_RANDOM) {
             Block up = up();
-            if (!isAge() && up.isAir() && level.getFullLight(up) >= BlockCrops.MINIMUM_LIGHT_LEVEL && ThreadLocalRandom.current().nextInt(3) == 0) {
+            if (getAge() == 0 && up.getId() == AIR && level.getFullLight(up) >= BlockCrops.MINIMUM_LIGHT_LEVEL && ThreadLocalRandom.current().nextInt(3) == 0) {
                 BlockBamboo newState = new BlockBamboo();
-                newState.setBambooLeafSize(BambooLeafSize.SMALL_LEAVES);
+                newState.setLeafSize(BlockBamboo.LEAF_SIZE_SMALL);
                 BlockGrowEvent blockGrowEvent = new BlockGrowEvent(up, newState);
                 level.getServer().getPluginManager().callEvent(blockGrowEvent);
                 if (!blockGrowEvent.isCancelled()) {
@@ -98,7 +112,7 @@ public class BlockBambooSapling extends BlockFlowable {
 
             boolean success = false;
             Block block = this.up();
-            if (block.isAir()) {
+            if (block.getId() == AIR) {
                 success = grow(block);
             }
 
@@ -115,7 +129,7 @@ public class BlockBambooSapling extends BlockFlowable {
         return false;
     }
 
-
+    @PowerNukkitOnly
     public boolean grow(Block up) {
         BlockBamboo bamboo = new BlockBamboo();
         bamboo.x = x;
@@ -126,7 +140,7 @@ public class BlockBambooSapling extends BlockFlowable {
     }
 
     private boolean isSupportInvalid() {
-        return switch (down().getId()) {
+        return switch(down().getId()) {
             case BAMBOO, DIRT, GRASS, SAND, GRAVEL, PODZOL, BAMBOO_SAPLING, MOSS_BLOCK -> false;
             default -> true;
         };
@@ -137,17 +151,15 @@ public class BlockBambooSapling extends BlockFlowable {
         return 5;
     }
 
-
-    /**
-     * alisa age == 0 | age == false | !age
-     */
-    public boolean isAge() {
-        return getPropertyValue(CommonBlockProperties.AGE_BIT);
+    @PowerNukkitOnly
+    public int getAge() {
+        return getDamage() & 0x1;
     }
 
-
-    public void setAge(boolean isAge) {
-        setPropertyValue(CommonBlockProperties.AGE_BIT, isAge);
+    @PowerNukkitOnly
+    public void setAge(int age) {
+        age = MathHelper.clamp(age, 0, 1) & 0x1;
+        setDamage(getDamage() & (DATA_MASK ^ 0x1) | age);
     }
 
     @Override

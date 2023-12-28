@@ -1,5 +1,7 @@
 package cn.nukkit.entity.passive;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySwimmable;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -21,7 +23,8 @@ public class EntityDolphin extends EntityAnimal implements EntitySwimmable {
         return NETWORK_ID;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Dolphin";

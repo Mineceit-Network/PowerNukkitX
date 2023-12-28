@@ -1,8 +1,13 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
-import cn.nukkit.block.property.enums.MinecraftVerticalHalf;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BooleanBlockProperty;
+import cn.nukkit.blockproperty.CommonBlockProperties;
+import cn.nukkit.blockproperty.value.VerticalHalf;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
 import cn.nukkit.math.BlockFace;
@@ -13,14 +18,38 @@ import javax.annotation.Nullable;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-public abstract class BlockSlab extends BlockTransparent {
-    protected final String doubleSlab;
+public abstract class BlockSlab extends BlockTransparentMeta {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BooleanBlockProperty TOP_SLOT_PROPERTY = new BooleanBlockProperty("top_slot_bit", false);
 
-    protected BlockSlab(BlockState blockState,String doubleSlab) {
-        super(blockState);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperties SIMPLE_SLAB_PROPERTIES = CommonBlockProperties.VERTICAL_HALF_PROPERTIES;
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return SIMPLE_SLAB_PROPERTIES;
+    }
+
+    protected final int doubleSlab;
+
+    public BlockSlab(int meta, int doubleSlab) {
+        super(meta);
         this.doubleSlab = doubleSlab;
     }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    public BlockSlab(int doubleSlab) {
+        this.doubleSlab = doubleSlab;
+    }
+
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public abstract String getSlabName();
 
     @Override
@@ -48,24 +77,30 @@ public abstract class BlockSlab extends BlockTransparent {
         return getToolType() < ItemTool.TYPE_AXE ? 30 : 15;
     }
 
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
     }
 
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isOnTop() {
-        return getPropertyValue(CommonBlockProperties.MINECRAFT_VERTICAL_HALF) == MinecraftVerticalHalf.TOP;
+        return getPropertyValue(CommonBlockProperties.VERTICAL_HALF) == VerticalHalf.TOP;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setOnTop(boolean top) {
-        setPropertyValue(CommonBlockProperties.MINECRAFT_VERTICAL_HALF, top ? MinecraftVerticalHalf.TOP : MinecraftVerticalHalf.BOTTOM);
+        setPropertyValue(CommonBlockProperties.VERTICAL_HALF, top ? VerticalHalf.TOP : VerticalHalf.BOTTOM);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public abstract boolean isSameType(BlockSlab slab);
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return side == BlockFace.UP && isOnTop() || side == BlockFace.DOWN && !isOnTop();
@@ -76,12 +111,11 @@ public abstract class BlockSlab extends BlockTransparent {
         setOnTop(false);
         if (face == BlockFace.DOWN) {
             if (target instanceof BlockSlab slab && slab.isOnTop() && isSameType((BlockSlab) target)) {
-
-                this.getLevel().setBlock(target, Block.get(doubleSlab), true);
+                this.getLevel().setBlock(target, getCurrentState().withBlockId(doubleSlab).getBlock(target), true);
 
                 return true;
             } else if (block instanceof BlockSlab && isSameType((BlockSlab) block)) {
-                this.getLevel().setBlock(block, Block.get(doubleSlab), true);
+                this.getLevel().setBlock(block, getCurrentState().withBlockId(doubleSlab).getBlock(target), true);
 
                 return true;
             } else {
@@ -89,11 +123,11 @@ public abstract class BlockSlab extends BlockTransparent {
             }
         } else if (face == BlockFace.UP) {
             if (target instanceof BlockSlab slab && !slab.isOnTop() && isSameType((BlockSlab) target)) {
-                this.getLevel().setBlock(target, Block.get(doubleSlab), true);
+                this.getLevel().setBlock(target, getCurrentState().withBlockId(doubleSlab).getBlock(target), true);
 
                 return true;
             } else if (block instanceof BlockSlab && isSameType((BlockSlab) block)) {
-                this.getLevel().setBlock(block, Block.get(doubleSlab), true);
+                this.getLevel().setBlock(block, getCurrentState().withBlockId(doubleSlab).getBlock(target), true);
 
                 return true;
             }
@@ -101,7 +135,7 @@ public abstract class BlockSlab extends BlockTransparent {
         } else {
             if (block instanceof BlockSlab) {
                 if (isSameType((BlockSlab) block)) {
-                    this.getLevel().setBlock(block, Block.get(doubleSlab), true);
+                    this.getLevel().setBlock(block, getCurrentState().withBlockId(doubleSlab).getBlock(block), true);
 
                     return true;
                 }

@@ -1,18 +1,36 @@
 package cn.nukkit.item;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.utils.BannerPattern;
 
-import java.util.Objects;
-
-
+@Since("1.2.1.0-PN")
 public class ItemBannerPattern extends Item {
+    @PowerNukkitOnly
     public static final int PATTERN_CREEPER_CHARGE = 0;
+
+    @PowerNukkitOnly
     public static final int PATTERN_SKULL_CHARGE = 1;
+
+    @PowerNukkitOnly
     public static final int PATTERN_FLOWER_CHARGE = 2;
+
+    @PowerNukkitOnly
     public static final int PATTERN_THING = 3;
+
+    @PowerNukkitOnly
     public static final int PATTERN_FIELD_MASONED = 4;
+
+    @PowerNukkitOnly
     public static final int PATTERN_BORDURE_INDENTED = 5;
+
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public static final int PATTERN_SNOUT = 6;
+
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public static final int PATTERN_GLOBE = 7;
 
     public ItemBannerPattern() {
@@ -28,8 +46,10 @@ public class ItemBannerPattern extends Item {
         updateName();
     }
 
-    public ItemBannerPattern(String id) {
-        super(id);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    protected ItemBannerPattern(int id, Integer meta, int count, String name) {
+        super(id, meta, count, name);
     }
 
     @Override
@@ -38,17 +58,18 @@ public class ItemBannerPattern extends Item {
     }
 
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         updateName();
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BannerPattern.Type getPatternType() {
-        if (!Objects.equals(getId(), BANNER_PATTERN)) {
+        if (getId() != BANNER_PATTERN) {
             return BannerPattern.Type.PATTERN_CREEPER;
         }
-        return switch (getAux()) {
+        return switch (getDamage()) {
             default -> BannerPattern.Type.PATTERN_CREEPER;
             case PATTERN_SKULL_CHARGE -> BannerPattern.Type.PATTERN_SKULL;
             case PATTERN_FLOWER_CHARGE -> BannerPattern.Type.PATTERN_FLOWER;
@@ -60,12 +81,12 @@ public class ItemBannerPattern extends Item {
         };
     }
 
-
+    @PowerNukkitOnly
     protected void updateName() {
-        if (!Objects.equals(getId(), BANNER_PATTERN)) {
+        if (getId() != BANNER_PATTERN) {
             return;
         }
-        switch (super.aux) {
+        switch (super.meta) {
             case PATTERN_CREEPER_CHARGE -> name = "Creeper Charge Banner Pattern";
             case PATTERN_SKULL_CHARGE -> name = "Skull Charge Banner Pattern";
             case PATTERN_FLOWER_CHARGE -> name = "Flower Charge Banner Pattern";

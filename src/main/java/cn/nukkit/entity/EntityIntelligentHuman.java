@@ -1,6 +1,9 @@
 package cn.nukkit.entity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.entity.data.Skin;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
@@ -29,8 +32,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * 用来提供给插件基础，以方便的使用带有智能的EntityHuman
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.50-r3")
 public class EntityIntelligentHuman extends EntityIntelligent implements EntityInventoryHolder, IHuman {
     protected UUID uuid;
     protected byte[] rawUUID;
@@ -43,7 +46,8 @@ public class EntityIntelligentHuman extends EntityIntelligent implements EntityI
         super(chunk, nbt);
     }
 
-
+    @Since("1.5.1.0-PN")
+    @PowerNukkitOnly
     @Override
     public float getSwimmingHeight() {
         return getWidth();
@@ -294,11 +298,11 @@ public class EntityIntelligentHuman extends EntityIntelligent implements EntityI
             }
 
             if (armor instanceof ItemShield)
-                armor.setAux(armor.getAux() + (event.getDamage() >= 3 ? (int) event.getDamage() + 1 : 0));
+                armor.setDamage(armor.getDamage() + (event.getDamage() >= 3 ? (int) event.getDamage() + 1 : 0));
             else
-                armor.setAux(armor.getAux() + Math.max(1, (int) (event.getDamage() / 4.0f)));
+                armor.setDamage(armor.getDamage() + Math.max(1, (int) (event.getDamage() / 4.0f)));
 
-            if (armor.getAux() >= armor.getMaxDurability()) {
+            if (armor.getDamage() >= armor.getMaxDurability()) {
                 getLevel().addSound(this, Sound.RANDOM_BREAK);
                 return Item.get(BlockID.AIR, 0, 0);
             }
@@ -390,7 +394,7 @@ public class EntityIntelligentHuman extends EntityIntelligent implements EntityI
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected void onBlock(Entity entity, EntityDamageEvent event, boolean animate) {
         super.onBlock(entity, event, animate);
@@ -415,72 +419,86 @@ public class EntityIntelligentHuman extends EntityIntelligent implements EntityI
         return null;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public Item getHelmet() {
         return this.getInventory().getHelmet();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean setHelmet(Item item) {
         return this.getInventory().setHelmet(item);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public Item getChestplate() {
         return this.getInventory().getChestplate();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean setChestplate(Item item) {
         return this.getInventory().setChestplate(item);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public Item getLeggings() {
         return getInventory().getLeggings();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean setLeggings(Item item) {
         return getInventory().setLeggings(item);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public Item getBoots() {
         return getInventory().getBoots();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean setBoots(Item item) {
         return getInventory().setBoots(item);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public Item getItemInHand() {
         return getInventory().getItemInHand();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public Item getItemInOffhand() {
         return this.getOffhandInventory().getItem(0);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean setItemInHand(Item item) {
         return getInventory().setItemInHand(item);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public boolean setItemInHand(Item item, boolean send) {
         return this.getInventory().setItem(getInventory().getHeldItemIndex(), item, send);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public boolean setItemInOffhand(Item item) {
         return this.getOffhandInventory().setItem(0, item, true);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public boolean setItemInOffhand(Item item, boolean send) {
         return this.getOffhandInventory().setItem(0, item, send);
     }

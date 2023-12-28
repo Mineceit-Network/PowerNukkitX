@@ -1,6 +1,8 @@
 package cn.nukkit.utils.collection.nb;
 
 import cn.nukkit.api.NonComputationAtomic;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import it.unimi.dsi.fastutil.longs.AbstractLongSet;
 import it.unimi.dsi.fastutil.longs.LongIterator;
 import it.unimi.dsi.fastutil.longs.LongSet;
@@ -78,8 +80,8 @@ import java.util.function.Function;
  * @author Cliff Click, SuperIceCN
  * @since 1.5
  */
-
-
+@Since("1.20.10-r1")
+@PowerNukkitXOnly
 @NonComputationAtomic
 public class Long2ObjectNonBlockingMap<TypeV>
         extends AbstractMap<Long, TypeV>

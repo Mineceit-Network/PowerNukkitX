@@ -1,6 +1,7 @@
 package cn.nukkit.inventory.transaction.action;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockAnvil;
 import cn.nukkit.block.BlockID;
@@ -11,7 +12,7 @@ import cn.nukkit.item.Item;
 import cn.nukkit.level.Sound;
 import lombok.ToString;
 
-
+@PowerNukkitOnly
 @ToString(callSuper = true)
 public class DamageAnvilAction extends InventoryAction {
     
@@ -19,7 +20,7 @@ public class DamageAnvilAction extends InventoryAction {
     private boolean shouldDamage;
     private CraftingTransaction transaction;
 
-
+    @PowerNukkitOnly
     public DamageAnvilAction(AnvilInventory anvil, boolean shouldDamage, CraftingTransaction transaction) {
         super(Item.get(0), Item.get(0));
         this.anvil = anvil;

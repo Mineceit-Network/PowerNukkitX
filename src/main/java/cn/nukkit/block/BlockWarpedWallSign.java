@@ -1,17 +1,21 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemWarpedSign;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockWarpedWallSign extends BlockWallSign {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockWarpedWallSign() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockWarpedWallSign(int meta) {
         super(meta);
     }
@@ -21,7 +25,7 @@ public class BlockWarpedWallSign extends BlockWallSign {
         return WARPED_WALL_SIGN;
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected int getPostId() {
         return WARPED_STANDING_SIGN;

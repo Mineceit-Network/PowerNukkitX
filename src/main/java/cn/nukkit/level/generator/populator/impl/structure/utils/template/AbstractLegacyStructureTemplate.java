@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.template;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.math.BlockVector3;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -8,7 +10,8 @@ import com.google.common.collect.Lists;
 import java.util.Iterator;
 import java.util.List;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public abstract class AbstractLegacyStructureTemplate extends AbstractStructureTemplate {
 
     protected final List<StructureBlockInfo> blockInfoList = Lists.newArrayList();

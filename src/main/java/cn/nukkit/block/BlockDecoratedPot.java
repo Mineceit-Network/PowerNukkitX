@@ -1,7 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityDecoratedPot;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -16,11 +17,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.20.10-r2")
 public class BlockDecoratedPot extends BlockTransparentMeta implements Faceable, BlockEntityHolder<BlockEntityDecoratedPot>{
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.DIRECTION);
 
-    @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
@@ -86,6 +87,6 @@ public class BlockDecoratedPot extends BlockTransparentMeta implements Faceable,
 
     @Override
     public BlockFace getBlockFace() {
-        return BlockFace.fromHorizontalIndex(getPropertyValue(CommonBlockProperties.DIRECTION));
+        return getPropertyValue(CommonBlockProperties.DIRECTION);
     }
 }

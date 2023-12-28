@@ -1,6 +1,8 @@
 package cn.nukkit.command.defaults;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
@@ -10,7 +12,8 @@ import cn.nukkit.utils.TextFormat;
 
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.19.50-r3")
 public class WorldCommand extends VanillaCommand {
 
     public WorldCommand(String name) {
@@ -29,7 +32,7 @@ public class WorldCommand extends VanillaCommand {
         this.enableParamTree();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         switch (result.getKey()) {

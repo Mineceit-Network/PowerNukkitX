@@ -1,5 +1,7 @@
 package cn.nukkit.command.tree.node;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.Location;
 import cn.nukkit.level.Position;
 import cn.nukkit.math.BVector3;
@@ -12,8 +14,8 @@ import java.util.regex.Pattern;
 /**
  * 坐标节点基类
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public abstract class PositionNode extends ParamNode<Position> {
     private final Pattern pattern;
     protected final double[] coordinate = new double[3];

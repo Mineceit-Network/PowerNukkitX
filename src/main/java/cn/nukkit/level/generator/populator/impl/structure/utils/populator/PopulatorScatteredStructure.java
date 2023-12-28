@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.populator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.format.FullChunk;
@@ -18,6 +20,8 @@ import java.util.Map;
 import java.util.Set;
 
 
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public abstract class PopulatorScatteredStructure extends PopulatorStructure {
 
     protected static final int MIN_DISTANCE = 8;
@@ -80,7 +84,7 @@ public abstract class PopulatorScatteredStructure extends PopulatorStructure {
 
     protected abstract ScatteredStructurePiece getPiece(int chunkX, int chunkZ);
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

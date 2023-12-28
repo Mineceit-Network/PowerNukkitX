@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.value.OxidizationLevel;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,14 +12,15 @@ import java.util.Locale;
  * @author joserobjr
  * @since 2021-06-14
  */
-
+@PowerNukkitOnly
 public class BlockDoubleSlabCopperCut extends BlockDoubleSlabCopperBase {
-
+    @PowerNukkitOnly
     public BlockDoubleSlabCopperCut() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockDoubleSlabCopperCut(int meta) {
         super(meta);
     }
@@ -27,7 +30,8 @@ public class BlockDoubleSlabCopperCut extends BlockDoubleSlabCopperBase {
         return DOUBLE_CUT_COPPER_SLAB;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public String getSlabName() {
         StringBuilder sb = new StringBuilder(30);
@@ -42,13 +46,15 @@ public class BlockDoubleSlabCopperCut extends BlockDoubleSlabCopperBase {
         return sb.append("Cut Copper").toString();
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getSingleSlabId() {
         return CUT_COPPER_SLAB;
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @Override
     protected int getCopperId(boolean waxed, @Nullable OxidizationLevel oxidizationLevel) {
         if (oxidizationLevel == null) {
@@ -68,7 +74,8 @@ public class BlockDoubleSlabCopperCut extends BlockDoubleSlabCopperBase {
         }
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public OxidizationLevel getOxidizationLevel() {

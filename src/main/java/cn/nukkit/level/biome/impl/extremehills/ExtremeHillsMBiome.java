@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.extremehills;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.level.generator.noise.nukkit.f.SimplexF;
 import cn.nukkit.math.NukkitRandom;
@@ -32,7 +34,8 @@ public class ExtremeHillsMBiome extends ExtremeHillsPlusBiome {
         return "Extreme Hills M";
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public BlockState getSurfaceState(int x, int y, int z) {
         return gravelNoise.noise2D(x, z, true) < -0.75f ? STATE_GRAVEL : STATE_GRASS;

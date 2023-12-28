@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.fossil;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.biome.EnumBiome;
 import cn.nukkit.level.format.FullChunk;
@@ -14,7 +16,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorFossil extends PopulatorStructure {
 
     protected static final ReadableStructureTemplate[] FOSSILS = {
@@ -68,7 +71,7 @@ public class PopulatorFossil extends PopulatorStructure {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

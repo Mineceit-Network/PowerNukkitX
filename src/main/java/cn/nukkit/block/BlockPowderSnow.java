@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.entity.Entity;
@@ -10,7 +12,8 @@ import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.Vector3;
 import org.jetbrains.annotations.NotNull;
 
-
+@Since("1.6.0.0-PNX")
+@PowerNukkitOnly
 public class BlockPowderSnow extends BlockTransparentMeta {
     @Override
     public String getName() {
@@ -37,7 +40,8 @@ public class BlockPowderSnow extends BlockTransparentMeta {
         return false;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
@@ -53,7 +57,8 @@ public class BlockPowderSnow extends BlockTransparentMeta {
         return true;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -65,7 +70,8 @@ public class BlockPowderSnow extends BlockTransparentMeta {
         return Item.EMPTY_ARRAY;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean onProjectileHit(@NotNull Entity projectile, @NotNull Position position, @NotNull Vector3 motion) {
         if (projectile instanceof EntitySmallFireBall) {

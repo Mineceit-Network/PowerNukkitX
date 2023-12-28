@@ -1,5 +1,7 @@
 package cn.nukkit.block.customblock.data;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 import cn.nukkit.nbt.tag.StringTag;
@@ -7,8 +9,8 @@ import cn.nukkit.nbt.tag.StringTag;
 /**
  * The type Permutation builder.
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.31-r1")
 public record Permutation(Component component, String condition, String[] blockTags) implements NBTData {
     public Permutation(Component component, String condition) {
         this(component, condition, new String[]{});

@@ -2,6 +2,8 @@
 package cn.nukkit.lang;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.plugin.PluginBase;
 import io.netty.util.internal.EmptyArrays;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -15,7 +17,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 @Log4j2
 public class PluginI18n {
     /**

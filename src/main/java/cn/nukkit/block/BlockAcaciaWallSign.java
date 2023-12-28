@@ -1,36 +1,29 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemAcaciaSign;
-import org.jetbrains.annotations.NotNull;
 
-import static cn.nukkit.block.property.CommonBlockProperties.FACING_DIRECTION;
-
-
+@PowerNukkitOnly
 public class BlockAcaciaWallSign extends BlockWallSign {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:acacia_wall_sign", FACING_DIRECTION);
-
+    @PowerNukkitOnly
     public BlockAcaciaWallSign() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockAcaciaWallSign(BlockState blockState) {
-        super(blockState);
-    }
-
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
+    @PowerNukkitOnly
+    public BlockAcaciaWallSign(int meta) {
+        super(meta);
     }
 
     @Override
-    public String getWallSignId() {
+    public int getId() {
         return ACACIA_WALL_SIGN;
     }
 
-
+    @PowerNukkitOnly
     @Override
-    protected String getStandingSignId() {
+    protected int getPostId() {
         return ACACIA_STANDING_SIGN;
     }
 

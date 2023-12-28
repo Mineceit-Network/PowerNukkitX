@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
@@ -10,7 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import static cn.nukkit.blockproperty.CommonBlockProperties.PILLAR_AXIS;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockMuddyMangroveRoots extends BlockSolid {
     public static final BlockProperties PROPERTIES = new BlockProperties(PILLAR_AXIS);
 

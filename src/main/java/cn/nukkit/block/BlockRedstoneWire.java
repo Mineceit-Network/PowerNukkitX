@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.event.block.BlockRedstoneEvent;
@@ -22,10 +25,11 @@ import java.util.Set;
 /**
  * @author Angelic47 (Nukkit Project)
  */
-
+@PowerNukkitDifference(info = "Implements RedstoneComponent and uses methods from it.", since = "1.4.0.0-PN")
 public class BlockRedstoneWire extends BlockFlowable implements RedstoneComponent {
 
-
+    @Since("1.5.0.0-PN")
+    @PowerNukkitOnly
     public static final BlockProperties PROPERTIES = CommonBlockProperties.REDSTONE_SIGNAL_BLOCK_PROPERTY;
 
     private boolean canProvidePower = true;
@@ -49,14 +53,15 @@ public class BlockRedstoneWire extends BlockFlowable implements RedstoneComponen
         return REDSTONE_WIRE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Removed unneeded replaceable check")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         if (!canBePlacedOn(block.down())) {
@@ -106,7 +111,7 @@ public class BlockRedstoneWire extends BlockFlowable implements RedstoneComponen
         this.calculateCurrentChanges(force);
     }
 
-    
+    @PowerNukkitDifference(info = "Let redstone go down transparent blocks.", since = "1.4.0.0-PN")
     private void calculateCurrentChanges(boolean force) {
         Vector3 pos = this.getLocation();
 
@@ -237,7 +242,7 @@ public class BlockRedstoneWire extends BlockFlowable implements RedstoneComponen
         return Level.BLOCK_UPDATE_NORMAL;
     }
 
-
+    @PowerNukkitOnly
     public boolean canBePlacedOn(Block support) {
         return support.isSolid(BlockFace.UP);
     }
@@ -295,7 +300,7 @@ public class BlockRedstoneWire extends BlockFlowable implements RedstoneComponen
         return canConnectTo(block, null);
     }
 
-    
+    @PowerNukkitDifference(info = "Can't connect to pistons and bells, but powers them either.", since = "1.4.0.0-PN")
     protected static boolean canConnectTo(Block block, BlockFace side) {
         if (block.getId() == Block.REDSTONE_WIRE) {
             return true;

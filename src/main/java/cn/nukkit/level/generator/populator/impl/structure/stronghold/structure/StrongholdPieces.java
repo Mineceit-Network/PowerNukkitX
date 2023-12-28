@@ -1,8 +1,9 @@
 package cn.nukkit.level.generator.populator.impl.structure.stronghold.structure;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.*;
-import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.mob.EntitySilverfish;
 import cn.nukkit.level.ChunkManager;
@@ -25,7 +26,8 @@ import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class StrongholdPieces {
 
     private static final BlockState INFESTED_STONE_BRICKS = new BlockState(Block.MONSTER_EGG, BlockMonsterEgg.STONE_BRICK);

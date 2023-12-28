@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -11,26 +14,30 @@ import org.jetbrains.annotations.NotNull;
 
 import static cn.nukkit.blockproperty.CommonBlockProperties.DIRECTION;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public abstract class BlockRedstoneRepeater extends BlockRedstoneDiode {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     protected static final IntBlockProperty REPEATER_DELAY = new IntBlockProperty("repeater_delay", false, 3);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(
             CommonBlockProperties.CARDINAL_DIRECTION,
             REPEATER_DELAY
     );
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockRedstoneRepeater() {
         super(0);
     }
@@ -48,7 +55,7 @@ public abstract class BlockRedstoneRepeater extends BlockRedstoneDiode {
         return true;
     }
 
-    
+    @PowerNukkitDifference(info = "Allow to be placed on top of the walls", since = "1.3.0.0-PN")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         if (!isSupportValid(down())) {

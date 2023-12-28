@@ -1,6 +1,9 @@
 package cn.nukkit;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockstate.BlockStateRegistry;
@@ -30,6 +33,7 @@ import cn.nukkit.level.biome.EnumBiome;
 import cn.nukkit.level.format.LevelProvider;
 import cn.nukkit.level.format.LevelProviderManager;
 import cn.nukkit.level.format.anvil.Anvil;
+import cn.nukkit.level.format.generic.BaseRegionLoader;
 import cn.nukkit.level.generator.*;
 import cn.nukkit.level.terra.PNXPlatform;
 import cn.nukkit.level.tickingarea.manager.SimpleTickingAreaManager;
@@ -96,12 +100,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.security.*;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -227,13 +234,16 @@ public class Server {
     public int networkCompressionLevel = 7;
     private int networkZlibProvider = 0;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r2")
     private int maximumStaleDatagrams = 512;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r2")
     private int maximumSizePerChunk = 1048576;
 
-
+    @Since("1.19.60-r1")
+    @PowerNukkitXOnly
     private int serverAuthoritativeMovementMode = 0;
 
     private boolean autoTickRate = true;
@@ -323,19 +333,24 @@ public class Server {
 
     private boolean checkMovement = true;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     private boolean allowTheEnd;
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     private boolean useTerra;
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     private boolean enableExperimentMode;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r1")
     private FreezableArrayManager freezableArrayManager;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.80-r2")
     public boolean enabledNetworkEncryption;
 
 
@@ -794,6 +809,7 @@ public class Server {
         Effect.init();
         Attribute.init();
         DispenseBehaviorRegister.init();
+        GlobalBlockPalette.getOrCreateRuntimeId(0, 0); //Force it to load
 
         freezableArrayManager = new FreezableArrayManager(
                 this.getConfig("memory-compression.enable", true),
@@ -907,7 +923,7 @@ public class Server {
                 this.setPropertyString("level-name", defaultName);
             }
 
-            if (!this.loadLevel(defaultName)) {//default world not exist
+            if (!this.loadLevel(defaultName)) {
                 long seed;
                 String seedString = String.valueOf(this.getProperty("level-seed", System.currentTimeMillis()));
                 try {
@@ -915,7 +931,7 @@ public class Server {
                 } catch (NumberFormatException e) {
                     seed = seedString.hashCode();
                 }
-                this.generateLevel(defaultName, seed == 0 ? System.currentTimeMillis() : seed);//generate the default world
+                this.generateLevel(defaultName, seed == 0 ? System.currentTimeMillis() : seed);
             }
 
             this.setDefaultLevel(this.getLevelByName(defaultName));
@@ -1445,7 +1461,8 @@ public class Server {
         return tickingAreaManager;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public long getLaunchTime() {
         return launchTime;
     }
@@ -1982,7 +1999,7 @@ public class Server {
      *
      * @param player 玩家
      */
-
+    @Since("1.4.0.0-PN")
     public void removePlayerListData(UUID uuid, Player player) {
         PlayerListPacket pk = new PlayerListPacket();
         pk.type = PlayerListPacket.TYPE_REMOVE;
@@ -2446,7 +2463,7 @@ public class Server {
         return Nukkit.VERSION;
     }
 
-
+    @PowerNukkitOnly
     public String getGitCommit() {
         return Nukkit.GIT_COMMIT;
     }
@@ -2529,7 +2546,8 @@ public class Server {
         BlockEntity.init();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public PositionTrackingService getPositionTrackingService() {
         return positionTrackingService;
@@ -2698,6 +2716,47 @@ public class Server {
 
         level.initLevel();
 
+        //convert old Nukkit World
+        if (level.getProvider() instanceof Anvil anvil && anvil.isOldAnvil() && level.isOverWorld()) {
+            log.info(Server.getInstance().getLanguage().tr("nukkit.anvil.converter.update"));
+            var scan = new Scanner(System.in);
+            var result = scan.next();
+            if (result.equalsIgnoreCase("true") || result.equalsIgnoreCase("t")) {
+                File file = new File(Path.of(path).resolve("region").toUri());
+                if (file.exists()) {
+                    var regions = file.listFiles();
+                    if (regions != null) {
+                        var bid = Server.getInstance().addBusying(System.currentTimeMillis());
+                        final Method loadRegion;
+                        try {
+                            loadRegion = Anvil.class.getDeclaredMethod("loadRegion", int.class, int.class);
+                            loadRegion.setAccessible(true);
+                        } catch (NoSuchMethodException e) {
+                            throw new RuntimeException(e);
+                        }
+                        var allTask = new ArrayList<CompletableFuture<?>>();
+                        for (var region : regions) {
+                            allTask.add(CompletableFuture.runAsync(() -> {
+                                var regionPos = region.getName().split("\\.");
+                                var regionX = Integer.parseInt(regionPos[1]);
+                                var regionZ = Integer.parseInt(regionPos[2]);
+                                BaseRegionLoader loader;
+                                try {
+                                    loader = (BaseRegionLoader) loadRegion.invoke(anvil, regionX, regionZ);
+                                } catch (IllegalAccessException | InvocationTargetException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                OldNukkitLevelConvert.convertToPNXWorld(anvil, loader);
+                            }, this.computeThreadPool));
+                        }
+                        CompletableFuture.allOf(allTask.toArray(new CompletableFuture<?>[]{})).join();
+                        Server.getInstance().removeBusying(bid);
+                        loadRegion.setAccessible(false);
+                    }
+                }
+            } else System.exit(0);
+        }
+
         this.getPluginManager().callEvent(new LevelLoadEvent(level));
         level.setTickRate(this.baseTickRate);
         return true;
@@ -2719,7 +2778,8 @@ public class Server {
         return generateLevel(name, seed, generator, options, null);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.20-r3")
     public boolean generateLevel(String name, long seed, Class<? extends Generator> generator, Map<String, Object> options, DimensionData givenDimensionData) {
         return generateLevel(name, seed, generator, options, null, null);
     }
@@ -2756,16 +2816,46 @@ public class Server {
             level = new Level(this, name, path, provider);
             this.levels.put(level.getId(), level);
 
-            level.initLevel();
+            level.initLevel(givenDimensionData);
             level.setTickRate(this.baseTickRate);
         } catch (Exception e) {
-            log.error(this.getLanguage().tr("nukkit.level.generationError", name, Utils.getExceptionMessage(e)), e);
+            log.error(this.getLanguage().tr("nukkit.level.generationError", new String[]{name, Utils.getExceptionMessage(e)}), e);
             return false;
         }
 
         this.getPluginManager().callEvent(new LevelInitEvent(level));
 
         this.getPluginManager().callEvent(new LevelLoadEvent(level));
+
+        /*this.getLogger().notice(this.getLanguage().tr("nukkit.level.backgroundGeneration", name));
+
+        int centerX = (int) level.getSpawnLocation().getX() >> 4;
+        int centerZ = (int) level.getSpawnLocation().getZ() >> 4;
+
+        TreeMap<String, Integer> order = new TreeMap<>();
+
+        for (int X = -3; X <= 3; ++X) {
+            for (int Z = -3; Z <= 3; ++Z) {
+                int distance = X * X + Z * Z;
+                int chunkX = X + centerX;
+                int chunkZ = Z + centerZ;
+                order.put(Level.chunkHash(chunkX, chunkZ), distance);
+            }
+        }
+
+        List<Map.Entry<String, Integer>> sortList = new ArrayList<>(order.entrySet());
+
+        Collections.sort(sortList, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                return o2.getValue() - o1.getValue();
+            }
+        });
+
+        for (String index : order.keySet()) {
+            Chunk.Entry entry = Level.getChunkXZ(index);
+            level.populateChunk(entry.chunkX, entry.chunkZ, true);
+        }*/
         return true;
     }
 
@@ -3178,12 +3268,12 @@ public class Server {
         return forceLanguage;
     }
 
-
+    @PowerNukkitOnly
     public boolean isRedstoneEnabled() {
         return redstoneEnabled;
     }
 
-
+    @PowerNukkitOnly
     public void setRedstoneEnabled(boolean redstoneEnabled) {
         this.redstoneEnabled = redstoneEnabled;
     }
@@ -3277,57 +3367,67 @@ public class Server {
         return this.allowNether;
     }
 
-
+    @Since("1.3.0.0-PN")
     public boolean isIgnoredPacket(Class<? extends DataPacket> clazz) {
         return this.ignoredPackets.contains(clazz.getSimpleName());
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isSafeSpawn() {
         return safeSpawn;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isForceSkinTrusted() {
         return forceSkinTrusted;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isCheckMovement() {
         return checkMovement;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isTheEndAllowed() {
         return this.allowTheEnd;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public boolean isEnableExperimentMode() {
         return this.enableExperimentMode;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public boolean isWaterdogCapable() {
         return this.getConfig("settings.waterdogpe", false);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r2")
     public int getMaximumStaleDatagrams() {
         return this.maximumStaleDatagrams;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.30-r2")
     public int getMaximumSizePerChunk() {
         return maximumSizePerChunk;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.40-r3")
     public int getServerAuthoritativeMovement() {
         return serverAuthoritativeMovementMode;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public boolean isEnableSnappy() {
         return this.getConfig("network.snappy", false);
     }

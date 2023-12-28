@@ -1,6 +1,9 @@
 package cn.nukkit.entity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
@@ -12,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author MagicDroidX (Nukkit Project)
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements EntityNameable only in PowerNukkit")
 public abstract class EntityCreature extends EntityLiving implements EntityNameable, EntityAgeable {
     public EntityCreature(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
@@ -27,7 +30,8 @@ public abstract class EntityCreature extends EntityLiving implements EntityNamea
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public final boolean playerApplyNameTag(@NotNull Player player, @NotNull Item item) {
         return applyNameTag(player, item);

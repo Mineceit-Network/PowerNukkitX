@@ -2,6 +2,10 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityCauldron;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
@@ -34,16 +38,19 @@ import java.util.Map;
 /**
  * @author CreeperFace (Nukkit Project)
  */
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
+public class BlockCauldron extends BlockSolidMeta implements BlockEntityHolder<BlockEntityCauldron> {
 
-public class BlockCauldron extends BlockSolid implements BlockEntityHolder<BlockEntityCauldron> {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty FILL_LEVEL = new IntBlockProperty("fill_level", false, 6);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final ArrayBlockProperty<CauldronLiquid> LIQUID = new ArrayBlockProperty<>("cauldron_liquid", false, CauldronLiquid.class);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(FILL_LEVEL, LIQUID);
 
     public BlockCauldron() {
@@ -59,21 +66,24 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
         return CAULDRON_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.CAULDRON;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityCauldron> getBlockEntityClass() {
@@ -113,17 +123,18 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
         return getFillLevel() == FILL_LEVEL.getMinValue();
     }
 
-
+    @PowerNukkitOnly
     public int getFillLevel() {
         return getIntValue(FILL_LEVEL);
     }
 
-
+    @PowerNukkitOnly
     public void setFillLevel(int fillLevel) {
         this.setFillLevel(fillLevel, null);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r4")
     public void setFillLevel(int fillLevel, @Nullable Player player) {
         if (fillLevel == getFillLevel()) return;
         setIntValue(FILL_LEVEL, fillLevel);
@@ -135,11 +146,14 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
     }
 
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public CauldronLiquid getCauldronLiquid() {
         return this.getPropertyValue(LIQUID);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void setCauldronLiquid(CauldronLiquid liquid) {
         this.setPropertyValue(LIQUID, liquid);
     }
@@ -179,7 +193,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
                         this.getLevel().addLevelEvent(this.add(0.5, 0.375 + getFillLevel() * 0.125, 0.5), LevelEventPacket.EVENT_CAULDRON_TAKE_WATER);
                     }
                 } else if (bucket.isWater() || bucket.isLava() || bucket.isPowderSnow()) {
-                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getAux() == 8) {
+                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getDamage() == 8) {
                         break;
                     }
 
@@ -229,7 +243,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
                     player.getInventory().setItemInHand(item);
                 }
 
-                BlockColor color = new ItemDye(item.getAux()).getDyeColor().getLeatherColor();
+                BlockColor color = new ItemDye(item.getDamage()).getDyeColor().getLeatherColor();
                 if (!cauldron.isCustomColor()) {
                     cauldron.setCustomColor(color);
                 } else {
@@ -286,7 +300,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
             case ItemID.POTION:
             case ItemID.SPLASH_POTION:
             case ItemID.LINGERING_POTION:
-                if (!isEmpty() && (cauldron.hasPotion() ? cauldron.getPotionId() != item.getAux() : item.getAux() != 0)) {
+                if (!isEmpty() && (cauldron.hasPotion() ? cauldron.getPotionId() != item.getDamage() : item.getDamage() != 0)) {
                     clearWithFizz(cauldron, player);
                     consumePotion(item, player);
                     break;
@@ -295,8 +309,8 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
                     break;
                 }
 
-                if (item.getAux() != 0 && isEmpty()) {
-                    cauldron.setPotionId(item.getAux());
+                if (item.getDamage() != 0 && isEmpty()) {
+                    cauldron.setPotionId(item.getDamage());
                 }
 
                 cauldron.setType(
@@ -434,7 +448,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
                 if (bucket.getFishEntityId() != null) {
                     break;
                 }
-                if (item.getAux() == 0) { //empty
+                if (item.getDamage() == 0) { //empty
                     if (!isFull() || cauldron.isCustomColor() || cauldron.hasPotion()) {
                         break;
                     }
@@ -449,7 +463,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
                         this.getLevel().addSound(this.add(0.5, 1, 0.5), Sound.BUCKET_FILL_LAVA);
                     }
                 } else if (bucket.isWater() || bucket.isLava()) { //water or lava bucket
-                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getAux() == 10) {
+                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getDamage() == 10) {
                         break;
                     }
 
@@ -480,7 +494,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
             case Item.POTION:
             case Item.SPLASH_POTION:
             case Item.LINGERING_POTION:
-                if (!isEmpty() && (cauldron.hasPotion() ? cauldron.getPotionId() != item.getAux() : item.getAux() != 0)) {
+                if (!isEmpty() && (cauldron.hasPotion() ? cauldron.getPotionId() != item.getDamage() : item.getDamage() != 0)) {
                     clearWithFizz(cauldron);
                     break;
                 }
@@ -530,7 +544,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
         }
     }
 
-
+    @PowerNukkitOnly
     public void clearWithFizz(BlockEntityCauldron cauldron) {
         clearWithFizz(cauldron, null);
     }
@@ -564,7 +578,7 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
@@ -589,19 +603,21 @@ public class BlockCauldron extends BlockSolid implements BlockEntityHolder<Block
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will return true")
     @Override
     public boolean isTransparent() {
         return true;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getLightFilter() {
         return 3;

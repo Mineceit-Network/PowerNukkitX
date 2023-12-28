@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.item.Item;
@@ -19,10 +21,12 @@ import javax.annotation.Nullable;
  */
 public class BlockCake extends BlockTransparentMeta {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty BITES = new IntBlockProperty("bite_counter", false, 6);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(BITES);
 
     public BlockCake(int meta) {
@@ -43,7 +47,8 @@ public class BlockCake extends BlockTransparentMeta {
         return CAKE_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -65,7 +70,7 @@ public class BlockCake extends BlockTransparentMeta {
         return 0.5;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -164,13 +169,13 @@ public class BlockCake extends BlockTransparentMeta {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean sticksToPiston() {
         return false;
     }

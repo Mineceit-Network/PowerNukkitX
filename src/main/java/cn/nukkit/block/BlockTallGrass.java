@@ -1,9 +1,13 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
-import cn.nukkit.block.state.property.enums.DoublePlantType;
-import cn.nukkit.block.state.property.enums.TallGrassType;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.ArrayBlockProperty;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.value.DoublePlantType;
+import cn.nukkit.blockproperty.value.TallGrassType;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemTool;
@@ -21,7 +25,15 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Angelic47 (Nukkit Project)
  */
 public class BlockTallGrass extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
-    public static final BlockProperties PROPERTIES = new BlockProperties(TALLGRASS, CommonBlockProperties.TALL_GRASS_TYPE);
+
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
+    public static final ArrayBlockProperty<TallGrassType> TALL_GRASS_TYPE = new ArrayBlockProperty<>("tall_grass_type", true, TallGrassType.class);
+
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
+    public static final BlockProperties PROPERTIES = new BlockProperties(TALL_GRASS_TYPE);
+
     public BlockTallGrass() {
         this(1);
     }
@@ -35,7 +47,8 @@ public class BlockTallGrass extends BlockFlowable implements BlockFlowerPot.Flow
         return TALL_GRASS;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -81,8 +94,8 @@ public class BlockTallGrass extends BlockFlowable implements BlockFlowerPot.Flow
         }
         return false;
     }
-
-
+    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will break on block update if the supporting block is invalid")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -144,17 +157,17 @@ public class BlockTallGrass extends BlockFlowable implements BlockFlowerPot.Flow
         // https://minecraft.wiki/w/Fortune#Grass_and_ferns
         List<Item> drops = new ArrayList<>(2);
         if (item.isShears()) {
-            drops.add(getBlockState().asItemBlock());
+            drops.add(getCurrentState().asItemBlock());
         }
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
         if (random.nextInt(8) == 0) {
             Enchantment fortune = item.getEnchantment(Enchantment.ID_FORTUNE_DIGGING);
-            int fortuneLevel = fortune != null ? fortune.getLevel() : 0;
-            int amount = fortuneLevel == 0 ? 1 : 1 + random.nextInt(fortuneLevel * 2);
+            int fortuneLevel = fortune != null? fortune.getLevel() : 0;
+            int amount = fortuneLevel == 0? 1 : 1 + random.nextInt(fortuneLevel * 2);
             drops.add(Item.get(ItemID.WHEAT_SEEDS, 0, amount));
         }
-
+        
         return drops.toArray(Item.EMPTY_ARRAY);
     }
 

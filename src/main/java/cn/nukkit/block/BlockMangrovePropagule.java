@@ -1,6 +1,11 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -17,7 +22,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockMangrovePropagule extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
 
     public static final BooleanBlockProperty HANGING = new BooleanBlockProperty("hanging",false);
@@ -35,7 +41,8 @@ public class BlockMangrovePropagule extends BlockFlowable implements BlockFlower
         return MANGROVE_PROPAGULE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -77,7 +84,7 @@ public class BlockMangrovePropagule extends BlockFlowable implements BlockFlower
         return false;
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will break on block update if the supporting block is invalid")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {

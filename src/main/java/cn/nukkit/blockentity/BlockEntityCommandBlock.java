@@ -2,6 +2,9 @@ package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockCommandBlock;
 import cn.nukkit.block.BlockCommandBlockChain;
@@ -35,7 +38,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 @Getter
 public class BlockEntityCommandBlock extends BlockEntitySpawnable implements ICommandBlock, BlockEntityNameable {
     protected boolean conditionalMode;
@@ -70,7 +74,7 @@ public class BlockEntityCommandBlock extends BlockEntitySpawnable implements ICo
         }
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -550,20 +554,22 @@ public class BlockEntityCommandBlock extends BlockEntitySpawnable implements ICo
         return false;
     }
 
-
+    @Since("1.6.0")
+    @PowerNukkitOnly
     @Override
     public boolean isEntity() {
         return false;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     @NotNull
     public Position getPosition() {
         return this;
     }
 
-
+    @Since("1.19.60-r1")
     @NotNull
     @Override
     public Location getLocation() {

@@ -1,7 +1,7 @@
 package cn.nukkit.dispenser;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.block.*;
-import cn.nukkit.block.Block;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBucket;
 import cn.nukkit.item.MinecraftItemID;
@@ -15,7 +15,7 @@ import cn.nukkit.math.BlockFace;
  */
 public class BucketDispenseBehavior extends DefaultDispenseBehavior {
 
-
+    @PowerNukkitOnly
     @Override
     public Item dispense(BlockDispenser block, BlockFace face, Item item) {
         if (!(item instanceof ItemBucket)) {
@@ -29,7 +29,7 @@ public class BucketDispenseBehavior extends DefaultDispenseBehavior {
             if (target.canBeFlowedInto() || target.getId() == BlockID.NETHER_PORTAL) {
                 Block replace = bucket.getTargetBlock();
                 var fishEntityId = bucket.getFishEntityId();
-                if (bucket.getAux() == 10)
+                if (bucket.getDamage() == 10)
                     target.level.addSound(block, Sound.BUCKET_EMPTY_LAVA);
                 else if (fishEntityId != null)
                     target.level.addSound(block, Sound.BUCKET_EMPTY_FISH);
@@ -54,7 +54,7 @@ public class BucketDispenseBehavior extends DefaultDispenseBehavior {
 
             }
         } else {
-            if (bucket.getAux() == 10)
+            if (bucket.getDamage() == 10)
                 target.level.addSound(block, Sound.BUCKET_FILL_LAVA);
             else
                 target.level.addSound(block, Sound.BUCKET_FILL_WATER);

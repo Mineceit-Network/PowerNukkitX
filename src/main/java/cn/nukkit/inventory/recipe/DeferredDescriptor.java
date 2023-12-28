@@ -1,10 +1,13 @@
 package cn.nukkit.inventory.recipe;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 
 import java.util.Objects;
 
-
+@PowerNukkitXOnly
+@Since("Future")
 public class DeferredDescriptor implements ItemDescriptor {
     private final String fullName;
     private final int auxValue;

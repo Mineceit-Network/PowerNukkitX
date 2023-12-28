@@ -1,5 +1,9 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BlockProperty;
@@ -14,10 +18,11 @@ import static cn.nukkit.blockproperty.CommonBlockProperties.PILLAR_AXIS;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-
+@PowerNukkitDifference(info = "Extends BlockLog instead of BlockSolidMeta only in PowerNukkit", since = "1.4.0.0-PN")
 public class BlockWood extends BlockLog {
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(WoodType.PROPERTY, PILLAR_AXIS);
     
     public static final int OAK = 0;
@@ -39,7 +44,8 @@ public class BlockWood extends BlockLog {
         return LOG;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -56,12 +62,14 @@ public class BlockWood extends BlockLog {
         return 2;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public WoodType getWoodType() {
         return getPropertyValue(WoodType.PROPERTY);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setWoodType(WoodType woodType) {
         setPropertyValue(WoodType.PROPERTY, woodType);
     }
@@ -71,7 +79,8 @@ public class BlockWood extends BlockLog {
         return getWoodType().getEnglishName() + " Log";
     }
 
-
+    @Since("1.5.1.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Block forState(@NotNull IBlockState state) throws InvalidBlockStateException {
@@ -104,9 +113,9 @@ public class BlockWood extends BlockLog {
         return 10;
     }
 
-
+    @PowerNukkitOnly
     @Override
-    @
+    @PowerNukkitXDifference(since = "1.20.0-r2", info = "make public")
     public BlockState getStrippedState() {
         int strippedId = switch (getWoodType()) {
             case OAK -> STRIPPED_OAK_LOG;

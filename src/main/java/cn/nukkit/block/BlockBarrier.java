@@ -1,25 +1,22 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.Item;
-import org.jetbrains.annotations.NotNull;
-
-import static cn.nukkit.block.property.CommonBlockProperties.FACING_DIRECTION;
-import static cn.nukkit.block.property.CommonBlockProperties.OPEN_BIT;
 
 /**
  * @author Pub4Game
  * @since 03.01.2016
  */
-
+@PowerNukkitOnly
 public class BlockBarrier extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties(BARRIER);
 
+    @PowerNukkitOnly
     public BlockBarrier() {
-        this(PROPERTIES.getDefaultState());
     }
 
-    public BlockBarrier(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return BARRIER;
     }
 
     @Override
@@ -27,11 +24,7 @@ public class BlockBarrier extends BlockSolid {
         return "Barrier";
     }
 
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;

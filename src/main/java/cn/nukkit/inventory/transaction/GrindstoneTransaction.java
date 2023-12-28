@@ -19,6 +19,8 @@
 package cn.nukkit.inventory.transaction;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.inventory.GrindstoneEvent;
 import cn.nukkit.inventory.GrindstoneInventory;
 import cn.nukkit.inventory.Inventory;
@@ -33,15 +35,16 @@ import java.util.List;
  * @author joserobjr
  * @since 2021-03-21
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class GrindstoneTransaction extends InventoryTransaction {
 
     private Item firstItem;
     private Item secondItem;
     private Item outputItem;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public GrindstoneTransaction(Player source, List<InventoryAction> actions) {
         super(source, actions);
     }
@@ -117,22 +120,26 @@ public class GrindstoneTransaction extends InventoryTransaction {
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getFirstItem() {
         return firstItem == null? null : firstItem.clone();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getSecondItem() {
         return secondItem == null? null : secondItem.clone();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Item getOutputItem() {
         return outputItem == null? null : outputItem.clone();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static boolean checkForItemPart(List<InventoryAction> actions) {
         return actions.stream().anyMatch(it-> it instanceof GrindstoneItemAction);
     }

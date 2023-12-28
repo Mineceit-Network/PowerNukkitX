@@ -49,7 +49,8 @@ public abstract class Command implements GenericParameter {
 
     protected Map<String, CommandParameter[]> commandParameters = new HashMap<>();
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     protected ParamTree paramTree;
 
     protected CommandData commandData;
@@ -154,7 +155,7 @@ public abstract class Command implements GenericParameter {
         return this.commandData.overloads;
     }
 
-
+    @PowerNukkitOnly
     protected double parseTilde(String arg, double pos) {
         if (arg.equals("~")) {
             return pos;
@@ -178,8 +179,8 @@ public abstract class Command implements GenericParameter {
      * @param log          命令输出工具
      * @return int 返回0代表执行失败, 返回大于等于1代表执行成功
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         throw new UnsupportedOperationException();
     }
@@ -280,12 +281,14 @@ public abstract class Command implements GenericParameter {
         return usageMessage;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public boolean isServerSideOnly() {
         return serverSideOnly;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public String getCommandFormatTips() {
         StringBuilder builder = new StringBuilder();
         for (String form : this.getCommandParameters().keySet()) {
@@ -330,7 +333,8 @@ public abstract class Command implements GenericParameter {
         this.usageMessage = usageMessage;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public boolean hasParamTree() {
         return this.paramTree != null;
     }
@@ -338,13 +342,14 @@ public abstract class Command implements GenericParameter {
     /**
      * 若调用此方法，则将启用ParamTree用于解析命令参数
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public void enableParamTree() {
         this.paramTree = new ParamTree(this);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public ParamTree getParamTree() {
         return paramTree;
     }
@@ -354,7 +359,7 @@ public abstract class Command implements GenericParameter {
             by = "PowerNukkit",
             since = "1.5.2.0-PN",
             reason = "Unused and always throws an exception even in Cloudburst Nukkit")
-    
+    @PowerNukkitDifference(
             since = "1.5.2.0-PN",
             info = "Throws UnsupportedOperationException instead of NullPointerException"
     )

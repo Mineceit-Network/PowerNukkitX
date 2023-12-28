@@ -25,7 +25,9 @@ import java.util.regex.Pattern;
  */
 @Log4j2
 public class Flat extends Generator {
+
     private final List<Populator> populators = new ArrayList<>();
+    private final Map<String, Object> options;
     private ChunkManager level;
     private NukkitRandom random;
     private int[][] structure;
@@ -39,8 +41,8 @@ public class Flat extends Generator {
     }
 
     public Flat(Map<String, Object> options) {
-        super(options);
         this.preset = "2;7,2x3,2;1;";
+        this.options = options;
 
         if (this.options.containsKey("decoration")) {
             PopulatorOre ores = new PopulatorOre(BlockID.STONE, new OreType[]{
@@ -70,6 +72,11 @@ public class Flat extends Generator {
     @Override
     public NukkitRandom getRandom() {
         return this.random;
+    }
+
+    @Override
+    public Map<String, Object> getSettings() {
+        return this.options;
     }
 
     @Override

@@ -1,10 +1,15 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityHangingSign;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.ItemBlockHangingSign;
 import cn.nukkit.level.Level;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.BlockFace;
@@ -17,9 +22,24 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 @Log4j2
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public abstract class BlockHangingSign extends BlockSignBase implements BlockEntityHolder<BlockEntityHangingSign> {
-    public BlockHangingSign(BlockState blockState) {
-        super(blockState);
+    public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.FACING_DIRECTION, CommonBlockProperties.GROUND_SIGN_DIRECTION,
+            CommonBlockProperties.ATTACHED, CommonBlockProperties.HANGING);
+
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return PROPERTIES;
+    }
+
+    public BlockHangingSign() {
+        this(0);
+    }
+
+    public BlockHangingSign(int meta) {
+        super(meta);
     }
 
     @NotNull
@@ -28,7 +48,8 @@ public abstract class BlockHangingSign extends BlockSignBase implements BlockEnt
         return BlockEntityHangingSign.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -44,7 +65,7 @@ public abstract class BlockHangingSign extends BlockSignBase implements BlockEnt
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
             if (isHanging()) {
-                if (up().isAir()) {
+                if (up().getId() == Block.AIR) {
                     getLevel().useBreakOn(this);
                     return Level.BLOCK_UPDATE_NORMAL;
                 }
@@ -59,19 +80,24 @@ public abstract class BlockHangingSign extends BlockSignBase implements BlockEnt
     }
 
     public boolean isHanging() {
-        return getPropertyValue(CommonBlockProperties.HANGING);
+        return getBooleanValue(CommonBlockProperties.HANGING);
     }
 
     public boolean isAttached() {
-        return getPropertyValue(CommonBlockProperties.ATTACHED_BIT);
+        return getBooleanValue(CommonBlockProperties.ATTACHED);
+    }
+
+    @Override
+    public Item toItem() {
+        return new ItemBlockHangingSign(this);
     }
 
     @Override
     public CompassRoseDirection getSignDirection() {
         if (isHanging() && isAttached()) {
-            return CompassRoseDirection.from(getPropertyValue(CommonBlockProperties.GROUND_SIGN_DIRECTION));
+            return getPropertyValue(CommonBlockProperties.GROUND_SIGN_DIRECTION);
         } else {
-            return BlockFace.fromIndex(getPropertyValue(CommonBlockProperties.FACING_DIRECTION)).getCompassRoseDirection();
+            return getPropertyValue(CommonBlockProperties.FACING_DIRECTION).getCompassRoseDirection();
         }
     }
 
@@ -98,19 +124,19 @@ public abstract class BlockHangingSign extends BlockSignBase implements BlockEnt
 
         if (face == BlockFace.DOWN) {
             this.setPropertyValue(CommonBlockProperties.HANGING, true);
-            CompassRoseDirection direction = CompassRoseDirection.from(
+            CompassRoseDirection direction = CommonBlockProperties.GROUND_SIGN_DIRECTION.getValueForMeta(
                     (int) Math.floor((((player != null ? player.yaw : 0) + 180) * 16 / 360) + 0.5) & 0x0f
             );
             if ((player != null && player.isSneaking()) || target instanceof BlockThin || target instanceof BlockChain || target instanceof BlockHangingSign) {
-                this.setPropertyValue(CommonBlockProperties.ATTACHED_BIT, true);
-                this.setPropertyValue(CommonBlockProperties.GROUND_SIGN_DIRECTION, direction.getIndex());
+                this.setPropertyValue(CommonBlockProperties.ATTACHED, true);
+                this.setPropertyValue(CommonBlockProperties.GROUND_SIGN_DIRECTION, direction);
                 getLevel().setBlock(block, this, true);
             } else {
-                this.setPropertyValue(CommonBlockProperties.FACING_DIRECTION, direction.getClosestBlockFace().getIndex());
+                this.setPropertyValue(CommonBlockProperties.FACING_DIRECTION, direction.getClosestBlockFace());
                 getLevel().setBlock(block, this, true);
             }
         } else {
-            this.setPropertyValue(CommonBlockProperties.FACING_DIRECTION, face.rotateY().getIndex());
+            this.setPropertyValue(CommonBlockProperties.FACING_DIRECTION, face.rotateY());
             getLevel().setBlock(block, this, true);
         }
         if (item.hasCustomBlockData()) {

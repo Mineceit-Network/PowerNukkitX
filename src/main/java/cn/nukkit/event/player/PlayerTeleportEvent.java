@@ -1,6 +1,9 @@
 package cn.nukkit.event.player;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.Cancellable;
 import cn.nukkit.event.HandlerList;
 import cn.nukkit.level.Level;
@@ -63,7 +66,8 @@ public class PlayerTeleportEvent extends PlayerEvent implements Cancellable {
         ENDER_PEARL,   // Teleport by ender pearl
         CHORUS_FRUIT,  // Teleport by chorus fruit
         UNKNOWN,       // Unknown cause
-
-
+        @PowerNukkitOnly @Since("1.4.0.0-PN") END_PORTAL,    // Teleport using End Portal
+        @PowerNukkitOnly @Since("1.4.0.0-PN") END_GATEWAY,    // Teleport using End Gateway
+        @PowerNukkitXOnly @Since("1.19.50-r3") PLAYER_SPAWN    // Teleport when players are spawn
     }
 }

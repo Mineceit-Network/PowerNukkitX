@@ -1,6 +1,9 @@
 package cn.nukkit.entity;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.event.entity.EntityDamageByEntityEvent;
 import cn.nukkit.event.entity.EntityDamageEvent;
@@ -150,15 +153,16 @@ public abstract class EntityHumanType extends EntityCreature implements IHuman {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Deprecated
     @Override
     public boolean applyNameTag(Item item) {
         return false;
     }
 
-
-    @
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    @PowerNukkitXDifference(since = "1.19.21-r4", info = "add EntityDamageEvent param to help cal the armor damage")
     protected Item damageArmor(Item armor, Entity damager, EntityDamageEvent event) {
         if (armor.hasEnchantments()) {
             if (damager != null) {
@@ -191,11 +195,11 @@ public abstract class EntityHumanType extends EntityCreature implements IHuman {
             }
 
             if (armor instanceof ItemShield)
-                armor.setAux(armor.getAux() + (event.getDamage() >= 3 ? (int) event.getDamage() + 1 : 0));
+                armor.setDamage(armor.getDamage() + (event.getDamage() >= 3 ? (int) event.getDamage() + 1 : 0));
             else
-                armor.setAux(armor.getAux() + Math.max(1, (int) (event.getDamage() / 4.0f)));
+                armor.setDamage(armor.getDamage() + Math.max(1, (int) (event.getDamage() / 4.0f)));
 
-            if (armor.getAux() >= armor.getMaxDurability()) {
+            if (armor.getDamage() >= armor.getMaxDurability()) {
                 getLevel().addSound(this, Sound.RANDOM_BREAK);
                 return Item.get(BlockID.AIR, 0, 0);
             }

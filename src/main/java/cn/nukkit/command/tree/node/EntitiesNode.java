@@ -2,6 +2,8 @@ package cn.nukkit.command.tree.node;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.exceptions.SelectorSyntaxException;
 import cn.nukkit.command.selector.EntitySelectorAPI;
 import cn.nukkit.entity.Entity;
@@ -14,6 +16,8 @@ import java.util.List;
  * <p>
  * 所有命令参数类型为{@link cn.nukkit.command.data.CommandParamType#TARGET TARGET}如果没有手动指定{@link IParamNode},则会默认使用这个解析
  */
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class EntitiesNode extends TargetNode<Entity> {
 
     //todo 支持uuid 或者 xuid

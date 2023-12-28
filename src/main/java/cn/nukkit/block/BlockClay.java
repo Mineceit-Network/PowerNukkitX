@@ -1,22 +1,15 @@
 package cn.nukkit.block;
 
 import cn.nukkit.item.Item;
-import cn.nukkit.item.ItemClayBall;
+import cn.nukkit.item.ItemClay;
 import cn.nukkit.item.ItemTool;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Nukkit Project Team
  */
 public class BlockClay extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:clay");
 
     public BlockClay() {
-        super(PROPERTIES.getDefaultState());
-    }
-
-    public BlockClay(BlockState blockState) {
-        super(blockState);
     }
 
     @Override
@@ -35,21 +28,19 @@ public class BlockClay extends BlockSolid {
     }
 
     @Override
+    public int getId() {
+        return CLAY_BLOCK;
+    }
+
+    @Override
     public String getName() {
         return "Clay Block";
     }
 
     @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
-    @Override
     public Item[] getDrops(Item item) {
-        Item clayBall = new ItemClayBall();
-        clayBall.setCount(4);
         return new Item[]{
-                clayBall
+                new ItemClay(0, 4)
         };
     }
 

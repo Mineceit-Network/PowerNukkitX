@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.memory;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 
 import java.util.Map;
@@ -9,8 +11,8 @@ import java.util.Map;
  * <p>
  * memory storage
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.50-r1")
 public interface IMemoryStorage {
 
     /**
@@ -60,7 +62,7 @@ public interface IMemoryStorage {
      *
      * @return 实体
      */
-
+    @Since("1.19.63-r1")
     Entity getEntity();
 
     /**

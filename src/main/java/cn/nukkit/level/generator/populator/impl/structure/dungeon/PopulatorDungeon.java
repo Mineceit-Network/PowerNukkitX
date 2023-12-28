@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.dungeon;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.mob.EntitySkeleton;
@@ -16,7 +18,8 @@ import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorDungeon extends PopulatorStructure {
 
     private static final int[] MOBS = {EntitySkeleton.NETWORK_ID, EntityZombie.NETWORK_ID, EntityZombie.NETWORK_ID, EntitySpider.NETWORK_ID};
@@ -137,7 +140,7 @@ public class PopulatorDungeon extends PopulatorStructure {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

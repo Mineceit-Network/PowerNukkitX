@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -18,16 +20,20 @@ import javax.annotation.Nullable;
  * @since 2021-07-14
  */
 
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockCandle extends BlockFlowable {
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     private static final BooleanBlockProperty LIT = new BooleanBlockProperty("lit", false);
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     private static final IntBlockProperty CANDLES = new IntBlockProperty("candles", false, 3, 0, 2);
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     private static final BlockProperties PROPERTIES = new BlockProperties(LIT, CANDLES);
 
     public BlockCandle() {
@@ -127,7 +133,8 @@ public class BlockCandle extends BlockFlowable {
         return 0.1;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

@@ -2,7 +2,10 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.event.block.BlockGrowEvent;
 import cn.nukkit.event.entity.EntityDamageByBlockEvent;
@@ -20,19 +23,26 @@ import javax.annotation.Nullable;
 /**
  * @author Nukkit Project Team
  */
-public class BlockCactus extends BlockTransparent implements BlockFlowerPot.FlowerPotBlock {
+public class BlockCactus extends BlockTransparentMeta implements BlockFlowerPot.FlowerPotBlock {
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
+    public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.AGE_15);
 
-
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:cactus", CommonBlockProperties.AGE_16);
+    public BlockCactus(int meta) {
+        super(meta);
+    }
 
     public BlockCactus() {
-        super(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockCactus(BlockState blockState) {
-        super(blockState);
+    @Override
+    public int getId() {
+        return CACTUS;
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -49,7 +59,7 @@ public class BlockCactus extends BlockTransparent implements BlockFlowerPot.Flow
         return 2;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -164,18 +174,18 @@ public class BlockCactus extends BlockTransparent implements BlockFlowerPot.Flow
     @Override
     public Item[] getDrops(Item item) {
         return new Item[]{
-                Item.getBlockItem(BlockID.CACTUS, 0, 1)
+                Item.getBlock(BlockID.CACTUS, 0, 1)
         };
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean sticksToPiston() {
         return false;
     }

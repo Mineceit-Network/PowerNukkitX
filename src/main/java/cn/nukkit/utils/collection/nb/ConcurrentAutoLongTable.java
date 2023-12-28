@@ -1,5 +1,8 @@
 package cn.nukkit.utils.collection.nb;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+
 import java.io.Serializable;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
@@ -17,8 +20,8 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * @author Cliff Click, SuperIceCN
  * @since 1.5
  */
-
-
+@Since("1.20.10-r1")
+@PowerNukkitXOnly
 public class ConcurrentAutoLongTable implements Serializable {
 
     // --- public interface ---

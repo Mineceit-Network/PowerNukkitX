@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.mineshaft;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.biome.EnumBiome;
 import cn.nukkit.level.format.FullChunk;
@@ -12,7 +14,8 @@ import cn.nukkit.level.generator.populator.type.PopulatorStructure;
 import cn.nukkit.level.generator.task.CallbackableChunkGenerationTask;
 import cn.nukkit.math.NukkitRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorMineshaft extends PopulatorStructure {
 
     protected static final int PROBABILITY = 4;
@@ -135,7 +138,7 @@ public class PopulatorMineshaft extends PopulatorStructure {
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

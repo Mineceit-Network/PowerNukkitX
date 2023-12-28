@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
 
@@ -33,18 +35,18 @@ public class BlockButtonStone extends BlockButton {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will return false")
     @Override
     public boolean canHarvestWithHand() {
         return false;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Requires wooden pickaxe to drop item")
     @Override
     public Item[] getDrops(Item item) {
         return super.getDrops(item);

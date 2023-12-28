@@ -1,6 +1,8 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockSculkSensor;
 import cn.nukkit.level.Position;
@@ -12,8 +14,8 @@ import cn.nukkit.nbt.tag.CompoundTag;
 /**
  * @author Kevims KCodeYT
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockEntitySculkSensor extends BlockEntity implements VibrationListener {
 
     protected int lastActiveTime = Server.getInstance().getTick();
@@ -25,7 +27,8 @@ public class BlockEntitySculkSensor extends BlockEntity implements VibrationList
 
     protected boolean waitForVibration = false;
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public BlockEntitySculkSensor(FullChunk chunk, CompoundTag nbt) {
         super(chunk, nbt);
     }

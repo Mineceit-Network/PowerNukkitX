@@ -2,7 +2,14 @@ package cn.nukkit.block;
 
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.ArrayBlockProperty;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BlockProperty;
+import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.event.block.BlockRedstoneEvent;
 import cn.nukkit.event.block.DoorToggleEvent;
 import cn.nukkit.item.Item;
@@ -19,18 +26,20 @@ import cn.nukkit.math.BlockFace.AxisDirection;
 import cn.nukkit.math.SimpleAxisAlignedBB;
 import cn.nukkit.utils.Faceable;
 import cn.nukkit.utils.RedstoneComponent;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static cn.nukkit.blockproperty.CommonBlockProperties.OPEN;
+import static cn.nukkit.blockproperty.CommonBlockProperties.UPPER_BLOCK;
+
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-public abstract class BlockDoor extends BlockTransparent implements RedstoneComponent, Faceable {
+@PowerNukkitDifference(info = "Implements RedstoneComponent.", since = "1.4.0.0-PN")
+public abstract class BlockDoor extends BlockTransparentMeta implements RedstoneComponent, Faceable {
     private static final double THICKNESS = 3.0 / 16;
 
     // Contains a list of positions of doors, which have been opened by hand (by a player).
@@ -39,17 +48,46 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
     // and gives the vanilla behavior; no idea how to make this better :d
     private static final List<Location> manualOverrides = new ArrayList<>();
 
-    protected final static BiMap<BlockFace, Integer> DOOR_DIRECTION = HashBiMap.create(4);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BooleanBlockProperty DOOR_HINGE = new BooleanBlockProperty("door_hinge_bit", false);
 
-    static {
-        DOOR_DIRECTION.put(BlockFace.EAST, 0);
-        DOOR_DIRECTION.put(BlockFace.SOUTH, 1);
-        DOOR_DIRECTION.put(BlockFace.WEST, 2);
-        DOOR_DIRECTION.put(BlockFace.NORTH, 3);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperty<BlockFace> DOOR_DIRECTION = new ArrayBlockProperty<>("direction", false, new BlockFace[]{
+            BlockFace.EAST, BlockFace.SOUTH,
+            BlockFace.WEST, BlockFace.NORTH
+    }).ordinal(true);
+
+    @PowerNukkitOnly
+    protected static final BlockProperties PROPERTIES = new BlockProperties(DOOR_DIRECTION, OPEN, UPPER_BLOCK, DOOR_HINGE);
+
+    @Deprecated
+    @DeprecationDetails(reason = "Use the accessors or properties instead", since = "1.4.0.0-PN", replaceWith = "CommonBlockProperties.OPEN")
+    public static final int DOOR_OPEN_BIT = PROPERTIES.getOffset(OPEN.getName());
+
+    @Deprecated
+    @DeprecationDetails(reason = "Use the accessors or properties instead", since = "1.4.0.0-PN", replaceWith = "UPPER_BLOCK")
+    public static final int DOOR_TOP_BIT = PROPERTIES.getOffset(UPPER_BLOCK.getName());
+
+    @Deprecated
+    @DeprecationDetails(reason = "Use the accessors or properties instead", since = "1.4.0.0-PN", replaceWith = "DOOR_HINGE")
+    public static final int DOOR_HINGE_BIT = PROPERTIES.getOffset(DOOR_HINGE.getName());
+
+    @Deprecated
+    @DeprecationDetails(reason = "Was removed from the game", since = "1.4.0.0-PN", replaceWith = "#isGettingPower()")
+    public static final int DOOR_POWERED_BIT = PROPERTIES.getBitSize();
+
+    protected BlockDoor(int meta) {
+        super(meta);
     }
 
-    protected BlockDoor(BlockState blockState) {
-        super(blockState);
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return PROPERTIES;
     }
 
     @Override
@@ -57,7 +95,7 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -68,9 +106,17 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         return false;
     }
 
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
+    }
+
+    @Deprecated
+    @DeprecationDetails(reason = "Limited amount of state data", since = "1.4.0.0-PN", replaceWith = "getCurrentState()")
+    public int getFullDamage() {
+        return getSignedBigDamage();
     }
 
     @Override
@@ -108,7 +154,7 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         }
     }
 
-
+    @PowerNukkitDifference(info = "Will drop the iron door item if the support is broken", since = "1.3.1.2-PN")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -127,8 +173,7 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
     private void onNormalUpdate() {
         Block down = this.down();
         if (isTop()) {
-
-            if (!down.getId().equals(this.getId()) || down.getPropertyValue(CommonBlockProperties.UPPER_BLOCK_BIT)) {
+            if (down.getId() != this.getId() || down.getBooleanValue(UPPER_BLOCK)) {
                 level.setBlock(this, Block.get(AIR), false);
             }
 
@@ -141,12 +186,12 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
             return;
         }
 
-        if (down.getId().equals(AIR)) {
+        if (down.getId() == AIR) {
             level.useBreakOn(this, getToolType() == ItemTool.TYPE_PICKAXE ? Item.get(ItemID.DIAMOND_PICKAXE) : null);
         }
     }
 
-
+    @PowerNukkitDifference(info = "Checking if the door was opened/closed manually.")
     private void onRedstoneUpdate() {
         if ((this.isOpen() != this.isGettingPower()) && !this.getManualOverride()) {
             if (this.isOpen() != this.isGettingPower()) {
@@ -159,7 +204,8 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setManualOverride(boolean val) {
         Location down;
         Location up;
@@ -180,7 +226,8 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean getManualOverride() {
         Location down;
         Location up;
@@ -196,8 +243,8 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
     }
 
     @Override
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isGettingPower() {
         Location down;
         Location up;
@@ -222,7 +269,7 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         return this.level.isBlockPowered(down) || this.level.isBlockPowered(up);
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed support logic")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, @Nullable Player player) {
         if (this.y > this.level.getMaxHeight() - 2 || face != BlockFace.UP) {
@@ -271,12 +318,12 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         this.setManualOverride(false);
         if (isTop()) {
             Block down = this.down();
-            if (down.getId().equals(this.getId()) && !down.getPropertyValue(CommonBlockProperties.UPPER_BLOCK_BIT)) {
+            if (down.getId() == this.getId() && !down.getBooleanValue(UPPER_BLOCK)) {
                 level.setBlock(down, Block.get(AIR), true);
             }
         } else {
             Block up = this.up();
-            if (up.getId().equals(this.getId()) && up.getPropertyValue(CommonBlockProperties.UPPER_BLOCK_BIT)) {
+            if (up.getId() == this.getId() && up.getBooleanValue(UPPER_BLOCK)) {
                 level.setBlock(up, Block.get(BlockID.AIR), true);
             }
         }
@@ -290,7 +337,8 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         return toggle(player);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playOpenCloseSound() {
         if (this.isTop() && down() instanceof BlockDoor) {
             if (((BlockDoor) down()).isOpen()) {
@@ -307,23 +355,28 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playOpenSound() {
         level.addSound(this, Sound.RANDOM_DOOR_OPEN);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playCloseSound() {
         level.addSound(this, Sound.RANDOM_DOOR_CLOSE);
     }
 
-
+    @PowerNukkitDifference(info = "Just call the #setOpen() method.", since = "1.4.0.0-PN")
     public boolean toggle(Player player) {
         if (!player.getAdventureSettings().get(AdventureSettings.Type.DOORS_AND_SWITCHED))
             return false;
         return this.setOpen(player, !this.isOpen());
     }
 
+    @PowerNukkitDifference(info = "Using direct values, instead of toggling (fixes a redstone bug, that the door won't open). " +
+            "Also adding possibility to detect, whether a player or redstone recently opened/closed the door.", since = "1.4.0.0-PN")
+    @PowerNukkitOnly
     public boolean setOpen(@Nullable Player player, boolean open) {
         if (open == this.isOpen()) {
             return false;
@@ -348,10 +401,10 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
             up = up();
         }
 
-        up.setPropertyValue(CommonBlockProperties.OPEN_BIT, open);
+        up.setBooleanValue(OPEN, open);
         up.level.setBlock(up, up, true, true);
 
-        down.setPropertyValue(CommonBlockProperties.OPEN_BIT, open);
+        down.setBooleanValue(OPEN, open);
         down.level.setBlock(down, down, true, true);
 
         if (player != null) {
@@ -366,52 +419,62 @@ public abstract class BlockDoor extends BlockTransparent implements RedstoneComp
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setOpen(boolean open) {
-        setPropertyValue(CommonBlockProperties.OPEN_BIT, open);
+        setBooleanValue(OPEN, open);
     }
 
     public boolean isOpen() {
-        return getPropertyValue(CommonBlockProperties.OPEN_BIT);
+        return getBooleanValue(OPEN);
     }
 
     public boolean isTop() {
-        return getPropertyValue(CommonBlockProperties.UPPER_BLOCK_BIT);
+        return getBooleanValue(UPPER_BLOCK);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setTop(boolean top) {
-        setPropertyValue(CommonBlockProperties.UPPER_BLOCK_BIT, top);
+        setBooleanValue(UPPER_BLOCK, top);
+    }
+
+    @Deprecated
+    @DeprecationDetails(reason = "Use the properties API instead", since = "1.4.0.0-PN")
+    public boolean isTop(int meta) {
+        return PROPERTIES.getBooleanValue(meta, UPPER_BLOCK.getName());
     }
 
     public boolean isRightHinged() {
-        return getPropertyValue(CommonBlockProperties.DOOR_HINGE_BIT);
+        return getBooleanValue(DOOR_HINGE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setRightHinged(boolean rightHinged) {
-        setPropertyValue(CommonBlockProperties.DOOR_HINGE_BIT, rightHinged);
+        setBooleanValue(DOOR_HINGE, rightHinged);
     }
 
     @Override
     public BlockFace getBlockFace() {
-        return DOOR_DIRECTION.inverse().get(getPropertyValue(CommonBlockProperties.DIRECTION));
+        return getPropertyValue(DOOR_DIRECTION);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public void setBlockFace(BlockFace face) {
-        setPropertyValue(CommonBlockProperties.DIRECTION, DOOR_DIRECTION.get(face));
+        setPropertyValue(DOOR_DIRECTION, face);
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean sticksToPiston() {
         return false;
     }

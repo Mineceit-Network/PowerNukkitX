@@ -1,26 +1,32 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.item.ItemTool;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.nukkit.block.property.CommonBlockProperties.*;
-
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class BlockBambooBlock extends BlockLog {
-    public static final BlockProperties PROPERTIES = new BlockProperties(BAMBOO_BLOCK, PILLAR_AXIS);
-
     public BlockBambooBlock() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockBambooBlock(BlockState blockState) {
-        super(blockState);
+    public BlockBambooBlock(int meta) {
+        super(meta);
     }
 
     @NotNull
     @Override
     public BlockProperties getProperties() {
-        return PROPERTIES;
+        return PILLAR_PROPERTIES;
+    }
+
+    @Override
+    public int getId() {
+        return BAMBOO_BLOCK;
     }
 
     @Override
@@ -55,6 +61,6 @@ public class BlockBambooBlock extends BlockLog {
 
     @Override
     public BlockState getStrippedState() {
-        return BlockStrippedBambooBlock.PROPERTIES.getDefaultState();
+        return getCurrentState().withBlockId(STRIPPED_BAMBOO_BLOCK);
     }
 }

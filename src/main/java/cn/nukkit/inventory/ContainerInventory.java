@@ -2,6 +2,8 @@ package cn.nukkit.inventory;
 
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.vibration.VibrationEvent;
@@ -80,8 +82,8 @@ public abstract class ContainerInventory extends BaseInventory {
      * 若返回为true,则在inventory打开和关闭时会发生振动事件 (InventoryHolder为Vector3子类的前提下)
      * @return boolean
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public boolean canCauseVibration() {
         return false;
     }

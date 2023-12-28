@@ -1,8 +1,19 @@
 package cn.nukkit.item;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 
+@PowerNukkitXOnly
+@Since("1.20.50-r1")
 public class ItemShelterPotterySherd extends ItemPotterySherd {
     public ItemShelterPotterySherd() {
-        super(SHELTER_POTTERY_SHERD);
+        this(0, 1);
+    }
+
+    public ItemShelterPotterySherd(Integer meta) {
+        this(meta, 1);
+    }
+    public ItemShelterPotterySherd(Integer meta, int count) {
+        super(SHELTER_POTTERY_SHERD, meta, count, "Shelter Pottery Sherd");
     }
 }

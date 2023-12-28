@@ -1,16 +1,20 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockWallBlackstonePolished extends BlockWallBase {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockWallBlackstonePolished() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockWallBlackstonePolished(int meta) {
         super(meta);
     }
@@ -35,7 +39,8 @@ public class BlockWallBlackstonePolished extends BlockWallBase {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;

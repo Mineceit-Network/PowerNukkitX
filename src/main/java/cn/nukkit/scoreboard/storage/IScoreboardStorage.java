@@ -1,5 +1,7 @@
 package cn.nukkit.scoreboard.storage;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.scoreboard.data.DisplaySlot;
 import cn.nukkit.scoreboard.scoreboard.IScoreboard;
 
@@ -9,8 +11,8 @@ import java.util.Map;
 /**
  * 计分板存储器接口
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.30-r1")
 public interface IScoreboardStorage {
     void saveScoreboard(IScoreboard scoreboard);
 

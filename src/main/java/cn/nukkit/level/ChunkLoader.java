@@ -1,14 +1,16 @@
 package cn.nukkit.level;
 
-import cn.nukkit.level.format.IChunk;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.Vector3;
 
 /**
  * @author MagicDroidX (Nukkit Project)
  */
 public interface ChunkLoader {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     ChunkLoader[] EMPTY_ARRAY = new ChunkLoader[0];
 
     int getLoaderId();
@@ -23,13 +25,13 @@ public interface ChunkLoader {
 
     Level getLevel();
 
-    void onChunkChanged(IChunk chunk);
+    void onChunkChanged(FullChunk chunk);
 
-    void onChunkLoaded(IChunk chunk);
+    void onChunkLoaded(FullChunk chunk);
 
-    void onChunkUnloaded(IChunk chunk);
+    void onChunkUnloaded(FullChunk chunk);
 
-    void onChunkPopulated(IChunk chunk);
+    void onChunkPopulated(FullChunk chunk);
 
     void onBlockChanged(Vector3 block);
 }

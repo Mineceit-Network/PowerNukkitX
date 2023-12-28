@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.netherfortress.structure;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.mob.EntityBlaze;
@@ -23,7 +25,8 @@ import com.google.common.collect.Lists;
 import javax.annotation.Nullable;
 import java.util.List;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class NetherBridgePieces {
 
     private static final BlockState NETHER_BRICKS = new BlockState(Block.NETHER_BRICKS);

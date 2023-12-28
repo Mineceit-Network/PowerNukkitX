@@ -1,5 +1,9 @@
 package cn.nukkit.nbt;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockUnknown;
 import cn.nukkit.block.customblock.CustomBlock;
@@ -33,8 +37,10 @@ import java.util.zip.GZIPInputStream;
 /**
  * A Named Binary Tag library for Nukkit Project
  */
-
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed resource leaks")
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "It's the caller responsibility to close the provided streams")
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed output streams not being finished correctly")
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Added defensive close invocations to byte array streams")
 @Log4j2
 public class NBTIO {
 
@@ -45,7 +51,7 @@ public class NBTIO {
     public static CompoundTag putItemHelper(Item item, Integer slot) {
         CompoundTag tag = new CompoundTag((String) null)
                 .putByte("Count", item.getCount())
-                .putShort("Damage", item.getAux());
+                .putShort("Damage", item.getDamage());
         int id = item.getId();
         if (id == ItemID.STRING_IDENTIFIED_ITEM || Block.ID_TO_CUSTOM_BLOCK.containsKey(255 - id)) {
             tag.putString("Name", item.getNamespaceId());
@@ -63,8 +69,7 @@ public class NBTIO {
         return tag;
     }
 
-    @
-
+    @PowerNukkitXDifference(info = "not limit name and id because the return value of fromString not null")
     public static Item getItemHelper(CompoundTag tag) {
         if (!tag.containsByte("Count")) {
             return Item.get(0);
@@ -75,22 +80,22 @@ public class NBTIO {
         Item item;
         if (tag.containsShort("id")) {
             int id = (short) tag.getShort("id");
-            item = fixWoolItem(id, damage, amount);
+            item = fixItem(id, damage, amount);
             if (item == null) {
                 try {
                     item = Item.get(id, damage, amount);
                 } catch (Exception e) {
                     item = Item.fromString(tag.getString("id"));
-                    if (item.getAux() == 0) {
-                        item.setAux(damage);
+                    if (item.getDamage() == 0) {
+                        item.setDamage(damage);
                     }
                     item.setCount(amount);
                 }
             }
         } else {
             item = Item.fromString(tag.getString("Name"));
-            if (item.getAux() == 0) {
-                item.setAux(damage);
+            if (item.getDamage() == 0) {
+                item.setDamage(damage);
             }
             item.setCount(amount);
         }
@@ -102,34 +107,36 @@ public class NBTIO {
         return item;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public static CompoundTag putBlockHelper(Block block) {
         return putBlockHelper(block, "Block");
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.80-r3")
     public static CompoundTag putBlockHelper(Block block, String nbtName) {
         String[] states = BlockStateRegistry.getKnownBlockStateIdByRuntimeId(block.getRuntimeId()).split(";");
         CompoundTag result = new CompoundTag(nbtName).putString("name", states[0]);
         var nbt = new CompoundTag("", new TreeMap<>());
         if (block instanceof CustomBlock) {
             for (var str : block.getProperties().getNames()) {
-                BlockProperty<?> property = block.getBlockState().getProperty(str);
+                BlockProperty<?> property = block.getCurrentState().getProperty(str);
                 if (property instanceof BooleanBlockProperty) {
-                    nbt.putBoolean(str, block.getBlockState().getBooleanValue(str));
+                    nbt.putBoolean(str, block.getCurrentState().getBooleanValue(str));
                 } else if (property instanceof IntBlockProperty) {
-                    nbt.putInt(str, block.getBlockState().getIntValue(str));
+                    nbt.putInt(str, block.getCurrentState().getIntValue(str));
                 } else if (property instanceof UnsignedIntBlockProperty) {
-                    nbt.putInt(str, block.getBlockState().getIntValue(str));
+                    nbt.putInt(str, block.getCurrentState().getIntValue(str));
                 } else if (property instanceof ArrayBlockProperty<?> arrayBlockProperty) {
                     if (arrayBlockProperty.isOrdinal()) {
                         if (property.getBitSize() > 1) {
-                            nbt.putInt(str, Integer.parseInt(block.getBlockState().getPersistenceValue(str)));
+                            nbt.putInt(str, Integer.parseInt(block.getCurrentState().getPersistenceValue(str)));
                         } else {
-                            nbt.putBoolean(str, !block.getBlockState().getPersistenceValue(str).equals("0"));
+                            nbt.putBoolean(str, !block.getCurrentState().getPersistenceValue(str).equals("0"));
                         }
                     } else {
-                        nbt.putString(str, block.getBlockState().getPersistenceValue(str));
+                        nbt.putString(str, block.getCurrentState().getPersistenceValue(str));
                     }
                 }
             }
@@ -150,7 +157,8 @@ public class NBTIO {
         return result.putInt("version", BlockStateRegistry.blockPaletteVersion.get());
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     @NotNull
     public static Block getBlockHelper(@NotNull CompoundTag block) {
         if (!block.containsString("name")) return Block.get(0);
@@ -185,57 +193,90 @@ public class NBTIO {
     }
 
 
-    private static Item fixWoolItem(int id, int damage, int count) {
-        //TODO 回退之前的方块更新方案，现在有更好的解决方式，下个版本移除这段代码
-        if (damage == 0) {
-            switch (id) {
-                case -552 -> {
-                    return Item.get(35, 8, count);
-                }
-                case -553 -> {
-                    return Item.get(35, 7, count);
-                }
-                case -554 -> {
-                    return Item.get(35, 15, count);
-                }
-                case -555 -> {
-                    return Item.get(35, 12, count);
-                }
-                case -556 -> {
-                    return Item.get(35, 14, count);
-                }
-                case -557 -> {
-                    return Item.get(35, 1, count);
-                }
-                case -558 -> {
-                    return Item.get(35, 4, count);
-                }
-                case -559 -> {
-                    return Item.get(35, 5, count);
-                }
-                case -560 -> {
-                    return Item.get(35, 13, count);
-                }
-                case -561 -> {
-                    return Item.get(35, 9, count);
-                }
-                case -562 -> {
-                    return Item.get(35, 3, count);
-                }
-                case -563 -> {
-                    return Item.get(35, 11, count);
-                }
-                case -564 -> {
-                    return Item.get(35, 10, count);
-                }
-                case -565 -> {
-                    return Item.get(35, 2, count);
-                }
-                case -566 -> {
-                    return Item.get(35, 6, count);
-                }
+    private static Item fixItem(int id, int damage, int count) {
+        //TODO
+
+        switch (id) {
+            case -552 -> {
+                return Item.get(35, 8, count);
+            } 
+            case -553 -> {
+                return Item.get(35, 7, count);
+            }
+            case -554 -> {
+                return Item.get(35, 15, count);
+            }
+            case -555 -> {
+                return Item.get(35, 12, count);
+            }
+            case -556 -> {
+                return Item.get(35, 14, count);
+            }
+            case -557 -> {
+                return Item.get(35, 1, count);
+            }
+            case -558 -> {
+                return Item.get(35, 4, count);
+            }
+            case -559 -> {
+                return Item.get(35, 5, count);
+            }
+            case -560 -> {
+                return Item.get(35, 13, count);
+            }
+            case -561 -> {
+                return Item.get(35, 9, count);
+            }
+            case -562 -> {
+                return Item.get(35, 3, count);
+            }
+            case -563 -> {
+                return Item.get(35, 11, count);
+            }
+            case -564 -> {
+                return Item.get(35, 10, count);
+            }
+            case -565 -> {
+                return Item.get(35, 2, count);
+            }
+            case -566 -> {
+                return Item.get(35, 6, count);
+            } 
+            case -742 -> {
+                return Item.get(5, 4, count);
+            }
+            case -740 -> {
+                return Item.get(5, 2, count);
+            }
+            case -743 -> {
+                return Item.get(5, 5, count);
+            }
+            case -741 -> {
+                return Item.get(5, 3, count);
+            }
+            case -739 -> {
+                return Item.get(5, 1, count);
+            }
+            case -590 -> {
+                return Item.get(1, 1, count);
+            }
+            case -591 -> {
+                return Item.get(1, 2, count);
+            }
+            case -592 -> {
+                return Item.get(1, 3, count);
+            }
+            case -593 -> {
+                return Item.get(1, 4, count);
+            }
+            case -594 -> {
+                return Item.get(1, 5, count);
+            }
+            case -595 -> {
+                return Item.get(1, 6, count);
             }
         }
+
         return Item.get(id, damage, count);
     }
 
@@ -392,14 +433,6 @@ public class NBTIO {
         Tag.writeNamedTag(tag, new NBTOutputStream(outputStream, endianness, network));
     }
 
-    public static void write(Collection<CompoundTag> tags, OutputStream outputStream, ByteOrder endianness, boolean network) throws IOException {
-        try (NBTOutputStream stream = new NBTOutputStream(outputStream, endianness, network)) {
-            for (CompoundTag tag : tags) {
-                Tag.writeNamedTag(tag, stream);
-            }
-        }
-    }
-
     public static byte[] writeNetwork(Tag tag) throws IOException {
         FastByteArrayOutputStream baos = ThreadCache.fbaos.get().reset();
         try (NBTOutputStream stream = new NBTOutputStream(baos, ByteOrder.LITTLE_ENDIAN, true)) {
@@ -481,22 +514,26 @@ public class NBTIO {
      * which do not write/read tag id and name
      */
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public static byte[] writeValue(CompoundTag tag) throws IOException {
         return writeValue(tag, ByteOrder.BIG_ENDIAN);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public static byte[] writeValue(CompoundTag tag, ByteOrder endianness) throws IOException {
         return writeValue(tag, endianness, false);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public static byte[] writeValue(CompoundTag tag, ByteOrder endianness, boolean network) throws IOException {
         return writeValue((Tag) tag, endianness, network);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public static byte[] writeValue(Tag tag, ByteOrder endianness, boolean network) throws IOException {
         FastByteArrayOutputStream baos = ThreadCache.fbaos.get().reset();
         try (NBTOutputStream stream = new NBTOutputStream(baos, endianness, network)) {
@@ -505,7 +542,8 @@ public class NBTIO {
         }
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r3")
     public static CompoundTag readCompoundValue(InputStream inputStream, ByteOrder endianness, boolean network) throws IOException {
         return Tag.readCompoundValue(new NBTInputStream(inputStream, endianness, network));
     }

@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.blockproperty.CommonBlockProperties;
@@ -24,10 +27,12 @@ import static cn.nukkit.blockproperty.CommonBlockProperties.DIRECTION;
  */
 public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceable {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty END_PORTAL_EYE = new BooleanBlockProperty("end_portal_eye_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.CARDINAL_DIRECTION, END_PORTAL_EYE);
 
     public BlockEndPortalFrame() {
@@ -42,8 +47,9 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
     public int getId() {
         return END_PORTAL_FRAME;
     }
-
-
+    
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -65,7 +71,7 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
         return 1;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -92,7 +98,7 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean canBePulled() {
         return false;
     }
@@ -112,7 +118,7 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
         return true;
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public boolean onActivate(@NotNull Item item, Player player) {
         if (!this.isEndPortalEye() && player != null && item.getId() == Item.ENDER_EYE) {
@@ -125,7 +131,7 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
     public void createPortal() {
         Vector3 centerSpot = this.searchCenter(new ArrayList<>());
         if (centerSpot != null) {
@@ -217,8 +223,9 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
     public BlockFace getBlockFace() {
         return getPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public void setBlockFace(BlockFace face) {
         setPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION, face);
@@ -235,12 +242,14 @@ public class BlockEndPortalFrame extends BlockTransparentMeta implements Faceabl
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isEndPortalEye() {
         return getPropertyValue(END_PORTAL_EYE);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setEndPortalEye(boolean endPortalEye) {
         setPropertyValue(END_PORTAL_EYE, endPortalEye);
     }

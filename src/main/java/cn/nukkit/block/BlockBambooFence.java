@@ -1,22 +1,16 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 
-import org.jetbrains.annotations.NotNull;
-
-public class BlockBambooFence extends BlockFence {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:bamboo_fence");
-
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
+public class BlockBambooFence extends BlockFenceBase {
     public BlockBambooFence() {
-        this(PROPERTIES.getDefaultState());
     }
 
-    public BlockBambooFence(BlockState blockstate) {
-        super(blockstate);
+    public int getId() {
+        return BAMBOO_FENCE;
     }
 
     public String getName() {

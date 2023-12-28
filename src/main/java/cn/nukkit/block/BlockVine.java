@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.entity.Entity;
@@ -28,7 +30,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BlockVine extends BlockTransparentMeta {
     private static final IntBlockProperty VINE_DIRECTION_BITS = new IntBlockProperty("vine_direction_bits", false, 15);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(VINE_DIRECTION_BITS);
 
     public BlockVine(int meta) {
@@ -49,7 +52,8 @@ public class BlockVine extends BlockTransparentMeta {
         return VINE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -86,7 +90,7 @@ public class BlockVine extends BlockTransparentMeta {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -108,7 +112,8 @@ public class BlockVine extends BlockTransparentMeta {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
@@ -377,13 +382,13 @@ public class BlockVine extends BlockTransparentMeta {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean sticksToPiston() {
         return false;
     }

@@ -1,23 +1,27 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.nukkit.block.property.CommonBlockProperties.PILLAR_AXIS;
-
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class BlockStrippedBambooBlock extends BlockLog {
-    public static final BlockProperties PROPERTIES = new BlockProperties(STRIPPED_BAMBOO_BLOCK, PILLAR_AXIS);
-
     public BlockStrippedBambooBlock() {
-        this(PROPERTIES.getDefaultState());
+        super(0);
     }
 
-    public BlockStrippedBambooBlock(BlockState blockState) {
-        super(blockState);
+    public BlockStrippedBambooBlock(int meta) {
+        super(meta);
+    }
+
+
+    public int getId() {
+        return STRIPPED_BAMBOO_BLOCK;
     }
 
     public String getName() {
@@ -27,12 +31,12 @@ public class BlockStrippedBambooBlock extends BlockLog {
     @NotNull
     @Override
     public BlockProperties getProperties() {
-        return PROPERTIES;
+        return PILLAR_PROPERTIES;
     }
 
     @Override
     public BlockState getStrippedState() {
-        return getBlockState();
+        return getCurrentState();
     }
 
     @Override

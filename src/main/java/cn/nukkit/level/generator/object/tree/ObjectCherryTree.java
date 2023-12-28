@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.object.tree;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockCherryLeaves;
 import cn.nukkit.block.BlockCherryLog;
 import cn.nukkit.block.BlockID;
@@ -11,7 +13,8 @@ import cn.nukkit.math.NukkitRandom;
 import cn.nukkit.math.Vector3;
 import org.jetbrains.annotations.NotNull;
 
-
+@Since("1.20.0-r2")
+@PowerNukkitXOnly
 public class ObjectCherryTree extends TreeGenerator {
     protected BlockState LOG_Y_AXIS;
     protected BlockState LOG_X_AXIS;
@@ -21,14 +24,14 @@ public class ObjectCherryTree extends TreeGenerator {
     public ObjectCherryTree() {
         var logY = new BlockCherryLog();
         logY.setPillarAxis(BlockFace.Axis.Y);
-        this.LOG_Y_AXIS = logY.getBlockState();
+        this.LOG_Y_AXIS = logY.getCurrentState();
         var logX = new BlockCherryLog();
         logX.setPillarAxis(BlockFace.Axis.X);
-        this.LOG_X_AXIS = logX.getBlockState();
+        this.LOG_X_AXIS = logX.getCurrentState();
         var logZ = new BlockCherryLog();
         logZ.setPillarAxis(BlockFace.Axis.Z);
-        this.LOG_Z_AXIS = logZ.getBlockState();
-        this.LEAVES = new BlockCherryLeaves().getBlockState();
+        this.LOG_Z_AXIS = logZ.getCurrentState();
+        this.LEAVES = new BlockCherryLeaves().getCurrentState();
     }
 
     @Override

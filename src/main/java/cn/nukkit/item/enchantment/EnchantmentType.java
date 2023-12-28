@@ -1,5 +1,6 @@
 package cn.nukkit.item.enchantment;
 
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockCarvedPumpkin;
 import cn.nukkit.item.*;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ public enum EnchantmentType {
     BOW,
     WEARABLE,
     TRIDENT,
-
+    @Since("1.4.0.0-PN") CROSSBOW;
 
     public boolean canEnchantItem(@NotNull Item item) {
         if (this == ALL) {
@@ -59,7 +60,7 @@ public enum EnchantmentType {
                 case FISHING_ROD:
                     return item instanceof ItemFishingRod;
                 case WEARABLE:
-                    return item instanceof ItemSkull || item.getBlockItem() instanceof BlockCarvedPumpkin;
+                    return item instanceof ItemSkull || item.getBlock() instanceof BlockCarvedPumpkin;
                 case TRIDENT:
                     return item instanceof ItemTrident;
                 case CROSSBOW:

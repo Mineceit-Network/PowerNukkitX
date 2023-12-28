@@ -1,6 +1,9 @@
 package cn.nukkit.level;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.Vector3;
@@ -33,7 +36,8 @@ public class MovingObjectPosition {
 
     public Entity entityHit;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static MovingObjectPosition fromBlock(int x, int y, int z, BlockFace face, Vector3 hitVector) {
         MovingObjectPosition objectPosition = new MovingObjectPosition();
         objectPosition.typeOfHit = 0;
@@ -45,7 +49,7 @@ public class MovingObjectPosition {
         return objectPosition;
     }
 
-    
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed: sideHit not being filled")
     @Deprecated
     @DeprecationDetails(since = "1.4.0.0-PN", reason = "Magic number in side param", replaceWith = "fromBlock(int,int,int,BlockFace,Vector3)")
     public static MovingObjectPosition fromBlock(int x, int y, int z, int side, Vector3 hitVector) {
@@ -67,7 +71,8 @@ public class MovingObjectPosition {
         return objectPosition;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     @SuppressWarnings("java:S1874")
     public BlockFace getFaceHit() {
@@ -89,7 +94,8 @@ public class MovingObjectPosition {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @SuppressWarnings("java:S1874")
     public void setFaceHit(@Nullable BlockFace face) {
         if (face == null) {

@@ -1,7 +1,19 @@
 package cn.nukkit.item;
 
-public class ItemCherrySign extends ItemSign {
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.block.BlockCherrySignPost;
+
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
+public class ItemCherrySign extends StringItemBase {
     public ItemCherrySign() {
-        super(CHERRY_SIGN);
+        super("minecraft:cherry_sign", "Cherry Sign");
+        this.block = new BlockCherrySignPost();
+    }
+
+    @Override
+    public int getMaxStackSize() {
+        return 16;
     }
 }

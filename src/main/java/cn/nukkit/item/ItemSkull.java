@@ -24,18 +24,18 @@ public class ItemSkull extends Item {
 
     public ItemSkull(Integer meta, int count) {
         super(SKULL, meta, count, "Skull");
-        this.block = Block.get(Block.SKULL);
+        this.block = Block.get(Block.SKULL_BLOCK);
         updateName();
     }
 
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         updateName();
     }
 
     private void updateName() {
-        name = getItemSkullName(getAux());
+        name = getItemSkullName(getDamage());
     }
 
     public static String getItemSkullName(int meta) {

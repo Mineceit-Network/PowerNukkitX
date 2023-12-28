@@ -1,6 +1,8 @@
 package cn.nukkit.item;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.nbt.tag.ListTag;
@@ -14,6 +16,7 @@ import java.util.Objects;
  * @author PetteriM1
  */
 public class ItemBanner extends Item {
+
     public static final int COMMON_BANNER_TYPE = 0;
     public static final int OMINOUS_BANNER_TYPE = 1;
 
@@ -32,8 +35,8 @@ public class ItemBanner extends Item {
     }
 
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         updateName();
     }
 
@@ -47,14 +50,15 @@ public class ItemBanner extends Item {
     }
 
     public int getBaseColor() {
-        return this.getAux() & 0x0f;
+        return this.getDamage() & 0x0f;
     }
 
     public void setBaseColor(@NotNull DyeColor color) {
-        this.setAux(color.getDyeData() & 0x0f);
+        this.setDamage(color.getDyeData() & 0x0f);
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @NotNull
     public DyeColor getBaseDyeColor() {
         return Objects.requireNonNull(DyeColor.getByDyeData(getBaseColor()));
@@ -97,8 +101,9 @@ public class ItemBanner extends Item {
     public int getPatternsSize() {
         return (this.hasCompoundTag() ? this.getNamedTag() : new CompoundTag()).getList("Patterns").size();
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean hasPattern() {
         return (this.hasCompoundTag() ? this.getNamedTag() : new CompoundTag()).contains("Patterns");
     }

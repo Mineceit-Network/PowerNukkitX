@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityInteractable;
 import cn.nukkit.entity.EntityWalkable;
@@ -104,7 +106,7 @@ public class EntityCreeper extends EntityMob implements EntityWalkable, EntityIn
         return 1.8f;
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public float getFloatingHeight() {
         return 0.6f;
@@ -149,7 +151,8 @@ public class EntityCreeper extends EntityMob implements EntityWalkable, EntityIn
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Creeper";
@@ -163,7 +166,7 @@ public class EntityCreeper extends EntityMob implements EntityWalkable, EntityIn
         return Item.EMPTY_ARRAY;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isPreventingSleep(Player player) {
         return true;

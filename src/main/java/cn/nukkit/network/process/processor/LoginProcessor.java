@@ -2,6 +2,8 @@ package cn.nukkit.network.process.processor;
 
 import cn.nukkit.PlayerHandle;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.data.Skin;
 import cn.nukkit.entity.data.StringEntityData;
@@ -31,8 +33,8 @@ public class LoginProcessor extends DataPacketProcessor<LoginPacket> {
     /**
      * Regular expression for validating player name. Allows only: Number nicknames, letter nicknames, number and letters nicknames, nicknames with underscores, nicknames with space in the middle
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r3")
     private static final Pattern playerNamePattern = Pattern.compile("^(?! )([a-zA-Z0-9_ ]{2,15}[a-zA-Z0-9_])(?<! )$");
 
     @Override

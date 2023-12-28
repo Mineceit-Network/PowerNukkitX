@@ -1,5 +1,7 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.math.BlockVector3;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.utils.Utils;
@@ -138,8 +140,8 @@ public class ClientboundMapItemDataPacket extends DataPacket {
     }
 
     public static class MapDecorator {
-
-
+        @PowerNukkitOnly
+        @Since("1.4.0.0-PN")
         public static final MapDecorator[] EMPTY_ARRAY = new MapDecorator[0];
         
         public byte rotation;

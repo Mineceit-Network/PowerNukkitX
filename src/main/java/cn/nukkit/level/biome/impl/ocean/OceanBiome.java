@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.ocean;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.level.biome.type.WateryBiome;
 import cn.nukkit.level.generator.populator.impl.PopulatorDisk;
@@ -45,7 +47,8 @@ public class OceanBiome extends WateryBiome {
         return "Ocean";
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public int getGroundBlock(int y) {
         if (useNewRakNetGround()) {

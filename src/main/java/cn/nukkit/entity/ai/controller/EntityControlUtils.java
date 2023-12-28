@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.controller;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.ai.memory.CoreMemoryTypes;
 import cn.nukkit.entity.ai.memory.IMemoryStorage;
 import cn.nukkit.math.Vector3;
@@ -9,8 +11,8 @@ import cn.nukkit.math.Vector3;
  * <p>
  * Some general entity motion control methods
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.63-r1")
 public interface EntityControlUtils {
     default Vector3 getLookTarget() {
         return getMemoryStorage().get(CoreMemoryTypes.LOOK_TARGET);
@@ -65,26 +67,26 @@ public interface EntityControlUtils {
     }
 
 //    暂时不使用
-//
-//
+//    @PowerNukkitXOnly
+//    @Since("1.19.50-r1")
 //    public boolean isEnableYaw() {
 //        return getMemoryStorage().get(CoreMemoryTypes.ENABLE_YAW);
 //    }
 //
-//
-//
+//    @PowerNukkitXOnly
+//    @Since("1.19.50-r1")
 //    public void setEnableYaw(boolean enableYaw) {
 //        getMemoryStorage().put(CoreMemoryTypes.ENABLE_YAW, enableYaw);
 //    }
 //
-//
-//
+//    @PowerNukkitXOnly
+//    @Since("1.19.50-r1")
 //    public boolean isEnableHeadYaw() {
 //        return getMemoryStorage().get(CoreMemoryTypes.ENABLE_HEAD_YAW);
 //    }
 //
-//
-//
+//    @PowerNukkitXOnly
+//    @Since("1.19.50-r1")
 //    public void setEnableHeadYaw(boolean enableHeadYaw) {
 //        getMemoryStorage().put(CoreMemoryTypes.ENABLE_HEAD_YAW, enableHeadYaw);
 //    }

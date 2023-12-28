@@ -1,10 +1,13 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.item.ItemTool;
 import cn.nukkit.math.AxisAlignedBB;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockPressurePlateMangrove extends BlockPressurePlateWood {
     public BlockPressurePlateMangrove(int meta) {
         super(meta);

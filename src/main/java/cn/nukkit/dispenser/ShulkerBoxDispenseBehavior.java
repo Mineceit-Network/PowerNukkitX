@@ -1,5 +1,6 @@
 package cn.nukkit.dispenser;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockDispenser;
 import cn.nukkit.block.BlockUndyedShulkerBox;
@@ -8,15 +9,15 @@ import cn.nukkit.level.vibration.VibrationEvent;
 import cn.nukkit.level.vibration.VibrationType;
 import cn.nukkit.math.BlockFace;
 
-
+@PowerNukkitOnly
 public class ShulkerBoxDispenseBehavior extends DefaultDispenseBehavior {
 
-
+    @PowerNukkitOnly
     public ShulkerBoxDispenseBehavior() {
         super();
     }
 
-
+    @PowerNukkitOnly
     @Override
     public Item dispense(BlockDispenser block, BlockFace face, Item item) {
         Block target = block.getSide(face);
@@ -26,7 +27,7 @@ public class ShulkerBoxDispenseBehavior extends DefaultDispenseBehavior {
             return null;
         }
 
-        BlockUndyedShulkerBox shulkerBox = (BlockUndyedShulkerBox) item.getBlockItem().clone();
+        BlockUndyedShulkerBox shulkerBox = (BlockUndyedShulkerBox) item.getBlock().clone();
         shulkerBox.level = block.level;
         shulkerBox.layer = 0;
         shulkerBox.x = target.x;

@@ -2,6 +2,8 @@ package cn.nukkit.network.session;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.network.CompressionProvider;
 import cn.nukkit.network.Network;
 import cn.nukkit.network.RakNetInterface;
@@ -38,7 +40,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-
+@Since("1.19.30-r1")
+@PowerNukkitXOnly
 @Log4j2
 public class RakNetPlayerSession implements NetworkPlayerSession, RakNetSessionListener {
 

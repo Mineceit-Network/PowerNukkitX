@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemEmerald;
 import cn.nukkit.item.ItemTool;
@@ -13,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author xtypr
  * @since 2015/12/1
  */
-
+@PowerNukkitDifference(since = "FUTURE", info = "Extends BlockOre instead of BlockSolid only in PowerNukkit")
 public class BlockOreEmerald extends BlockOre {
 
     public BlockOreEmerald() {
@@ -35,7 +38,8 @@ public class BlockOreEmerald extends BlockOre {
         return ItemTool.TIER_IRON;
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @Nullable
     @Override
     protected MinecraftItemID getRawMaterial() {

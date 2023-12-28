@@ -1,16 +1,21 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 
-
+@Since("1.4.0.0-PN")
+@PowerNukkitOnly
 public class BlockHyphaeWarped extends BlockStem {
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public BlockHyphaeWarped() {
         this(0);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public BlockHyphaeWarped(int meta) {
         super(meta);
     }
@@ -25,10 +30,10 @@ public class BlockHyphaeWarped extends BlockStem {
         return "Warped Hyphae";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public BlockState getStrippedState() {
-        return getBlockState().withBlockId(STRIPPED_WARPED_HYPHAE);
+        return getCurrentState().withBlockId(STRIPPED_WARPED_HYPHAE);
     }
 
 }

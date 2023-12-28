@@ -1,6 +1,10 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockWall.WallConnectionType;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -25,26 +29,32 @@ import java.util.Map;
 import static cn.nukkit.math.VectorMath.calculateAxis;
 import static cn.nukkit.math.VectorMath.calculateFace;
 
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 @Log4j2
-public abstract class BlockWallBase extends BlockTransparent implements BlockConnectable {
-
-
+public abstract class BlockWallBase extends BlockTransparentMeta implements BlockConnectable {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<WallConnectionType> WALL_CONNECTION_TYPE_SOUTH = new ArrayBlockProperty<>("wall_connection_type_south", false, WallConnectionType .class);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<WallConnectionType> WALL_CONNECTION_TYPE_WEST = new ArrayBlockProperty<>("wall_connection_type_west", false, WallConnectionType .class);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<WallConnectionType> WALL_CONNECTION_TYPE_NORTH = new ArrayBlockProperty<>("wall_connection_type_north", false, WallConnectionType .class);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<WallConnectionType> WALL_CONNECTION_TYPE_EAST = new ArrayBlockProperty<>("wall_connection_type_east", false, WallConnectionType .class);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BooleanBlockProperty WALL_POST_BIT = new BooleanBlockProperty("wall_post_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(
             WALL_CONNECTION_TYPE_SOUTH,
             WALL_CONNECTION_TYPE_WEST,
@@ -56,15 +66,18 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
     private static final double MIN_POST_BB =  5.0/16;
     private static final double MAX_POST_BB = 11.0/16;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockWallBase(int meta) {
         super(meta);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public BlockWallBase(){}
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -76,7 +89,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return false;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return false;
@@ -92,7 +106,7 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return 30;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -150,7 +164,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean autoConfigureState() {
         final Number previousMeta = getDataStorage();
 
@@ -178,7 +193,7 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return !getDataStorage().equals(previousMeta);
     }
 
-    
+    @PowerNukkitDifference(info = "Will connect as expected", since = "1.4.0.0-PN")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -190,24 +205,27 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return 0;
     }
 
-    
+    @PowerNukkitDifference(info = "Will be placed on the right state", since = "1.4.0.0-PN")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, @Nullable Player player) {
         autoConfigureState();
         return super.place(item, block, target, face, fx, fy, fz, player);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isWallPost() {
         return getBooleanValue(WALL_POST_BIT);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setWallPost(boolean wallPost) {
         setBooleanValue(WALL_POST_BIT, wallPost);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void clearConnections() {
         setPropertyValue(WALL_CONNECTION_TYPE_EAST, WallConnectionType.NONE);
         setPropertyValue(WALL_CONNECTION_TYPE_WEST, WallConnectionType.NONE);
@@ -215,7 +233,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         setPropertyValue(WALL_CONNECTION_TYPE_SOUTH, WallConnectionType.NONE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Map<BlockFace, WallConnectionType> getWallConnections() {
         EnumMap<BlockFace, WallConnectionType> connections = new EnumMap<>(BlockFace.class);
         for (BlockFace blockFace : BlockFace.Plane.HORIZONTAL) {
@@ -227,7 +246,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return connections;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public WallConnectionType getConnectionType(BlockFace blockFace) {
         switch (blockFace) {
             case NORTH:
@@ -244,6 +264,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
     }
 
 
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean setConnection(BlockFace blockFace, WallConnectionType type) {
         switch (blockFace) {
             case NORTH:
@@ -266,13 +288,14 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
     /**
      * @return true if it should be a post
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void autoUpdatePostFlag() {
         setWallPost(recheckPostConditions(up(1, 0)));
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean hasConnections() {
         return getPropertyValue(WALL_CONNECTION_TYPE_EAST) != WallConnectionType.NONE 
                 || getPropertyValue(WALL_CONNECTION_TYPE_WEST) != WallConnectionType.NONE
@@ -377,7 +400,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return above instanceof BlockSignPost;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isSameHeightStraight() {
         Map<BlockFace, WallConnectionType> connections = getWallConnections();
         if (connections.size() != 2) {
@@ -390,12 +414,14 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return a.getValue() == b.getValue() && a.getKey().getOpposite() == b.getKey();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean connect(BlockFace blockFace) {
         return connect(blockFace, true);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean connect(BlockFace blockFace, boolean recheckPost) {
         if (blockFace.getHorizontalIndex() < 0) {
             return false;
@@ -416,7 +442,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean disconnect(BlockFace blockFace) {
         if (blockFace.getHorizontalIndex() < 0) {
             return false;
@@ -460,7 +487,7 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         );
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean canConnect(Block block) {
         switch (block.getId()) {
@@ -489,7 +516,8 @@ public abstract class BlockWallBase extends BlockTransparent implements BlockCon
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public boolean isConnected(BlockFace face) {
         return getConnectionType(face) != WallConnectionType.NONE;

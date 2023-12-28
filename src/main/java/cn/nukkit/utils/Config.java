@@ -1,6 +1,8 @@
 package cn.nukkit.utils;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.scheduler.FileWriteTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -186,7 +188,8 @@ public class Config {
         return correct;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public boolean loadAsJson(@Nullable InputStream inputStream, @NotNull Gson gson) {
         if (inputStream == null) return false;
         if (this.correct) {
@@ -227,7 +230,8 @@ public class Config {
         return save();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public boolean saveAsJson(@NotNull File file, boolean async, @NotNull Gson gson) {
         this.file = file;
         return saveAsJson(async, gson);
@@ -237,7 +241,8 @@ public class Config {
         return this.save(false);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public boolean saveAsJson(boolean async, @NotNull Gson gson) {
         if (!this.correct) {
             return false;

@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.ItemTool;
@@ -10,23 +12,27 @@ import org.jetbrains.annotations.NotNull;
  * @since 08/06/2021
  */
 
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public abstract class BlockRaw extends BlockSolidMeta {
-
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public static final BlockProperties PROPERTIES = CommonBlockProperties.EMPTY_PROPERTIES;
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockRaw() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockRaw(int meta) {
         super(meta);
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -48,7 +54,8 @@ public abstract class BlockRaw extends BlockSolidMeta {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_STONE;

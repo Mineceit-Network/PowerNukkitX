@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.shipwreck;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.Level;
@@ -30,7 +32,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorShipwreck extends PopulatorStructure implements CallbackableTemplateStructurePopulator {
 
     public static final boolean[] FILTER = new boolean[2048];
@@ -284,7 +287,7 @@ public class PopulatorShipwreck extends PopulatorStructure implements Callbackab
         }
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

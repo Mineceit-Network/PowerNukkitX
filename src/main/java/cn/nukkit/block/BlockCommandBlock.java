@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityCommandBlock;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -16,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import static cn.nukkit.blockproperty.CommonBlockProperties.FACING_DIRECTION;
 
 //special thanks to wode
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockCommandBlock  extends BlockSolidMeta implements Faceable, BlockEntityHolder<BlockEntityCommandBlock>{
 
     public static final BooleanBlockProperty CONDITIONAL_BIT = new BooleanBlockProperty("conditional_bit", false);
@@ -143,14 +146,16 @@ public class BlockCommandBlock  extends BlockSolidMeta implements Faceable, Bloc
         return Math.min(this.getOrCreateBlockEntity().getSuccessCount(), 0xf);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityCommandBlock> getBlockEntityClass() {
         return BlockEntityCommandBlock.class;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public String getBlockEntityType() {

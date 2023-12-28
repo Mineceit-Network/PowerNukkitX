@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
@@ -8,7 +10,8 @@ import cn.nukkit.math.BlockFace;
 import cn.nukkit.math.NukkitRandom;
 import org.jetbrains.annotations.NotNull;
 
-
+@Since("1.6.0.0-PNX")
+@PowerNukkitOnly
 public class BlockBuddingAmethyst extends BlockSolid {
     private static final NukkitRandom RANDOM = new NukkitRandom();
 
@@ -32,20 +35,21 @@ public class BlockBuddingAmethyst extends BlockSolid {
         return 1.5;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return CommonBlockProperties.EMPTY_PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean breaksWhenMoved() {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean sticksToPiston() {
         return false;

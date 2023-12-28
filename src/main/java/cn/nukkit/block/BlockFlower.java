@@ -2,6 +2,9 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BlockProperty;
@@ -21,8 +24,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * @since 2015/11/23
  */
 public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperty<SmallFlowerType> RED_FLOWER_TYPE = new ArrayBlockProperty<>("flower_type", true, new SmallFlowerType[]{
             SmallFlowerType.POPPY,
             SmallFlowerType.ORCHID,
@@ -37,7 +40,8 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
             SmallFlowerType.LILY_OF_THE_VALLEY
     });
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(RED_FLOWER_TYPE);
 
     @Deprecated
@@ -91,7 +95,8 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
         return RED_FLOWER;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -103,12 +108,14 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
         return getFlowerType().getEnglishName();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public SmallFlowerType getFlowerType() {
         return getPropertyValue(RED_FLOWER_TYPE);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     protected void setOnSingleFlowerType(SmallFlowerType acceptsOnly, SmallFlowerType attemptedToSet) {
         if (attemptedToSet == null || attemptedToSet == acceptsOnly) {
             return;
@@ -122,12 +129,14 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
         );
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setFlowerType(SmallFlowerType flowerType) {
         setPropertyValue(RED_FLOWER_TYPE, flowerType);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static boolean isSupportValid(Block block) {
         switch (block.getId()) {
             case GRASS:
@@ -142,7 +151,7 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
         }
     }
 
-
+    @PowerNukkitOnly
     public boolean canPlantOn(Block block) {
         return isSupportValid(block);
     }
@@ -158,7 +167,7 @@ public class BlockFlower extends BlockFlowable implements BlockFlowerPot.FlowerP
         return false;
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Will break on normal update if the supporting block is invalid")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {

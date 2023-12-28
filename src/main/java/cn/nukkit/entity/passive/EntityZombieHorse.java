@@ -1,5 +1,7 @@
 package cn.nukkit.entity.passive;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntitySmite;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.item.Item;
@@ -43,13 +45,14 @@ public class EntityZombieHorse extends EntityAnimal implements EntityWalkable, E
         return new Item[]{Item.get(Item.ROTTEN_FLESH, 1, 1)};
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isUndead() {
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Zombie Horse";

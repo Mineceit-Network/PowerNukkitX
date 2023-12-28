@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.value.MonsterEggStoneType;
@@ -7,12 +9,13 @@ import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockMonsterEgg extends BlockSolidMeta {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final ArrayBlockProperty<MonsterEggStoneType> MONSTER_EGG_STONE_TYPE = new ArrayBlockProperty<>(
             "monster_egg_stone_type", true, MonsterEggStoneType.class);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(MONSTER_EGG_STONE_TYPE);
 
     public static final int STONE = 0;
@@ -44,20 +47,23 @@ public class BlockMonsterEgg extends BlockSolidMeta {
         return MONSTER_EGG;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     @NotNull
     public MonsterEggStoneType getMonsterEggStoneType() {
         return getPropertyValue(MONSTER_EGG_STONE_TYPE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public void setMonsterEggStoneType(@NotNull MonsterEggStoneType value) {
         setPropertyValue(MONSTER_EGG_STONE_TYPE, value);
     }

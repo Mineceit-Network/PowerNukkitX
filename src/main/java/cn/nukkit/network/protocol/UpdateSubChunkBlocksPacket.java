@@ -1,11 +1,14 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.network.protocol.types.BlockChangeEntry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 import java.util.List;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class UpdateSubChunkBlocksPacket extends DataPacket {
     public final int chunkX;
     public final int chunkY;

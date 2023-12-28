@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.value.CoralType;
@@ -12,28 +14,30 @@ import org.jetbrains.annotations.NotNull;
 
 import static cn.nukkit.blockproperty.CommonBlockProperties.PERMANENTLY_DEAD;
 
-
+@PowerNukkitOnly
 public class BlockCoralFanHang extends BlockCoralFan implements Faceable {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final ArrayBlockProperty<CoralType> HANG1_TYPE = new ArrayBlockProperty<>("coral_hang_type_bit", true,
             new CoralType[]{CoralType.BLUE, CoralType.PINK}
     ).ordinal(true);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final ArrayBlockProperty<BlockFace> HANG_DIRECTION = new ArrayBlockProperty<>("coral_direction", false,
             new BlockFace[]{BlockFace.WEST, BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH}
     ).ordinal(true);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(HANG1_TYPE, PERMANENTLY_DEAD, HANG_DIRECTION);
 
-
+    @PowerNukkitOnly
     public BlockCoralFanHang() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockCoralFanHang(int meta) {
         super(meta);
     }
@@ -43,7 +47,8 @@ public class BlockCoralFanHang extends BlockCoralFan implements Faceable {
         return CORAL_FAN_HANG;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -61,7 +66,7 @@ public class BlockCoralFanHang extends BlockCoralFan implements Faceable {
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isDead() {
         return (getDamage() & 0b10) == 0b10;
@@ -76,7 +81,7 @@ public class BlockCoralFanHang extends BlockCoralFan implements Faceable {
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getType() {
         if ((getDamage() & 0b1) == 0) {
@@ -102,7 +107,7 @@ public class BlockCoralFanHang extends BlockCoralFan implements Faceable {
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     public BlockFace getRootsFace() {
         return getBlockFace().getOpposite();

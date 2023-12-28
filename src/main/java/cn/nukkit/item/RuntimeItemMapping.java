@@ -2,6 +2,9 @@ package cn.nukkit.item;
 
 import cn.nukkit.Server;
 import cn.nukkit.api.DoNotModify;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.customblock.CustomBlock;
 import cn.nukkit.item.RuntimeItems.MappingEntry;
 import cn.nukkit.item.customitem.CustomItem;
@@ -39,20 +42,20 @@ public class RuntimeItemMapping {
     private final Int2ObjectMap<LegacyEntry> runtime2Legacy = new Int2ObjectOpenHashMap<>();
     private final Int2ObjectMap<RuntimeEntry> legacy2Runtime = new Int2ObjectOpenHashMap<>();//legacyFullID to Runtime
     private final Map<String, LegacyEntry> identifier2Legacy = new HashMap<>();
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r2")
     private final List<RuntimeEntry> itemPaletteEntries = new ArrayList<>();
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r2")
     private final Int2ObjectMap<String> runtimeId2Name = new Int2ObjectOpenHashMap<>();
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r2")
     private final Object2IntMap<String> name2RuntimeId = new Object2IntOpenHashMap<>();
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r2")
     private final Map<String, Supplier<Item>> namespacedIdItem = new HashMap<>();
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.80-r1")
     private static final BiMap<String, String> blockMappings = HashBiMap.create();
     private byte[] itemPalette;
 
@@ -199,7 +202,8 @@ public class RuntimeItemMapping {
         return this.itemPalette;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void registerCustomItem(CustomItem customItem, Supplier<Item> constructor) {
         var runtimeId = CustomItemDefinition.getRuntimeId(customItem.getNamespaceId());
         RuntimeEntry entry = new RuntimeEntry(
@@ -215,7 +219,8 @@ public class RuntimeItemMapping {
         this.generatePalette();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void deleteCustomItem(CustomItem customItem) {
         this.runtimeId2Name.remove(customItem.getId());
         this.name2RuntimeId.removeInt(customItem.getNamespaceId());
@@ -223,7 +228,8 @@ public class RuntimeItemMapping {
         this.generatePalette();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void registerCustomBlock(List<CustomBlock> blocks) {
         for (var block : blocks) {
             int id = 255 - block.getId();//方块物品id等于 255-方块id(即-750开始递减)
@@ -247,7 +253,8 @@ public class RuntimeItemMapping {
         this.generatePalette();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public void deleteCustomBlock(List<CustomBlock> blocks) {
         for (var block : blocks) {
             this.runtimeId2Name.remove(block.getId());
@@ -279,16 +286,16 @@ public class RuntimeItemMapping {
      * @return The <b>network id</b>
      * @throws IllegalArgumentException If the mapping of the <b>full id</b> to the <b>network id</b> is unknown
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getNetworkId(Item item) {
         if (item instanceof StringItem) {
             return name2RuntimeId.getInt(item.getNamespaceId());
         }
 
-        int fullId = RuntimeItems.getFullId(item.getId(), item.getAux());
-        if (!item.hasMeta() && item.getAux() != 0) { // Fuzzy crafting recipe of a remapped item, like charcoal
-            fullId = RuntimeItems.getFullId(item.getId(), item.getAux());
+        int fullId = RuntimeItems.getFullId(item.getId(), item.getDamage());
+        if (!item.hasMeta() && item.getDamage() != 0) { // Fuzzy crafting recipe of a remapped item, like charcoal
+            fullId = RuntimeItems.getFullId(item.getId(), item.getDamage());
         }
         RuntimeEntry runtimeEntry = legacy2Runtime.get(fullId);
         if (runtimeEntry == null) {
@@ -307,8 +314,8 @@ public class RuntimeItemMapping {
      * @return The <b>full id</b>
      * @throws IllegalArgumentException If the mapping of the <b>full id</b> to the <b>network id</b> is unknown
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getLegacyFullId(int networkId) {
         LegacyEntry legacyEntry = runtime2Legacy.get(networkId);
         if (legacyEntry == null) {
@@ -317,7 +324,8 @@ public class RuntimeItemMapping {
         return legacyEntry.fullID();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public byte[] getItemDataPalette() {
         return this.itemPalette;
     }
@@ -328,8 +336,8 @@ public class RuntimeItemMapping {
      * @param networkId The given <b>network id</b>
      * @return The <b>namespace id</b> or {@code null} if it is unknown
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Nullable
     public String getNamespacedIdByNetworkId(int networkId) {
         return runtimeId2Name.get(networkId);
@@ -341,8 +349,8 @@ public class RuntimeItemMapping {
      * @param namespaceId The given <b>namespaced id</b>
      * @return A <b>network id</b> wrapped in {@link OptionalInt} or an empty {@link OptionalInt} if it is unknown
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public OptionalInt getNetworkIdByNamespaceId(@NotNull String namespaceId) {
         int id = name2RuntimeId.getOrDefault(namespaceId, -1);
@@ -358,8 +366,8 @@ public class RuntimeItemMapping {
      * @return The correct {@link Item} instance with the write <b>item id</b> and <b>item damage</b> values.
      * @throws IllegalArgumentException If there are unknown mappings in the process.
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Item getItemByNamespaceId(@NotNull String namespaceId, int amount) {
         Supplier<Item> constructor = this.namespacedIdItem.get(namespaceId.toLowerCase(Locale.ENGLISH));
@@ -396,15 +404,15 @@ public class RuntimeItemMapping {
 
 
     @SneakyThrows
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.70-r2")
     public void registerNamespacedIdItem(@NotNull Class<? extends StringItem> item) {
         Constructor<? extends StringItem> declaredConstructor = item.getDeclaredConstructor();
         var Item = declaredConstructor.newInstance();
         registerNamespacedIdItem(Item.getNamespaceId(), stringItemSupplier(declaredConstructor));
     }
 
-
+    @PowerNukkitOnly
     public void registerNamespacedIdItem(@NotNull String namespacedId, @NotNull Constructor<? extends Item> constructor) {
         Preconditions.checkNotNull(namespacedId, "namespacedId is null");
         Preconditions.checkNotNull(constructor, "constructor is null");
@@ -412,7 +420,7 @@ public class RuntimeItemMapping {
     }
 
     @SneakyThrows
-
+    @PowerNukkitOnly
     public void registerNamespacedIdItem(@NotNull String namespacedId, @NotNull Supplier<Item> constructor) {
         Preconditions.checkNotNull(namespacedId, "namespacedId is null");
         Preconditions.checkNotNull(constructor, "constructor is null");
@@ -420,8 +428,8 @@ public class RuntimeItemMapping {
     }
 
     @DoNotModify
-
-
+    @Since("1.19.80-r1")
+    @PowerNukkitXOnly
     public static BiMap<String, String> getBlockMapping() {
         return blockMappings;
     }
@@ -437,7 +445,8 @@ public class RuntimeItemMapping {
         };
     }
 
-
+    @Since("1.19.60-r1")
+    @PowerNukkitXOnly
     @NotNull
     private static Supplier<Item> stringItemSupplier(@NotNull Constructor<? extends StringItem> constructor) {
         return () -> {

@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.entity.Entity;
@@ -31,7 +33,8 @@ public class BlockCobweb extends BlockFlowable {
         return COBWEB;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -53,7 +56,7 @@ public class BlockCobweb extends BlockFlowable {
         return ItemTool.TYPE_SWORD;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -84,7 +87,7 @@ public class BlockCobweb extends BlockFlowable {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean diffusesSkyLight() {
         return true;

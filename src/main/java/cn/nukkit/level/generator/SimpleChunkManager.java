@@ -1,6 +1,9 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.format.FullChunk;
@@ -21,7 +24,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
         return getBlockIdAt(x, y, z, 0);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getBlockIdAt(int x, int y, int z, int layer) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -31,7 +34,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
         return 0;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public BlockState getBlockStateAt(int x, int y, int z, int layer) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -46,7 +49,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
         setBlockIdAt(x, y, z, 0, id);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void setBlockIdAt(int x, int y, int z, int layer, int id) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -64,7 +67,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
 
     @Deprecated
     @DeprecationDetails(reason = "The meta is limited to 32 bits", since = "1.4.0.0-PN")
-
+    @PowerNukkitOnly
     @Override
     public boolean setBlockAtLayer(int x, int y, int z, int layer, int id, int data) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -83,7 +86,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
 
     @Deprecated
     @DeprecationDetails(reason = "The meta is limited to 32 bits", since = "1.4.0.0-PN")
-
+    @PowerNukkitOnly
     @Override
     public void setBlockFullIdAt(int x, int y, int z, int layer, int fullId) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -92,7 +95,8 @@ public abstract class SimpleChunkManager implements ChunkManager {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public boolean setBlockStateAt(int x, int y, int z, int layer, BlockState state) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -111,7 +115,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
 
     @Deprecated
     @DeprecationDetails(reason = "The meta is limited to 32 bits", since = "1.4.0.0-PN")
-
+    @PowerNukkitOnly
     @Override
     public int getBlockDataAt(int x, int y, int z, int layer) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -130,7 +134,7 @@ public abstract class SimpleChunkManager implements ChunkManager {
 
     @Deprecated
     @DeprecationDetails(reason = "The meta is limited to 32 bits", since = "1.4.0.0-PN")
-
+    @PowerNukkitOnly
     @Override
     public void setBlockDataAt(int x, int y, int z, int layer, int data) {
         FullChunk chunk = this.getChunk(x >> 4, z >> 4);
@@ -157,7 +161,8 @@ public abstract class SimpleChunkManager implements ChunkManager {
         this.seed = seed;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     private int ensureY(final int y, final FullChunk chunk) {
         if (chunk.isOverWorld()) {
             return Math.max(Math.min(y, 319), -64);

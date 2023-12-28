@@ -2,6 +2,9 @@ package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.API;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.enchantment.Enchantment;
@@ -14,26 +17,28 @@ import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
-
+@PowerNukkitOnly
 public class GrindstoneInventory extends FakeBlockUIComponent {
-
+    @PowerNukkitOnly
     public static final int OFFSET = 16;
     
     private static final int SLOT_FIRST_ITEM = 0;
     private static final int SLOT_SECOND_ITEM = 1;
     private static final int SLOT_RESULT = 50 - OFFSET;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @API(usage = API.Usage.INCUBATING, definition = API.Definition.INTERNAL)
     public static final int GRINDSTONE_EQUIPMENT_UI_SLOT = OFFSET + SLOT_FIRST_ITEM;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @API(usage = API.Usage.INCUBATING, definition = API.Definition.INTERNAL)
     public static final int GRINDSTONE_INGREDIENT_UI_SLOT = OFFSET + SLOT_SECOND_ITEM;
 
     private int resultExperience;
 
-
+    @PowerNukkitOnly
     public GrindstoneInventory(PlayerUIInventory playerUI, Position position) {
         super(playerUI, InventoryType.GRINDSTONE, OFFSET, position);
     }
@@ -68,47 +73,47 @@ public class GrindstoneInventory extends FakeBlockUIComponent {
         who.craftingType = Player.CRAFTING_GRINDSTONE;
     }
 
-
+    @PowerNukkitOnly
     public Item getFirstItem() {
         return getItem(SLOT_FIRST_ITEM);
     }
 
-
+    @PowerNukkitOnly
     public Item getSecondItem() {
         return getItem(SLOT_SECOND_ITEM);
     }
 
-
+    @PowerNukkitOnly
     public Item getResult() {
         return getItem(2);
     }
 
-
+    @PowerNukkitOnly
     public boolean setFirstItem(Item item, boolean send) {
         return setItem(SLOT_FIRST_ITEM, item, send);
     }
 
-
+    @PowerNukkitOnly
     public boolean setFirstItem(Item item) {
         return setFirstItem(item, true);
     }
 
-
+    @PowerNukkitOnly
     public boolean setSecondItem(Item item, boolean send) {
         return setItem(SLOT_SECOND_ITEM, item, send);
     }
 
-
+    @PowerNukkitOnly
     public boolean setSecondItem(Item item) {
         return setSecondItem(item, true);
     }
 
-
+    @PowerNukkitOnly
     public boolean setResult(Item item, boolean send) {
         return setItem(2, item, send);
     }
 
-
+    @PowerNukkitOnly
     public boolean setResult(Item item) {
         return setResult(item, true);
     }
@@ -125,7 +130,7 @@ public class GrindstoneInventory extends FakeBlockUIComponent {
         }
     }
 
-
+    @PowerNukkitOnly
     public boolean updateResult(boolean send) {
         Item firstItem = getFirstItem();
         Item secondItem = getSecondItem();
@@ -165,18 +170,19 @@ public class GrindstoneInventory extends FakeBlockUIComponent {
         
         result.setCompoundTag(tag);
         if (!secondItem.isNull() && firstItem.getMaxDurability() > 0) {
-            int first = firstItem.getMaxDurability() - firstItem.getAux();
-            int second = secondItem.getMaxDurability() - secondItem.getAux();
+            int first = firstItem.getMaxDurability() - firstItem.getDamage();
+            int second = secondItem.getMaxDurability() - secondItem.getDamage();
             int reduction = first + second + firstItem.getMaxDurability() * 5 / 100;
             int resultingDamage = Math.max(firstItem.getMaxDurability() - reduction + 1, 0);
-            result.setAux(resultingDamage);
+            result.setDamage(resultingDamage);
         }
         setResult(result, send);
         recalculateResultExperience();
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void recalculateResultExperience() {
         if (getResult().isNull()) {
             setResultExperience(0);
@@ -227,7 +233,8 @@ public class GrindstoneInventory extends FakeBlockUIComponent {
         return super.getItem(index);
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     @Override
     public Item getUnclonedItem(int index) {
         if (index < 0 || index > 3) {
@@ -253,12 +260,14 @@ public class GrindstoneInventory extends FakeBlockUIComponent {
         return super.setItem(index, item, send);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public int getResultExperience() {
         return resultExperience;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setResultExperience(int returnLevels) {
         this.resultExperience = returnLevels;
     }

@@ -1,12 +1,11 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.Server;
-import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.*;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.level.Position;
 import cn.nukkit.level.format.FullChunk;
-import cn.nukkit.level.format.IChunk;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.scheduler.Task;
@@ -29,8 +28,8 @@ public abstract class BlockEntity extends Position {
     public static final String CHEST = "Chest";
     public static final String ENDER_CHEST = "EnderChest";
     public static final String FURNACE = "Furnace";
-    public static final String BLAST_FURNACE = "BlastFurnace";
-
+    @PowerNukkitOnly public static final String BLAST_FURNACE = "BlastFurnace";
+    @PowerNukkitOnly
     public static final String SMOKER = "Smoker";
     public static final String SIGN = "Sign";
     public static final String HANGING_SIGN = "HangingSign";
@@ -42,8 +41,8 @@ public abstract class BlockEntity extends Position {
     public static final String DAYLIGHT_DETECTOR = "DaylightDetector";
     public static final String MUSIC = "Music";
     public static final String ITEM_FRAME = "ItemFrame";
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public static final String GLOW_ITEM_FRAME = "GlowItemFrame";
     public static final String CAULDRON = "Cauldron";
     public static final String BEACON = "Beacon";
@@ -55,40 +54,40 @@ public abstract class BlockEntity extends Position {
     public static final String JUKEBOX = "Jukebox";
     public static final String SHULKER_BOX = "ShulkerBox";
     public static final String BANNER = "Banner";
-    public static final String LECTERN = "Lectern";
-    public static final String BEEHIVE = "Beehive";
-    public static final String CONDUIT = "Conduit";
-    public static final String BARREL = "Barrel";
-    public static final String CAMPFIRE = "Campfire";
-    public static final String BELL = "Bell";
-    public static final String DISPENSER = "Dispenser";
-    public static final String DROPPER = "Dropper";
-
-
-
-
-
-
-
-
-
-
+    @PowerNukkitOnly public static final String LECTERN = "Lectern";
+    @PowerNukkitOnly public static final String BEEHIVE = "Beehive";
+    @PowerNukkitOnly public static final String CONDUIT = "Conduit";
+    @PowerNukkitOnly public static final String BARREL = "Barrel";
+    @PowerNukkitOnly public static final String CAMPFIRE = "Campfire";
+    @PowerNukkitOnly public static final String BELL = "Bell";
+    @PowerNukkitOnly public static final String DISPENSER = "Dispenser";
+    @PowerNukkitOnly public static final String DROPPER = "Dropper";
+    @PowerNukkitOnly @Since("1.4.0.0-PN") public static final String NETHER_REACTOR = "NetherReactor";
+    @PowerNukkitOnly @Since("1.4.0.0-PN") public static final String LODESTONE = "Lodestone";
+    @PowerNukkitOnly @Since("1.4.0.0-PN") public static final String TARGET = "Target";
+    @PowerNukkitOnly @Since("FUTURE") public static final String END_PORTAL = "EndPortal";
+    @PowerNukkitOnly @Since("FUTURE") public static final String END_GATEWAY = "EndGateway";
+    @PowerNukkitOnly @Since("1.6.0.0-PNX") public static final String COMMAND_BLOCK = "CommandBlock";
+    @PowerNukkitOnly @Since("1.6.0.0-PNX") public static final String SCULK_SENSOR = "SculkSensor";
+    @PowerNukkitOnly @Since("1.6.0.0-PNX") public static final String SCULK_CATALYST = "SculkCatalyst";
+    @PowerNukkitOnly
+    @Since("1.6.0.0-PNX")
     public static final String SCULK_SHRIEKER = "SculkShrieker";
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public static final String STRUCTURE_BLOCK = "StructureBlock";
-
-
+    @PowerNukkitXOnly
+    @Since("1.20.0-r2")
     public static final String CHISELED_BOOKSHELF = "ChiseledBookshelf";
-
-
+    @PowerNukkitXOnly
+    @Since("1.20.50-r1")
     public static final String DECORATED_POT = "DecoratedPot";
 
     public static long count = 1;
 
     private static final BiMap<String, Class<? extends BlockEntity>> knownBlockEntities = HashBiMap.create(35);
 
-    public IChunk chunk;
+    public FullChunk chunk;
     public String name;
     public long id;
 
@@ -97,7 +96,7 @@ public abstract class BlockEntity extends Position {
     public boolean closed = false;
     public CompoundTag namedTag;
     @Deprecated @DeprecationDetails(since = "1.3.1.2-PN", reason = "Not necessary and causes slowdown")
-    
+    @PowerNukkitDifference(info = "Not updated anymore", since = "1.3.1.2-PN")
     protected long lastUpdate;
     protected Server server;
 
@@ -133,7 +132,7 @@ public abstract class BlockEntity extends Position {
         this.getLevel().addBlockEntity(this);
     }
 
-    
+    @PowerNukkitXInternal
     public static void init() {
         registerBlockEntity(FURNACE, BlockEntityFurnace.class);
         registerBlockEntity(CHEST, BlockEntityChest.class);
@@ -187,17 +186,17 @@ public abstract class BlockEntity extends Position {
         loadNBT();
     }
 
-
+    @PowerNukkitOnly
     public static BlockEntity createBlockEntity(String type, Position position, Object... args) {
         return createBlockEntity(type, position, BlockEntity.getDefaultCompound(position, type), args);
     }
 
-
+    @PowerNukkitOnly
     public static BlockEntity createBlockEntity(String type, Position pos, CompoundTag nbt, Object... args) {
         return createBlockEntity(type, pos.getLevel().getChunk(pos.getFloorX() >> 4, pos.getFloorZ() >> 4), nbt, args);
     }
 
-    public static BlockEntity createBlockEntity(String type, IChunk chunk, CompoundTag nbt, Object... args) {
+    public static BlockEntity createBlockEntity(String type, FullChunk chunk, CompoundTag nbt, Object... args) {
         BlockEntity blockEntity = null;
 
         Class<? extends BlockEntity> clazz = knownBlockEntities.get(type);
@@ -281,8 +280,8 @@ public abstract class BlockEntity extends Position {
     /**
      * 从方块实体的namedtag中读取数据
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public void loadNBT() {}
 
     public CompoundTag getCleanedNBT() {
@@ -327,7 +326,7 @@ public abstract class BlockEntity extends Position {
 
     }
 
-
+    @PowerNukkitOnly
     public void onBreak(boolean isSilkTouch) {
         onBreak();
     }
@@ -350,8 +349,8 @@ public abstract class BlockEntity extends Position {
     /**
      * Indicates if an observer blocks that are looking at this block should blink when {@link #setDirty()} is called.
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isObservable() {
         return true;
     }
@@ -372,7 +371,7 @@ public abstract class BlockEntity extends Position {
                 .putInt("z", pos.getFloorZ());
     }
 
-
+    @PowerNukkitOnly
     @Nullable
     @Override
     public final BlockEntity getLevelBlockEntity() {

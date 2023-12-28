@@ -1,5 +1,7 @@
 package cn.nukkit.command.defaults;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
@@ -17,7 +19,8 @@ import java.util.Map;
 
 import static cn.nukkit.utils.Utils.getLevelBlocks;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class CloneCommand extends VanillaCommand {
 
     public CloneCommand(String name) {
@@ -42,7 +45,7 @@ public class CloneCommand extends VanillaCommand {
         this.enableParamTree();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         var list = result.getValue();

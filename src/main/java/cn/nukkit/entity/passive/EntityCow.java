@@ -1,6 +1,8 @@
 package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.entity.ai.behavior.Behavior;
 import cn.nukkit.entity.ai.behaviorgroup.BehaviorGroup;
@@ -81,7 +83,8 @@ public class EntityCow extends EntityAnimal implements EntityWalkable {
         return 1.3f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Cow";
@@ -112,7 +115,7 @@ public class EntityCow extends EntityAnimal implements EntityWalkable {
             return true;
         }
 
-        if (item.getId() == Item.BUCKET && item.getAux() == 0) {
+        if (item.getId() == Item.BUCKET && item.getDamage() == 0) {
             item.count--;
             player.getInventory().addItem(Item.get(Item.BUCKET, 1));
             return true;

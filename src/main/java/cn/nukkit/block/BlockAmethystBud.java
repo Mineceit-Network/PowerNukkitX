@@ -1,6 +1,11 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
 import cn.nukkit.item.ItemTool;
@@ -11,12 +16,15 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
-import static cn.nukkit.block.property.CommonBlockProperties.MINECRAFT_BLOCK_FACE;
+import static cn.nukkit.blockproperty.CommonBlockProperties.BLOCK_FACE;
+import static cn.nukkit.blockproperty.CommonBlockProperties.FACING_DIRECTION;
 
-public abstract class BlockAmethystBud extends BlockTransparent implements Faceable {
-    protected BlockAmethystBud(BlockState blockState) {
-        super(blockState);
-    }
+@Since("1.6.0.0-PNX")
+@PowerNukkitOnly
+public abstract class BlockAmethystBud extends BlockTransparentMeta implements Faceable {
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    public static final BlockProperties PROPERTIES = new BlockProperties(BLOCK_FACE);
 
     @Override
     public String getName() {
@@ -25,6 +33,10 @@ public abstract class BlockAmethystBud extends BlockTransparent implements Facea
 
     protected abstract String getNamePrefix();
 
+    @Override
+    public abstract int getId();
+
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -48,7 +60,8 @@ public abstract class BlockAmethystBud extends BlockTransparent implements Facea
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public int getToolTier() {
         return ItemTool.TIER_IRON;
@@ -64,15 +77,24 @@ public abstract class BlockAmethystBud extends BlockTransparent implements Facea
         return false;
     }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    @NotNull
     @Override
-    public BlockFace getBlockFace() {
-        return getPropertyValue(MINECRAFT_BLOCK_FACE);
+    public BlockProperties getProperties() {
+        return PROPERTIES;
     }
 
+    @Override
+    public BlockFace getBlockFace() {
+        return getPropertyValue(BLOCK_FACE);
+    }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     @Override
     public void setBlockFace(BlockFace face) {
-        setPropertyValue(MINECRAFT_BLOCK_FACE, face);
+        setPropertyValue(BLOCK_FACE, face);
     }
 
     @Override
@@ -97,7 +119,7 @@ public abstract class BlockAmethystBud extends BlockTransparent implements Facea
 
     @Override
     public int onUpdate(int type) {
-        if ((this.getSide(this.getBlockFace().getOpposite()).isAir()))
+        if ((this.getSide(this.getBlockFace().getOpposite()).getId() == BlockID.AIR))
             this.onBreak(Item.get(ItemID.DIAMOND_PICKAXE));
         return 0;
     }

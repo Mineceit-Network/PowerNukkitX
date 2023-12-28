@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BlockProperty;
@@ -10,11 +12,12 @@ import org.jetbrains.annotations.NotNull;
 
 
 public class BlockPrismarine extends BlockSolidMeta {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperty<PrismarineBlockType> PRISMARINE_BLOCK_TYPE = new ArrayBlockProperty<>("prismarine_block_type", true, PrismarineBlockType.class);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(PRISMARINE_BLOCK_TYPE);
 
     @Deprecated
@@ -40,7 +43,8 @@ public class BlockPrismarine extends BlockSolidMeta {
         return PRISMARINE;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -67,18 +71,20 @@ public class BlockPrismarine extends BlockSolidMeta {
         return getPrismarineBlockType().getEnglishName();
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public void setPrismarineBlockType(PrismarineBlockType prismarineBlockType) {
         setPropertyValue(PRISMARINE_BLOCK_TYPE, prismarineBlockType);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public PrismarineBlockType getPrismarineBlockType() {
         return getPropertyValue(PRISMARINE_BLOCK_TYPE);
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }

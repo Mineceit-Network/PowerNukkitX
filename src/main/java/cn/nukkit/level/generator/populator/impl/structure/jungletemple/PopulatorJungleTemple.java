@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.jungletemple;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.biome.EnumBiome;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.level.generator.populator.impl.structure.jungletemple.structure.JungleTemple;
@@ -7,7 +9,8 @@ import cn.nukkit.level.generator.populator.impl.structure.utils.populator.Popula
 import cn.nukkit.level.generator.populator.impl.structure.utils.structure.ScatteredStructurePiece;
 import cn.nukkit.math.NukkitRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorJungleTemple extends PopulatorScatteredStructure {
 
     @Override

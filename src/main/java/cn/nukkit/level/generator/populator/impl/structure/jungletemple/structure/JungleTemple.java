@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.jungletemple.structure;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.ChunkManager;
@@ -14,7 +16,8 @@ import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class JungleTemple extends ScatteredStructurePiece {
 
     public JungleTemple(BlockVector3 pos) {

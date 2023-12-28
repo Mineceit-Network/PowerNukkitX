@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.loot;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.math.NukkitRandom;
 import cn.nukkit.nbt.NBTIO;
@@ -11,7 +13,8 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class RandomizableContainer {
 
     protected final Map<List<ItemEntry>, RollEntry> pools;

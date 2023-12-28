@@ -1,14 +1,19 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockPressurePlateBlackstonePolished extends BlockPressurePlateStone {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockPressurePlateBlackstonePolished() {
         // Does nothing
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockPressurePlateBlackstonePolished(int meta) {
         super(meta);
     }

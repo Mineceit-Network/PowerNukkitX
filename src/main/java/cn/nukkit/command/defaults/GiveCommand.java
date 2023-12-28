@@ -51,7 +51,7 @@ public class GiveCommand extends VanillaCommand {
             log.addError("commands.give.item.notFound", item.getDisplayName()).output();
             return 0;
         }
-        if (item instanceof ItemBlock && item.getBlockItem() instanceof BlockUnknown) {
+        if (item instanceof ItemBlock && item.getBlock() instanceof BlockUnknown) {
             log.addError("commands.give.block.notFound", item.getDisplayName()).output();
             return 0;
         }
@@ -66,7 +66,7 @@ public class GiveCommand extends VanillaCommand {
         }
         if (list.hasResult(3)) {
             int damage = list.getResult(3);
-            item.setAux(damage);
+            item.setDamage(damage);
         }
         if (list.hasResult(4)) {
             String json = list.getResult(4);
@@ -98,10 +98,10 @@ public class GiveCommand extends VanillaCommand {
             for (Item drop : drops) {
                 player.dropItem(drop);
             }
-            log.outputObjectWhisper(player, "commands.give.successRecipient", item.getDisplayName() + " (" + item.getNamespaceId() + (item.getAux() != 0 ? ":" + item.getAux() : "") + ")",
+            log.outputObjectWhisper(player, "commands.give.successRecipient", item.getDisplayName() + " (" + item.getNamespaceId() + (item.getDamage() != 0 ? ":" + item.getDamage() : "") + ")",
                     String.valueOf(item.getCount()));
         }
-        log.addSuccess("commands.give.success", item.getDisplayName() + " (" + item.getNamespaceId() + (item.getAux() != 0 ? ":" + item.getAux() : "") + ")",
+        log.addSuccess("commands.give.success", item.getDisplayName() + " (" + item.getNamespaceId() + (item.getDamage() != 0 ? ":" + item.getDamage() : "") + ")",
                 String.valueOf(item.getCount()),
                 players.stream().map(Player::getName).collect(Collectors.joining(","))).successCount(players.size()).output(true);
         return players.size();

@@ -1,11 +1,12 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitOnly
 public class BlockFletchingTable extends BlockSolid {
 
-
+    @PowerNukkitOnly
     public BlockFletchingTable() {
     }
 

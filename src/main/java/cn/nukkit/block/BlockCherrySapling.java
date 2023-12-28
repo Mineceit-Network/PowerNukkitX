@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.event.level.StructureGrowEvent;
 import cn.nukkit.item.Item;
@@ -16,17 +19,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@Since("1.20.0-r2")
+@PowerNukkitXOnly
 public class BlockCherrySapling extends BlockFlowable implements BlockFlowerPot.FlowerPotBlock {
 
     public static final BlockProperties PROPERTIES = new BlockProperties(BlockSapling.AGED);
 
-
+    @PowerNukkitOnly
     public BlockCherrySapling() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockCherrySapling(int meta) {
         super(meta);
     }
@@ -36,7 +40,8 @@ public class BlockCherrySapling extends BlockFlowable implements BlockFlowerPot.
         return CHERRY_SAPLING;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

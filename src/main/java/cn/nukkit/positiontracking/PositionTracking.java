@@ -1,5 +1,7 @@
 package cn.nukkit.positiontracking;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 import cn.nukkit.math.BlockFace;
@@ -11,51 +13,59 @@ import javax.annotation.Nullable;
 /**
  * @author joserobjr
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class PositionTracking extends NamedPosition {
     @NotNull
     private String levelName;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull String levelName, double x, double y, double z) {
         super(x, y, z);
         this.levelName = levelName;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull Level level, double x, double y, double z) {
         this(level.getName(), x, y, z);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull Level level, Vector3 v) {
         this(level, v.x, v.y, v.z);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull String levelName, Vector3 v) {
         this(levelName, v.x, v.y, v.z);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull Position pos) {
         this(pos.getLevel(), pos.x, pos.y, pos.z);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public PositionTracking(@NotNull NamedPosition pos) {
         this(pos.getLevelName(), pos.x, pos.y, pos.z);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getLevelName() {
         return levelName;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setLevelName(@NotNull String levelName) {
         this.levelName = levelName;
     }
@@ -243,7 +253,8 @@ public class PositionTracking extends NamedPosition {
         return this;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public PositionTracking setComponents(Vector3 pos) {
         super.setComponents(pos);

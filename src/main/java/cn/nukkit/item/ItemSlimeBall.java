@@ -3,17 +3,17 @@ package cn.nukkit.item;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-public class ItemSlimeBall extends Item {
+public class ItemSlimeball extends Item {
 
-    public ItemSlimeBall() {
+    public ItemSlimeball() {
         this(0, 1);
     }
 
-    public ItemSlimeBall(Integer meta) {
+    public ItemSlimeball(Integer meta) {
         this(meta, 1);
     }
 
-    public ItemSlimeBall(Integer meta, int count) {
-        super(SLIME_BALL, meta, count);
+    public ItemSlimeball(Integer meta, int count) {
+        super(SLIMEBALL, meta, count, "Slimeball");
     }
 }

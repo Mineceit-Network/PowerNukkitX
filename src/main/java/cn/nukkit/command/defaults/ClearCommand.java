@@ -1,6 +1,8 @@
 package cn.nukkit.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
@@ -14,7 +16,8 @@ import cn.nukkit.item.Item;
 import java.util.List;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class ClearCommand extends VanillaCommand {
 
     public ClearCommand(String name) {
@@ -48,7 +51,7 @@ public class ClearCommand extends VanillaCommand {
                             maxCount = list.getResult(3);
                         }
                     }
-                    item.setAux(data);
+                    item.setDamage(data);
                 }
             }
 

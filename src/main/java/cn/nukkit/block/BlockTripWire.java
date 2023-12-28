@@ -2,6 +2,9 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.blockproperty.CommonBlockProperties;
@@ -25,17 +28,20 @@ import static cn.nukkit.blockproperty.CommonBlockProperties.POWERED;
 public class BlockTripWire extends BlockTransparentMeta {
     @Deprecated(since = "1.20.0-r2",forRemoval = true)
     @DeprecationDetails(since = "1.20.0-r2", reason = "replace to CommonBlockProperties")
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty ATTACHED = new BooleanBlockProperty("attached_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty DISARMED = new BooleanBlockProperty("disarmed_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty SUSPENDED = new BooleanBlockProperty("suspended_bit", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(POWERED, SUSPENDED, CommonBlockProperties.ATTACHED, DISARMED);
 
     public BlockTripWire(int meta) {
@@ -51,7 +57,8 @@ public class BlockTripWire extends BlockTransparentMeta {
         return TRIP_WIRE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -68,7 +75,7 @@ public class BlockTripWire extends BlockTransparentMeta {
         return true;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;
@@ -129,7 +136,7 @@ public class BlockTripWire extends BlockTransparentMeta {
         }
     }
 
-    
+    @PowerNukkitDifference(info = "Trigger observer.", since = "1.4.0.0-PN")
     @Override
     public void onEntityCollide(Entity entity) {
         if (!this.level.getServer().isRedstoneEnabled()) {
@@ -181,7 +188,7 @@ public class BlockTripWire extends BlockTransparentMeta {
         }
     }
 
-    
+    @PowerNukkitDifference(info = "Trigger observer.", since = "1.4.0.0-PN")
     @Override
     public int onUpdate(int type) {
         if (!this.level.getServer().isRedstoneEnabled()) {

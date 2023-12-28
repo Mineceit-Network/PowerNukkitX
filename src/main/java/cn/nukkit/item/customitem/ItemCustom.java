@@ -1,6 +1,10 @@
 package cn.nukkit.item.customitem;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
+import cn.nukkit.item.StringItem;
+import cn.nukkit.item.StringItemBase;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -12,6 +16,8 @@ import javax.annotation.Nullable;
  *
  * @author lt_name
  */
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public abstract class ItemCustom extends StringItemBase implements CustomItem {
     private final String textureName;
 

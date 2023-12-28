@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.UnsignedIntBlockProperty;
 import org.jetbrains.annotations.NotNull;
@@ -8,11 +10,12 @@ import org.jetbrains.annotations.NotNull;
  * @author MagicDroidX (Nukkit Project)
  */
 public class BlockUnknown extends BlockMeta {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final UnsignedIntBlockProperty UNKNOWN = new UnsignedIntBlockProperty("nukkit-unknown", true, 0xFFFFFFFF);
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(UNKNOWN);
 
     private final int id;
@@ -29,7 +32,8 @@ public class BlockUnknown extends BlockMeta {
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public BlockUnknown(int id, Number meta) {
         super(0);
         this.id = id;
@@ -38,7 +42,8 @@ public class BlockUnknown extends BlockMeta {
         }
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

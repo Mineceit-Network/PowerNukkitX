@@ -1,11 +1,14 @@
 package cn.nukkit.level.generator.task;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.scheduler.Task;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class TileSyncTask extends Task {
 
     public final String type;

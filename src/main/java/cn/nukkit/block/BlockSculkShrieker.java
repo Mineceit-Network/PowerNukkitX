@@ -1,5 +1,8 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntitySculkShrieker;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -7,7 +10,8 @@ import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.item.ItemTool;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockSculkShrieker extends BlockSolid implements BlockEntityHolder<BlockEntitySculkShrieker> {
 
     public static final BooleanBlockProperty ACTIVE = new BooleanBlockProperty("active", false);
@@ -24,14 +28,15 @@ public class BlockSculkShrieker extends BlockSolid implements BlockEntityHolder<
         return SCULK_SHRIEKER;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean canBePulled() {
         return false;

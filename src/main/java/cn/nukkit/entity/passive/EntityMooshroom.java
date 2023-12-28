@@ -1,6 +1,8 @@
 package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityWalkable;
 import cn.nukkit.entity.ai.behavior.Behavior;
 import cn.nukkit.entity.ai.behaviorgroup.BehaviorGroup;
@@ -38,7 +40,7 @@ public class EntityMooshroom extends EntityAnimal implements EntityWalkable {
         super(chunk, nbt);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public IBehaviorGroup requireBehaviorGroup() {
         return new BehaviorGroup(
@@ -84,7 +86,8 @@ public class EntityMooshroom extends EntityAnimal implements EntityWalkable {
         return 1.3f;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Mooshroom";
@@ -123,11 +126,11 @@ public class EntityMooshroom extends EntityAnimal implements EntityWalkable {
             cow.spawnToAll();
             this.level.getVibrationManager().callVibrationEvent(new VibrationEvent(this.clone(), this.getPosition(), VibrationType.SHEAR));
             return true;
-        } else if (item.getId() == Item.BUCKET && item.getAux() == 0) {
+        } else if (item.getId() == Item.BUCKET && item.getDamage() == 0) {
             item.count--;
             player.getInventory().addItem(Item.get(Item.BUCKET, 1));
             return true;
-        } else if (item.getId() == Item.BOWL && item.getAux() == 0) {
+        } else if (item.getId() == Item.BOWL && item.getDamage() == 0) {
             item.count--;
             player.getInventory().addItem(Item.get(Item.MUSHROOM_STEW));
             return true;

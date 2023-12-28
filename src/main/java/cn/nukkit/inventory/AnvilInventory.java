@@ -2,6 +2,8 @@ package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
@@ -21,10 +23,12 @@ import java.util.stream.Stream;
  * @author MagicDroidX (Nukkit Project)
  */
 public class AnvilInventory extends FakeBlockUIComponent {
-    public static final int ANVIL_INPUT_UI_SLOT = 1;
-    public static final int ANVIL_MATERIAL_UI_SLOT = 2;
-    public static final int ANVIL_OUTPUT_UI_SLOT = CREATED_ITEM_OUTPUT_UI_SLOT;
-    public static final int OFFSET = 1;
+
+    @Since("1.4.0.0-PN") public static final int ANVIL_INPUT_UI_SLOT = 1;
+    @Since("1.4.0.0-PN") public static final int ANVIL_MATERIAL_UI_SLOT = 2;
+    @Since("1.4.0.0-PN") public static final int ANVIL_OUTPUT_UI_SLOT = CREATED_ITEM_OUTPUT_UI_SLOT;
+
+    @PowerNukkitOnly public static final int OFFSET = 1;
     public static final int TARGET = 0;
     public static final int SACRIFICE = 1;
     public static final int RESULT = ANVIL_OUTPUT_UI_SLOT - 1; //1: offset
@@ -54,7 +58,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
     
     @Deprecated
     @DeprecationDetails(since = "1.4.0.0-PN", by = "PowerNukkit", reason = "Experimenting the new implementation by Nukkit")
-
+    @PowerNukkitOnly
     public void updateResult() {
         Item target = getFirstItem();
         Item sacrifice = getSecondItem();
@@ -81,7 +85,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
             int repair2;
             int repair3;
             if (result.getMaxDurability() != -1 && sacrifice.getId() == repairMaterial) {
-                repair = Math.min(result.getAux(), result.getMaxDurability() / 4);
+                repair = Math.min(result.getDamage(), result.getMaxDurability() / 4);
                 if (repair <= 0) {
                     setResult(Item.get(0));
                     setLevelCost(0);
@@ -89,10 +93,10 @@ public class AnvilInventory extends FakeBlockUIComponent {
                 }
         
                 for(repair2 = 0; repair > 0 && repair2 < sacrifice.getCount(); ++repair2) {
-                    repair3 = result.getAux() - repair;
-                    result.setAux(repair3);
+                    repair3 = result.getDamage() - repair;
+                    result.setDamage(repair3);
                     ++extraCost;
-                    repair = Math.min(result.getAux(), result.getMaxDurability() / 4);
+                    repair = Math.min(result.getDamage(), result.getMaxDurability() / 4);
                 }
     
             } else {
@@ -103,17 +107,17 @@ public class AnvilInventory extends FakeBlockUIComponent {
                 }
         
                 if ((result.getMaxDurability() != -1) && !enchantedBook) {
-                    repair = target.getMaxDurability() - target.getAux();
-                    repair2 = sacrifice.getMaxDurability() - sacrifice.getAux();
+                    repair = target.getMaxDurability() - target.getDamage();
+                    repair2 = sacrifice.getMaxDurability() - sacrifice.getDamage();
                     repair3 = repair2 + result.getMaxDurability() * 12 / 100;
                     int totalRepair = repair + repair3;
                     int finalDamage = result.getMaxDurability() - totalRepair + 1;
                     if (finalDamage < 0) {
                         finalDamage = 0;
                     }
-
-                    if (finalDamage < result.getAux()) {
-                        result.setAux(finalDamage);
+            
+                    if (finalDamage < result.getDamage()) {
+                        result.setDamage(finalDamage);
                         extraCost += 2;
                     }
                 }
@@ -293,7 +297,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
     }
      */
 
-
+    @PowerNukkitOnly
     @Deprecated @DeprecationDetails(
             reason = "NukkitX added the samething with other name.",
             by = "PowerNukkit", since = "1.4.0.0-PN",
@@ -303,12 +307,12 @@ public class AnvilInventory extends FakeBlockUIComponent {
         return getItem(TARGET);
     }
 
-
+    @Since("1.4.0.0-PN")
     public Item getInputSlot() {
         return this.getItem(TARGET);
     }
 
-
+    @PowerNukkitOnly
     @Deprecated @DeprecationDetails(
             reason = "NukkitX added the samething with other name.",
             by = "PowerNukkit", since = "1.4.0.0-PN",
@@ -318,12 +322,12 @@ public class AnvilInventory extends FakeBlockUIComponent {
         return getItem(SACRIFICE);
     }
 
-
+    @Since("1.4.0.0-PN")
     public Item getMaterialSlot() {
         return this.getItem(SACRIFICE);
     }
 
-
+    @PowerNukkitOnly
     @Deprecated @DeprecationDetails(
             reason = "NukkitX added the samething with other name.",
             by = "PowerNukkit", since = "1.4.0.0-PN",
@@ -334,7 +338,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
         return getOutputSlot();
     }
 
-
+    @Since("1.4.0.0-PN")
     public Item getOutputSlot() {
         return this.getItem(RESULT);
     }
@@ -350,22 +354,22 @@ public class AnvilInventory extends FakeBlockUIComponent {
     }
      */
 
-
+    @PowerNukkitOnly
     public boolean setFirstItem(Item item, boolean send) {
         return setItem(SACRIFICE, item, send);
     }
 
-
+    @PowerNukkitOnly
     public boolean setFirstItem(Item item) {
         return setFirstItem(item, true);
     }
 
-
+    @PowerNukkitOnly
     public boolean setSecondItem(Item item, boolean send) {
         return setItem(SACRIFICE, item, send);
     }
 
-
+    @PowerNukkitOnly
     public boolean setSecondItem(Item item) {
         return setSecondItem(item, true);
     }
@@ -387,7 +391,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
         return item.hasCompoundTag() && item.getNamedTag().contains("RepairCost") ? item.getNamedTag().getInt("RepairCost") : 0;
     }
 
-
+    @PowerNukkitOnly
     @Deprecated @DeprecationDetails(
             reason = "NukkitX added the samething with other name.",
             by = "PowerNukkit", since = "1.4.0.0-PN",
@@ -397,7 +401,7 @@ public class AnvilInventory extends FakeBlockUIComponent {
         return getCost();
     }
 
-
+    @PowerNukkitOnly
     @Deprecated @DeprecationDetails(
             reason = "NukkitX added the samething with other name.",
             by = "PowerNukkit", since = "1.4.0.0-PN",
@@ -407,22 +411,22 @@ public class AnvilInventory extends FakeBlockUIComponent {
         setCost(levelCost);
     }
 
-
+    @Since("1.4.0.0-PN")
     public int getCost() {
         return this.cost;
     }
 
-
+    @Since("1.4.0.0-PN")
     public void setCost(int cost) {
         this.cost = cost;
     }
 
-
+    @PowerNukkitOnly
     public String getNewItemName() {
         return newItemName;
     }
 
-
+    @PowerNukkitOnly
     public void setNewItemName(String newItemName) {
         this.newItemName = newItemName;
     }

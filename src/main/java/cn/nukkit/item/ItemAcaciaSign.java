@@ -1,9 +1,23 @@
 package cn.nukkit.item;
 
 
-public class ItemAcaciaSign extends ItemSign {
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.block.BlockAcaciaSignPost;
 
+@PowerNukkitOnly
+public class ItemAcaciaSign extends ItemSign {
+    @PowerNukkitOnly
     public ItemAcaciaSign() {
-        super(ACACIA_SIGN);
+        this(0, 1);
+    }
+
+    @PowerNukkitOnly
+    public ItemAcaciaSign(Integer meta) {
+        this(meta, 1);
+    }
+
+    @PowerNukkitOnly
+    public ItemAcaciaSign(Integer meta, int count) {
+        super(ACACIA_SIGN, meta, count, "Acacia Sign", new BlockAcaciaSignPost());
     }
 }

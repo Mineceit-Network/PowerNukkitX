@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.pillageroutpost;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.mob.EntityIronGolem;
@@ -29,7 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class PopulatorPillagerOutpost extends PopulatorStructure {
 
     protected static final ReadableStructureTemplate WATCHTOWER = new ReadOnlyLegacyStructureTemplate().load(loadNBT("structures/pillageroutpost/watchtower.nbt"));
@@ -183,7 +186,7 @@ public class PopulatorPillagerOutpost extends PopulatorStructure {
         fillBase(chunk, y, x, z, size.getX(), size.getZ());
     }
 
-
+    @Since("1.19.21-r2")
     @Override
     public boolean isAsync() {
         return true;

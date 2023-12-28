@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.event.block.BlockFadeEvent;
@@ -15,21 +17,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static cn.nukkit.block.BlockCoral.COLOR;
 
-
+@PowerNukkitOnly
 public class BlockCoralFan extends BlockFlowable implements Faceable {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty FAN_DIRECTION = new IntBlockProperty("coral_fan_direction", false, 1, 0, 1);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(COLOR, FAN_DIRECTION);
 
-
+    @PowerNukkitOnly
     public BlockCoralFan() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockCoralFan(int meta) {
         super(meta);
     }
@@ -39,7 +42,8 @@ public class BlockCoralFan extends BlockFlowable implements Faceable {
         return CORAL_FAN;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -58,18 +62,18 @@ public class BlockCoralFan extends BlockFlowable implements Faceable {
         return names[getType()];
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;
     }
 
-
+    @PowerNukkitOnly
     public boolean isDead() {
         return false;
     }
 
-
+    @PowerNukkitOnly
     public int getType() {
         return getDamage() & 0x7;
     }
@@ -79,7 +83,7 @@ public class BlockCoralFan extends BlockFlowable implements Faceable {
         return BlockFace.fromHorizontalIndex(((getDamage() & 0x8) >> 3) + 1);
     }
 
-
+    @PowerNukkitOnly
     public BlockFace getRootsFace() {
         return BlockFace.DOWN;
     }

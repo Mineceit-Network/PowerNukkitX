@@ -6,18 +6,18 @@ import cn.nukkit.block.BlockID;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-public class ItemSugarCane extends Item {
+public class ItemSugarcane extends Item {
 
-    public ItemSugarCane() {
+    public ItemSugarcane() {
         this(0, 1);
     }
 
-    public ItemSugarCane(Integer meta) {
+    public ItemSugarcane(Integer meta) {
         this(meta, 1);
     }
 
-    public ItemSugarCane(Integer meta, int count) {
-        super(SUGAR_CANE, 0, count);
+    public ItemSugarcane(Integer meta, int count) {
+        super(SUGARCANE, 0, count, "Sugar Cane");
         this.block = Block.get(BlockID.REEDS);
     }
 }

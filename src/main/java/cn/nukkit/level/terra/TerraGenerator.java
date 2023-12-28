@@ -1,5 +1,7 @@
 package cn.nukkit.level.terra;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.DimensionData;
 import cn.nukkit.level.DimensionEnum;
@@ -14,10 +16,12 @@ import com.dfsek.terra.api.block.state.BlockState;
 import com.dfsek.terra.api.config.ConfigPack;
 import com.dfsek.terra.api.world.biome.generation.BiomeProvider;
 import com.dfsek.terra.api.world.chunk.generation.ChunkGenerator;
+import com.dfsek.terra.api.world.chunk.generation.stage.GenerationStage;
 import com.dfsek.terra.api.world.chunk.generation.util.GeneratorWrapper;
 import com.dfsek.terra.api.world.info.WorldProperties;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Map;
@@ -33,8 +37,8 @@ import java.util.Map;
  * Each of its instances will hold an identical instance of {@link TerraGenerator}<br/>
  * The reason for this is because the bottom layer of nk will create a new generator instance for each thread to generate blocks in parallel, and Terra itself is parallel
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class TerraGenerator implements GeneratorWrapper {
     private final BiomeProvider biomeProvider;
     @Getter

@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.sensor;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.entity.ai.memory.IMemoryStorage;
 
@@ -10,8 +12,8 @@ import cn.nukkit.entity.ai.memory.IMemoryStorage;
  * This interface abstracts a sensor<br>
  * The sensor is used to collect environmental information and write a memory {@link cn.nukkit.entity.ai.memory.MemoryType} to the memory storage {@link IMemoryStorage}
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public interface ISensor {
 
     /**

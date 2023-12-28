@@ -1,5 +1,8 @@
 package cn.nukkit.command.tree.node;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+
 /**
  * 代表一个可以输入通配符 * 的{@link IntNode},当输入通配符时，将会解析结果将变成默认值{@link #defaultV}
  * <p>
@@ -7,8 +10,8 @@ package cn.nukkit.command.tree.node;
  * <p>
  * {@code defaultV = Integer.MIN_VALUE}
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class WildcardIntNode extends ParamNode<Integer> {
     private final int defaultV;
 

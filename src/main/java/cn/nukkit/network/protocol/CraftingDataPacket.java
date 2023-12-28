@@ -1,5 +1,7 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.*;
 import cn.nukkit.inventory.recipe.DefaultDescriptor;
 import cn.nukkit.inventory.recipe.ItemDescriptor;
@@ -37,7 +39,7 @@ public class CraftingDataPacket extends DataPacket {
         Collections.addAll(entries, recipe);
     }
 
-
+    @PowerNukkitOnly
     public void addStonecutterRecipe(StonecutterRecipe... recipes) {
         Collections.addAll(entries, recipes);
     }
@@ -46,7 +48,7 @@ public class CraftingDataPacket extends DataPacket {
         Collections.addAll(entries, recipe);
     }
 
-
+    @PowerNukkitOnly
     public void addCartographyRecipe(CartographyRecipe... recipe) {
         Stream.of(recipe).filter(r -> r.getRecipeId() != null).forEachOrdered(r -> entries.add(r));
     }
@@ -55,22 +57,22 @@ public class CraftingDataPacket extends DataPacket {
         Collections.addAll(entries, recipe);
     }
 
-
+    @PowerNukkitOnly
     public void addSmokerRecipe(SmokerRecipe... recipe) {
         Collections.addAll(entries, recipe);
     }
 
-
+    @PowerNukkitOnly
     public void addBlastFurnaceRecipe(BlastFurnaceRecipe... recipe) {
         Collections.addAll(entries, recipe);
     }
 
-
+    @PowerNukkitOnly
     public void addCampfireRecipeRecipe(CampfireRecipe... recipe) {
         Collections.addAll(entries, recipe);
     }
 
-
+    @Since("1.4.0.0-PN")
     public void addMultiRecipe(MultiRecipe... recipe) {
         Collections.addAll(entries, recipe);
     }
@@ -172,7 +174,7 @@ public class CraftingDataPacket extends DataPacket {
                     Item input = smelting.getInput();
                     this.putVarInt(input.getId());
                     if (recipe.getType().name().endsWith("_DATA")) {
-                        this.putVarInt(input.getAux());
+                        this.putVarInt(input.getDamage());
                     }
                     this.putSlot(smelting.getResult(), true);
                     switch (recipe.getType()) {
@@ -194,19 +196,19 @@ public class CraftingDataPacket extends DataPacket {
 
         this.putUnsignedVarInt(this.brewingEntries.size());
         for (BrewingRecipe recipe : brewingEntries) {
-            this.putVarInt(recipe.getInput().getRuntimeId());
-            this.putVarInt(recipe.getInput().getAux());
-            this.putVarInt(recipe.getIngredient().getRuntimeId());
-            this.putVarInt(recipe.getIngredient().getAux());
-            this.putVarInt(recipe.getResult().getRuntimeId());
-            this.putVarInt(recipe.getResult().getAux());
+            this.putVarInt(recipe.getInput().getNetworkId());
+            this.putVarInt(recipe.getInput().getDamage());
+            this.putVarInt(recipe.getIngredient().getNetworkId());
+            this.putVarInt(recipe.getIngredient().getDamage());
+            this.putVarInt(recipe.getResult().getNetworkId());
+            this.putVarInt(recipe.getResult().getDamage());
         }
 
         this.putUnsignedVarInt(this.containerEntries.size());
         for (ContainerRecipe recipe : containerEntries) {
-            this.putVarInt(recipe.getInput().getRuntimeId());
-            this.putVarInt(recipe.getIngredient().getRuntimeId());
-            this.putVarInt(recipe.getResult().getRuntimeId());
+            this.putVarInt(recipe.getInput().getNetworkId());
+            this.putVarInt(recipe.getIngredient().getNetworkId());
+            this.putVarInt(recipe.getResult().getNetworkId());
         }
 
         this.putUnsignedVarInt(0); // Material reducers size

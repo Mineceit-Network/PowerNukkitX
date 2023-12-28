@@ -1,16 +1,20 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.generator.object.tree.ObjectWarpedTree;
 import cn.nukkit.math.NukkitRandom;
 
 import javax.annotation.Nullable;
 
-
+@Since("1.4.0.0-PN")
+@PowerNukkitOnly
 public class BlockFungusWarped extends BlockFungus {
     private final ObjectWarpedTree feature = new ObjectWarpedTree();
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public BlockFungusWarped() {
         // Does nothing
     }
@@ -25,7 +29,7 @@ public class BlockFungusWarped extends BlockFungus {
         return "Warped Fungus";
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected boolean canGrowOn(Block support) {
         if (support.getId() == WARPED_NYLIUM) {
@@ -39,7 +43,7 @@ public class BlockFungusWarped extends BlockFungus {
         return false;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean grow(@Nullable Player cause) {
         NukkitRandom nukkitRandom = new NukkitRandom();

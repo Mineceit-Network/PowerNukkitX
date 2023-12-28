@@ -1,9 +1,13 @@
 package cn.nukkit.nbt.tag;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.19.20-r4")
 public class LinkedCompoundTag extends CompoundTag {
     public LinkedCompoundTag() {
         this("");

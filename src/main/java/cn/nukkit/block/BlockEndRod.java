@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
@@ -19,7 +22,8 @@ import javax.annotation.Nullable;
  */
 public class BlockEndRod extends BlockTransparentMeta implements Faceable {
 
-
+    @Since("1.5.0.0-PN")
+    @PowerNukkitOnly
     public static final BlockProperties PROPERTIES = CommonBlockProperties.FACING_DIRECTION_BLOCK_PROPERTIES;
 
     public BlockEndRod() {
@@ -40,7 +44,8 @@ public class BlockEndRod extends BlockTransparentMeta implements Faceable {
         return END_ROD;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -87,7 +92,7 @@ public class BlockEndRod extends BlockTransparentMeta implements Faceable {
         return this.z + 0.6;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;
@@ -112,7 +117,7 @@ public class BlockEndRod extends BlockTransparentMeta implements Faceable {
         return new ItemBlock(this, 0);
     }
 
-
+    @PowerNukkitDifference(info = "Fixed the direction", since = "1.3.0.0-PN")
     @Override
     public BlockFace getBlockFace() {
         return BlockFace.fromIndex(this.getDamage() & 0x07);

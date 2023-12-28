@@ -2,6 +2,10 @@ package cn.nukkit.blockentity;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockPistonHead;
@@ -27,28 +31,28 @@ import java.util.List;
 /**
  * @author CreeperFace
  */
-@
-
+@PowerNukkitXDifference(info = "活塞速度现在匹配原版")
+@Since("1.19.60-r1")
 public class BlockEntityPistonArm extends BlockEntitySpawnable {
-
+    @PowerNukkitOnly
     public static final float MOVE_STEP = Utils.dynamic(0.25f);
 
     public BlockFace facing;
     public boolean extending;
     public boolean sticky;
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public byte state;
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public byte newState = 1;
-
+    @PowerNukkitOnly
     public List<BlockVector3> attachedBlocks;
     public boolean powered;
     public float progress;
     public float lastProgress = 1;
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean finished = true;
 
     public BlockEntityPistonArm(FullChunk chunk, CompoundTag nbt) {
@@ -182,7 +186,7 @@ public class BlockEntityPistonArm extends BlockEntitySpawnable {
         return super.onUpdate() || hasUpdate;
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();

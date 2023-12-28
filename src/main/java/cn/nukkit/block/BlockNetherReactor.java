@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityNetherReactor;
 import cn.nukkit.item.Item;
@@ -14,11 +16,11 @@ import javax.annotation.Nullable;
 /**
  * @author good777LUCKY
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockNetherReactor extends BlockSolid implements BlockEntityHolder<BlockEntityNetherReactor> {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockNetherReactor() {
         // Does nothing
     }
@@ -28,14 +30,16 @@ public class BlockNetherReactor extends BlockSolid implements BlockEntityHolder<
         return NETHER_REACTOR;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.NETHER_REACTOR;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityNetherReactor> getBlockEntityClass() {
@@ -67,7 +71,8 @@ public class BlockNetherReactor extends BlockSolid implements BlockEntityHolder<
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;

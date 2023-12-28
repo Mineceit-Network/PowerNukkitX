@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
@@ -14,18 +16,19 @@ import static cn.nukkit.blockproperty.CommonBlockProperties.DIRECTION;
 /**
  * @implNote Faceable since FUTURE
  */
-
+@PowerNukkitOnly
 public class BlockLoom extends BlockSolidMeta implements Faceable {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(DIRECTION);
 
-
+    @PowerNukkitOnly
     public BlockLoom() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockLoom(int meta) {
         super(meta);
     }
@@ -35,7 +38,8 @@ public class BlockLoom extends BlockSolidMeta implements Faceable {
         return LOOM;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -92,13 +96,14 @@ public class BlockLoom extends BlockSolidMeta implements Faceable {
         return true;
     }
 
-
+    @Since("1.5.0.0-PN")
     @Override
     public BlockFace getBlockFace() {
         return getPropertyValue(DIRECTION);
     }
 
-
+    @Since("1.5.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public void setBlockFace(BlockFace face) {
         setPropertyValue(DIRECTION, face);

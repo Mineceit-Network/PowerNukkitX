@@ -1,6 +1,8 @@
 package cn.nukkit.command.defaults;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandParamType;
@@ -170,7 +172,8 @@ public class VersionCommand extends Command implements CoreCommand {
         return true;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     private CompletableFuture<JsonArray> listVersion() {
         return CompletableFuture.supplyAsync(() -> {
             if (this.listVersionCache != null) {

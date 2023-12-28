@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.populator.impl.structure.utils.template;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.level.ChunkManager;
@@ -19,7 +21,8 @@ import cn.nukkit.nbt.tag.ListTag;
 import java.util.Comparator;
 import java.util.function.Consumer;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class ReadOnlyLegacyStructureTemplate extends AbstractLegacyStructureTemplate implements ReadableStructureTemplate {
 
     @Override

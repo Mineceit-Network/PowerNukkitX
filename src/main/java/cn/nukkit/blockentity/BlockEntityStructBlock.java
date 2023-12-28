@@ -1,5 +1,7 @@
 package cn.nukkit.blockentity;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockproperty.value.StructureBlockType;
 import cn.nukkit.inventory.Inventory;
@@ -13,7 +15,8 @@ import cn.nukkit.network.protocol.types.StructureMirror;
 import cn.nukkit.network.protocol.types.StructureRedstoneSaveMode;
 import cn.nukkit.network.protocol.types.StructureRotation;
 
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class BlockEntityStructBlock extends BlockEntitySpawnable implements IStructBlock {
     private StructureAnimationMode animationMode;
     private float animationSeconds;
@@ -38,7 +41,7 @@ public class BlockEntityStructBlock extends BlockEntitySpawnable implements IStr
         super(chunk, nbt);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();

@@ -1,6 +1,9 @@
 package cn.nukkit.level.generator;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.DimensionData;
@@ -29,16 +32,19 @@ public abstract class Generator implements BlockID {
     public static final int TYPE_NETHER = 3;
     public static final int TYPE_THE_END = 4;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     protected Level level;
 
-
+    @Since("1.19.21-r2")
     protected ChunkManager chunkManager;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     protected NukkitRandom random;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     protected List<PopulatorStructure> structurePopulators = new ArrayList<>();
 
     {
@@ -54,15 +60,10 @@ public abstract class Generator implements BlockID {
         }
     }
 
-    protected final Map<String, Object> options;
-
-    public Generator(Map<String, Object> options) {
-        this.options = options;
-    }
-
     public abstract int getId();
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public List<PopulatorStructure> getStructurePopulators() {
         return structurePopulators;
     }
@@ -82,13 +83,14 @@ public abstract class Generator implements BlockID {
      *
      * @return {@link cn.nukkit.level.generator.populator.type.Populator}
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public Level getLevel() {
         return level;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public NukkitRandom getRandom() {
         return random;
     }
@@ -99,27 +101,31 @@ public abstract class Generator implements BlockID {
      *
      * @return {@link ChunkManager}
      */
-
-
+    @PowerNukkitXDifference
+    @Since("1.19.21-r2")
     public ChunkManager getChunkManager() {
         return chunkManager;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public void setLevel(Level level) {
         this.level = level;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public void setChunkManager(ChunkManager chunkManager) {
         this.chunkManager = chunkManager;
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public void setRandom(NukkitRandom random) {
         this.random = random;
     }
 
+    @Deprecated
     public int getDimension() {
         return Level.DIMENSION_OVERWORLD;
     }
@@ -143,8 +149,8 @@ public abstract class Generator implements BlockID {
     /**
      * 注册未知类型的生成器(Terra)
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r1")
     public static boolean addGenerator(Class<? extends Generator> clazz, String name) {
         name = name.toLowerCase();
         if (clazz != null && !Generator.nameList.containsKey(name)) {
@@ -208,8 +214,8 @@ public abstract class Generator implements BlockID {
      * @param chunkX
      * @param chunkZ
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public void populateStructure(int chunkX, int chunkZ) {
         //这里不能使用chunkManager而是使用level
         //因为在这个方法调用时，区块地形生成工作已完成，chunkManager(实际为PopChunkManager)内所有区块已清空
@@ -221,9 +227,7 @@ public abstract class Generator implements BlockID {
         }
     }
 
-    public Map<String, Object> getSettings() {
-        return this.options;
-    }
+    public abstract Map<String, Object> getSettings();
 
     public abstract String getName();
 
@@ -234,8 +238,8 @@ public abstract class Generator implements BlockID {
      *
      * @return 是否需要生成结构
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.21-r2")
     public boolean shouldGenerateStructures() {
         return false;
     }
@@ -244,11 +248,10 @@ public abstract class Generator implements BlockID {
      * 处理需要计算的异步地形生成任务<br/>
      * 有特殊需求的地形生成器可以覆写此方法并提供自己的逻辑<br/>
      * 默认采用Server类的fjp线程池
-     *
      * @param task 地形生成任务
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r2")
     public void handleAsyncChunkPopTask(AsyncTask task) {
         //这个判断是防止单元测试报错
         if (Server.getInstance().computeThreadPool != null)
@@ -259,11 +262,10 @@ public abstract class Generator implements BlockID {
      * 处理需要计算的异步结构生成任务<br/>
      * 有特殊需求的地形生成器可以覆写此方法并提供自己的逻辑<br/>
      * 默认采用Server类的fjp线程池
-     *
      * @param task 结构生成任务
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.50-r2")
     public void handleAsyncStructureGenTask(AsyncTask task) {
         //这个判断是防止单元测试报错
         if (Server.getInstance().computeThreadPool != null)

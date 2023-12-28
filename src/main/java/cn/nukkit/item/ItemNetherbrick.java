@@ -3,17 +3,17 @@ package cn.nukkit.item;
 /**
  * @author MagicDroidX (Nukkit Project)
  */
-public class ItemNetherbrick extends Item {
+public class ItemNetherBrick extends Item {
 
-    public ItemNetherbrick() {
+    public ItemNetherBrick() {
         this(0, 1);
     }
 
-    public ItemNetherbrick(Integer meta) {
+    public ItemNetherBrick(Integer meta) {
         this(meta, 1);
     }
 
-    public ItemNetherbrick(Integer meta, int count) {
-        super(NETHERBRICK, meta, count, "Nether Brick");
+    public ItemNetherBrick(Integer meta, int count) {
+        super(NETHER_BRICK, meta, count, "Nether Brick");
     }
 }

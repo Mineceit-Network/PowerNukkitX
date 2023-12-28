@@ -1,21 +1,29 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.ItemTool;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * @author LoboMetalurgico
+ * @since 08/06/2021
+ */
+
+@PowerNukkitOnly
+@PowerNukkitXDifference(info = "not isLavaResistant")
 public class BlockCalcite extends BlockSolid {
+    @PowerNukkitOnly
+    public static final BlockProperties PROPERTIES = CommonBlockProperties.EMPTY_PROPERTIES;
 
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:calcite");
-
-
+    @PowerNukkitOnly
     public BlockCalcite() {
-        super(PROPERTIES.getDefaultState());
     }
 
-    public BlockCalcite(BlockState blockState) {
-        super(blockState);
-    }
-
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -25,6 +33,11 @@ public class BlockCalcite extends BlockSolid {
     @Override
     public String getName() {
         return "Calcite";
+    }
+
+    @Override
+    public int getId() {
+        return CALCITE;
     }
 
     @Override
@@ -42,7 +55,8 @@ public class BlockCalcite extends BlockSolid {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;

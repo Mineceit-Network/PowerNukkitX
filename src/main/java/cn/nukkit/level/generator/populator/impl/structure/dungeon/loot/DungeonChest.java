@@ -1,13 +1,15 @@
 package cn.nukkit.level.generator.populator.impl.structure.dungeon.loot;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.generator.populator.impl.structure.utils.loot.RandomizableContainer;
 import com.google.common.collect.Maps;
 
 // ./data/behavior_packs/vanilla/loot_tables/chests/simple_dungeon.json (1.16.20.3)
-
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class DungeonChest extends RandomizableContainer {
 
     private static final DungeonChest INSTANCE = new DungeonChest();

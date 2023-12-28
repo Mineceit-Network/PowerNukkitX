@@ -1,6 +1,8 @@
 package cn.nukkit.entity.mob;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityCanAttack;
@@ -197,7 +199,8 @@ public abstract class EntityMob extends EntityIntelligent implements EntityInven
         return epf;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     protected Item damageArmor(Item armor, Entity damager) {
         if (armor.hasEnchantments()) {
             if (damager != null) {
@@ -220,9 +223,9 @@ public abstract class EntityMob extends EntityIntelligent implements EntityInven
             return armor;
         }
 
-        armor.setAux(armor.getAux() + 1);
+        armor.setDamage(armor.getDamage() + 1);
 
-        if (armor.getAux() >= armor.getMaxDurability()) {
+        if (armor.getDamage() >= armor.getMaxDurability()) {
             getLevel().addSound(this, Sound.RANDOM_BREAK);
             return Item.get(BlockID.AIR, 0, 0);
         }

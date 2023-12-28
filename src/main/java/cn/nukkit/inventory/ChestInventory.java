@@ -1,6 +1,7 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
 import cn.nukkit.block.BlockTrappedChest;
 import cn.nukkit.blockentity.BlockEntityChest;
 import cn.nukkit.event.redstone.RedstoneUpdateEvent;
@@ -26,7 +27,7 @@ public class ChestInventory extends ContainerInventory {
         return (BlockEntityChest) this.holder;
     }
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onOpen(Player who) {
         super.onOpen(who);
@@ -56,7 +57,7 @@ public class ChestInventory extends ContainerInventory {
         } catch (LevelException ignored) {}
     }
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onClose(Player who) {
         if (this.getViewers().size() == 1) {

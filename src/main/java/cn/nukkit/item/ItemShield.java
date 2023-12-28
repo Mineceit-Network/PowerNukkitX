@@ -1,11 +1,15 @@
 package cn.nukkit.item;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.utils.DyeColor;
 import org.jetbrains.annotations.Nullable;
 
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Extends ItemTool instead of Item only in PowerNukkit")
 public class ItemShield extends ItemTool {
+
     public ItemShield() {
         this(0, 1);
     }
@@ -28,17 +32,22 @@ public class ItemShield extends ItemTool {
      * @param count the count
      * @param name  the name
      */
-    protected ItemShield(String id, Integer meta, int count, String name) {
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
+    public ItemShield(int id, Integer meta, int count, String name) {
         super(id, meta, count, name);
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @Since("1.20.0-r2")
+    @PowerNukkitXOnly
     public boolean hasBannerPattern() {
         return this.hasCompoundTag() && (this.getNamedTag().containsInt("Base") ||
                 this.getNamedTag().containsInt("Type") || this.getNamedTag().containsList("Patterns"));
     }
 
-
+    @Since("1.20.0-r2")
+    @PowerNukkitXOnly
     public @Nullable ItemBanner getBannerPattern() {
         if (!this.hasBannerPattern()) {
             return null;
@@ -54,7 +63,8 @@ public class ItemShield extends ItemTool {
         return item;
     }
 
-
+    @Since("1.20.0-r2")
+    @PowerNukkitXOnly
     public void setBannerPattern(@Nullable ItemBanner banner) {
         if (banner == null) {
             this.clearNamedTag();

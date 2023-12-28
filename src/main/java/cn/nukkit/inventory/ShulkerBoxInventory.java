@@ -1,6 +1,7 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntityShulkerBox;
 import cn.nukkit.item.Item;
@@ -22,7 +23,7 @@ public class ShulkerBoxInventory extends ContainerInventory {
         return (BlockEntityShulkerBox) this.holder;
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onOpen(Player who) {
         super.onOpen(who);
@@ -43,7 +44,7 @@ public class ShulkerBoxInventory extends ContainerInventory {
         }
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onClose(Player who) {
         if (this.getViewers().size() == 1) {

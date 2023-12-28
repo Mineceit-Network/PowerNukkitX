@@ -1,5 +1,7 @@
 package cn.nukkit.dispenser;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockDispenser;
 import cn.nukkit.block.BlockID;
@@ -8,7 +10,8 @@ import cn.nukkit.item.ItemPotion;
 import cn.nukkit.math.BlockFace;
 import cn.nukkit.potion.Potion;
 
-
+@PowerNukkitXOnly
+@Since("1.19.60-r1")
 public class WaterBottleDispenseBehavior extends DefaultDispenseBehavior {
     @Override
     public Item dispense(BlockDispenser block, BlockFace face, Item item) {

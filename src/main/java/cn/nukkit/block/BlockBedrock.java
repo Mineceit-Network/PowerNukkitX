@@ -1,39 +1,60 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
-
-import static cn.nukkit.block.property.CommonBlockProperties.INFINIBURN_BIT;
 
 /**
  * @author Angelic47 (Nukkit Project)
  * @apiNote Extends BlockSolidMeta instead of BlockSolid only in PowerNukkit
  */
-
-public class BlockBedrock extends BlockSolid {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:bedrock", INFINIBURN_BIT);
-
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Extends BlockSolidMeta instead of BlockSolid only in PowerNukkit")
+public class BlockBedrock extends BlockSolidMeta {
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BooleanBlockProperty INFINIBURN = new BooleanBlockProperty("infiniburn_bit", true);
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public static final BlockProperties PROPERTIES = new BlockProperties(INFINIBURN);
 
     public BlockBedrock() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockBedrock(BlockState blockstate) {
-        super(blockstate);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    public BlockBedrock(int meta) {
+        super(meta);
     }
 
+    @Override
+    public int getId() {
+        return BEDROCK;
+    }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return PROPERTIES;
+    }
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean getBurnIndefinitely() {
-        return getPropertyValue(INFINIBURN_BIT);
+        return getBooleanValue(INFINIBURN);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setBurnIndefinitely(boolean infiniburn) {
-        setPropertyValue(INFINIBURN_BIT, infiniburn);
+        setBooleanValue(INFINIBURN, infiniburn);
     }
 
     @Override
@@ -62,8 +83,8 @@ public class BlockBedrock extends BlockSolid {
     }
 
     @Override
-
-    public boolean canBePulled() {
+    @PowerNukkitOnly
+    public  boolean canBePulled() {
         return false;
     }
 

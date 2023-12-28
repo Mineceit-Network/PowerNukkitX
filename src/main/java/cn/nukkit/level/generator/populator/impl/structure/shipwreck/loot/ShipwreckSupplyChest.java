@@ -1,11 +1,14 @@
 package cn.nukkit.level.generator.populator.impl.structure.shipwreck.loot;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.generator.populator.impl.structure.utils.loot.RandomizableContainer;
 import com.google.common.collect.Maps;
 
-
+@PowerNukkitXOnly
+@Since("1.19.21-r2")
 public class ShipwreckSupplyChest extends RandomizableContainer {
 
     private static final ShipwreckSupplyChest INSTANCE = new ShipwreckSupplyChest();

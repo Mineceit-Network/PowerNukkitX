@@ -1,6 +1,7 @@
 package cn.nukkit.blockentity;
 
 import cn.nukkit.api.DoNotModify;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.BlockChiseledBookshelf;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.format.FullChunk;
@@ -83,7 +84,7 @@ public class BlockEntityChiseledBookshelf extends BlockEntitySpawnable {
         super.setDirty();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -103,7 +104,7 @@ public class BlockEntityChiseledBookshelf extends BlockEntitySpawnable {
                     continue;
                 }
                 Item item = Item.fromString(name);
-                item.setAux(compoundTag.getByte("Damage"));
+                item.setDamage(compoundTag.getByte("Damage"));
                 item.setCount(compoundTag.getByte("Count"));
                 if (compoundTag.containsCompound("tag")) {
                     item.setNamedTag(compoundTag.getCompound("tag"));
@@ -130,7 +131,7 @@ public class BlockEntityChiseledBookshelf extends BlockEntitySpawnable {
                 CompoundTag compoundTag = new CompoundTag()
                         .putByte("Count", item.getCount())
                         .putString("Name", item.getNamespaceId())
-                        .putByte("Damage", item.getAux())
+                        .putByte("Damage", item.getDamage())
                         .putBoolean("WasPickedUp", false);
                 if (item.hasCompoundTag()) {
                     compoundTag.putCompound("tag", item.getNamedTag());

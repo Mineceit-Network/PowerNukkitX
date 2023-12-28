@@ -2,6 +2,8 @@ package cn.nukkit.entity.passive;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockDirt;
 import cn.nukkit.block.BlockTurtleEgg;
@@ -192,7 +194,8 @@ public class EntityHorse extends EntityAnimal implements EntityWalkable, EntityV
         return new Item[]{Item.get(Item.LEATHER), getHorseArmor(), getSaddle()};
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Horse";

@@ -1,8 +1,13 @@
 package cn.nukkit.level.format;
 
-import cn.nukkit.level.DimensionData;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.level.DimensionEnum;
 import cn.nukkit.level.GameRules;
 import cn.nukkit.level.Level;
+import cn.nukkit.level.format.generic.BaseFullChunk;
+import cn.nukkit.level.generator.Generator;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.scheduler.AsyncTask;
 
@@ -15,10 +20,6 @@ public interface LevelProvider {
     byte ORDER_YZX = 0;
     byte ORDER_ZXY = 1;
 
-    void initDimensionData(DimensionData dimensionData);
-
-    DimensionData getDimensionData();
-
     AsyncTask requestChunkTask(int X, int Z);
 
     String getPath();
@@ -27,21 +28,21 @@ public interface LevelProvider {
 
     Map<String, Object> getGeneratorOptions();
 
-    IChunk getLoadedChunk(int X, int Z);
+    BaseFullChunk getLoadedChunk(int X, int Z);
 
-    IChunk getLoadedChunk(long hash);
+    BaseFullChunk getLoadedChunk(long hash);
 
-    IChunk getChunk(int X, int Z);
+    BaseFullChunk getChunk(int X, int Z);
 
-    IChunk getChunk(int X, int Z, boolean create);
+    BaseFullChunk getChunk(int X, int Z, boolean create);
 
-    IChunk getEmptyChunk(int x, int z);
+    BaseFullChunk getEmptyChunk(int x, int z);
 
     void saveChunks();
 
     void saveChunk(int X, int Z);
 
-    void saveChunk(int X, int Z, IChunk chunk);
+    void saveChunk(int X, int Z, FullChunk chunk);
 
     void unloadChunks();
 
@@ -61,7 +62,7 @@ public interface LevelProvider {
 
     boolean isChunkLoaded(long hash);
 
-    void setChunk(int chunkX, int chunkZ, IChunk chunk);
+    void setChunk(int chunkX, int chunkZ, FullChunk chunk);
 
     String getName();
 
@@ -97,18 +98,18 @@ public interface LevelProvider {
 
     void setSpawn(Vector3 pos);
 
-    Map<Long, IChunk> getLoadedChunks();
+    Map<Long, ? extends FullChunk> getLoadedChunks();
 
     void doGarbageCollection();
 
     default void doGarbageCollection(long time) {
+
     }
 
     Level getLevel();
 
     void close();
 
-    LevelDat getLevelData();
     void saveLevelData();
 
     void updateLevelName(String name);
@@ -117,20 +118,64 @@ public interface LevelProvider {
 
     void setGameRules(GameRules rules);
 
-
+    @PowerNukkitOnly
     default int getMaximumLayer() {
-        return 1;//two layer 0,1
+        return 0;
     }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    default int getDimension() {
+        if (this instanceof DimensionDataProvider dimensionDataProvider) {
+            var dimData = dimensionDataProvider.getDimensionData();
+            if (dimData != null) {
+                return dimData.getDimensionId();
+            }
+        }
+        final var level = getLevel();
+        if (level != null) {
+            return getLevel().getDimension();
+        } else {
+            switch (getGenerator()) {
+                case "normal":
+                case "terra": {
+                    if (getGeneratorOptions().containsKey("preset")) {
+                        var opts = getGeneratorOptions().get("preset").toString().split(":");
+                        if (opts.length == 2) {
+                            return DimensionEnum.valueOf(opts[1].toUpperCase()).ordinal();
+                        }
+                    }
+                    return Level.DIMENSION_OVERWORLD;
+                }
+                case "nether":
+                    return Level.DIMENSION_NETHER;
+                case "the_end":
+                    return Level.DIMENSION_THE_END;
+            }
+            final var type = Generator.getGeneratorType(Generator.getGenerator(getGenerator()));
+            return switch (type) {
+                case Generator.TYPE_NETHER -> Level.DIMENSION_NETHER;
+                case Generator.TYPE_THE_END -> Level.DIMENSION_THE_END;
+                default -> Level.DIMENSION_OVERWORLD;
+            };
+        }
+    }
+
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")//todo: have problem in async environment (nullpointer)
     default boolean isOverWorld() {
-        return this.getDimensionData().getDimensionId() == 0;
+        return getDimension() == 0;
     }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")//todo: have problem in async environment (nullpointer)
     default boolean isNether() {
-        return this.getDimensionData().getDimensionId() == 1;
+        return getDimension() == 1;
     }
 
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")//todo: have problem in async environment (nullpointer)
     default boolean isTheEnd() {
-        return this.getDimensionData().getDimensionId() == 2;
+        return getDimension() == 2;
     }
 }

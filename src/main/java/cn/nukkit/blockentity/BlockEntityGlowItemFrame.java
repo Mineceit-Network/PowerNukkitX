@@ -37,7 +37,7 @@ public class BlockEntityGlowItemFrame extends BlockEntityItemFrame {
 
         if (!item.isNull()) {
             CompoundTag itemTag = NBTIO.putItemHelper(item);
-            int networkDamage = item.getAux();
+            int networkDamage = item.getDamage();
             String namespacedId = item.getNamespaceId();
             if (namespacedId != null) {
                 itemTag.remove("id");
@@ -45,7 +45,7 @@ public class BlockEntityGlowItemFrame extends BlockEntityItemFrame {
                 itemTag.putString("Name", namespacedId);
             }
             if (item instanceof ItemBlock itemBlock) {
-                itemTag.putCompound("Block", NBTIO.putBlockHelper(itemBlock.getBlockItem()));
+                itemTag.putCompound("Block", NBTIO.putBlockHelper(itemBlock.getBlock()));
             }
             tag.putCompound("Item", itemTag)
                     .putByte("ItemRotation", this.getItemRotation());

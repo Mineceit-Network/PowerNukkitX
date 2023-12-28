@@ -1,9 +1,12 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+
 /**
  * @author CreeperFace
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
 public class BlockPistonSticky extends BlockPistonBase {
 
     public BlockPistonSticky() {
@@ -25,7 +28,7 @@ public class BlockPistonSticky extends BlockPistonBase {
         return "Sticky Piston";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getPistonHeadBlockId() {
         return STICKY_PISTON_ARM_COLLISION;

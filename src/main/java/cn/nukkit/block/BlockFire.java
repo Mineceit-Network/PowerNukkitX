@@ -1,6 +1,10 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -29,11 +33,12 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author MagicDroidX (Nukkit Project)
  */
 public class BlockFire extends BlockFlowable {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final IntBlockProperty FIRE_AGE = CommonBlockProperties.AGE_15;
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(FIRE_AGE);
 
     public BlockFire() {
@@ -49,7 +54,8 @@ public class BlockFire extends BlockFlowable {
         return FIRE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -102,7 +108,7 @@ public class BlockFire extends BlockFlowable {
         return Item.EMPTY_ARRAY;
     }
 
-
+    @PowerNukkitDifference(info = "Soul Fire Implementation", since = "1.4.0.0-PN")
     @Override
     public int onUpdate(int type) {
 
@@ -112,7 +118,7 @@ public class BlockFire extends BlockFlowable {
             if (type == Level.BLOCK_UPDATE_NORMAL) {
                 int downId = down.getId();
                 if (downId == Block.SOUL_SAND || downId == Block.SOUL_SOIL) {
-                    this.getLevel().setBlock(this, getBlockState().withBlockId(BlockID.SOUL_FIRE).getBlock(this));
+                    this.getLevel().setBlock(this, getCurrentState().withBlockId(BlockID.SOUL_FIRE).getBlock(this));
                     return type;
                 }
             }
@@ -333,8 +339,8 @@ public class BlockFire extends BlockFlowable {
      * 检查火焰是否应被雨水浇灭
      * @return 是否应被雨水浇灭
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.20-r3")
     protected boolean checkRain() {
         var down = down();
         int downId = down.getId();

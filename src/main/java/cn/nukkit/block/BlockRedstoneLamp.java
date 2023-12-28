@@ -1,6 +1,7 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
 import cn.nukkit.event.redstone.RedstoneUpdateEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemBlock;
@@ -15,7 +16,7 @@ import javax.annotation.Nullable;
 /**
  * @author Nukkit Project Team
  */
-
+@PowerNukkitDifference(info = "Implements RedstoneComponent.", since = "1.4.0.0-PN")
 public class BlockRedstoneLamp extends BlockSolid implements RedstoneComponent {
 
     public BlockRedstoneLamp() {
@@ -46,7 +47,7 @@ public class BlockRedstoneLamp extends BlockSolid implements RedstoneComponent {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @PowerNukkitDifference(info = "Using new method for checking if powered", since = "1.4.0.0-PN")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, @Nullable Player player) {
         if (this.isGettingPower()) {
@@ -57,7 +58,7 @@ public class BlockRedstoneLamp extends BlockSolid implements RedstoneComponent {
         return true;
     }
 
-
+    @PowerNukkitDifference(info = "Redstone Event after Block powered check + use #isGettingPower() method" +
             " + trigger observer.", since = "1.4.0.0-PN")
     @Override
     public int onUpdate(int type) {

@@ -1,6 +1,8 @@
 package cn.nukkit.entity.projectile;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.mob.EntityBlaze;
 import cn.nukkit.level.Level;
@@ -91,13 +93,13 @@ public class EntitySnowball extends EntityProjectile {
         return hasUpdate;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getResultDamage(@Nullable Entity entity) {
         return entity instanceof EntityBlaze ? 3 : super.getResultDamage(entity);
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected void addHitEffect() {
         int particles = nextParticleCount();
@@ -113,7 +115,8 @@ public class EntitySnowball extends EntityProjectile {
         level.getServer().batchPackets(level.getChunkPlayers(chunkX, chunkZ).values().toArray(Player.EMPTY_ARRAY), allPackets);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Snowball";

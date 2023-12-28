@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.behavior;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.entity.ai.evaluator.IBehaviorEvaluator;
 import cn.nukkit.entity.ai.executor.IBehaviorExecutor;
@@ -10,8 +12,8 @@ import lombok.Getter;
  * <p>
  * A single behavior object, containing an executor and an evaluator, with the behavior object delegating their methods
  */
-
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 @Getter
 public class Behavior extends AbstractBehavior {
 

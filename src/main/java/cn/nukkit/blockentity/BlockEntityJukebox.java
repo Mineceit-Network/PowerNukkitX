@@ -1,8 +1,10 @@
 package cn.nukkit.blockentity;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.item.Item;
-import cn.nukkit.item.ItemMusicDisc;
+import cn.nukkit.item.ItemRecord;
 import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -22,7 +24,7 @@ public class BlockEntityJukebox extends BlockEntitySpawnable {
         super(chunk, nbt);
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public void loadNBT() {
         super.loadNBT();
@@ -47,9 +49,9 @@ public class BlockEntityJukebox extends BlockEntitySpawnable {
         return recordItem;
     }
 
-    
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     public void play() {
-        if (this.recordItem instanceof ItemMusicDisc itemRecord) {
+        if (this.recordItem instanceof ItemRecord itemRecord) {
             PlaySoundPacket packet = new PlaySoundPacket();
             packet.name = itemRecord.getSoundId();
             packet.volume = 1;
@@ -63,7 +65,7 @@ public class BlockEntityJukebox extends BlockEntitySpawnable {
 
     //TODO: Transfer the stop sound to the new sound method
     public void stop() {
-        if (this.recordItem instanceof ItemMusicDisc itemRecord) {
+        if (this.recordItem instanceof ItemRecord itemRecord) {
             StopSoundPacket packet = new StopSoundPacket();
             packet.name = itemRecord.getSoundId();
             packet.stopAll = false;

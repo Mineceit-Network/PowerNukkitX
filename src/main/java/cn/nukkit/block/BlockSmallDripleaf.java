@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.item.Item;
@@ -14,10 +17,11 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-
+@Since("1.6.0.0-PNX")
+@PowerNukkitOnly
 public class BlockSmallDripleaf extends BlockFlowable implements Faceable {
-
-
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
     public static final BlockProperties PROPERTIES = new BlockProperties(CommonBlockProperties.CARDINAL_DIRECTION, CommonBlockProperties.UPPER_BLOCK);
 
     protected BlockSmallDripleaf() {
@@ -34,7 +38,8 @@ public class BlockSmallDripleaf extends BlockFlowable implements Faceable {
         return BlockID.SMALL_DRIPLEAF_BLOCK;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -46,7 +51,8 @@ public class BlockSmallDripleaf extends BlockFlowable implements Faceable {
         return getPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION);
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @Override
     public void setBlockFace(BlockFace face) {
         setPropertyValue(CommonBlockProperties.CARDINAL_DIRECTION, face);
@@ -60,7 +66,7 @@ public class BlockSmallDripleaf extends BlockFlowable implements Faceable {
         this.setBooleanValue(CommonBlockProperties.UPPER_BLOCK,isUpperBlock);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;

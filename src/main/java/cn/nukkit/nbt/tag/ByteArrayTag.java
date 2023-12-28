@@ -1,5 +1,7 @@
 package cn.nukkit.nbt.tag;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.nbt.stream.NBTInputStream;
 import cn.nukkit.nbt.stream.NBTOutputStream;
 import cn.nukkit.utils.Binary;
@@ -10,7 +12,8 @@ import java.util.Arrays;
 public class ByteArrayTag extends Tag {
     public byte[] data;
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public ByteArrayTag(byte[] data) {
         super("");
         this.data = data;

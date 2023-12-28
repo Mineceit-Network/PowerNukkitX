@@ -1,24 +1,28 @@
 package cn.nukkit.block;
 
-import cn.nukkit.block.property.enums.OldLeafType;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.value.WoodType;
 import cn.nukkit.item.Item;
 import org.jetbrains.annotations.NotNull;
 
-import static cn.nukkit.block.property.CommonBlockProperties.PERSISTENT_BIT;
-import static cn.nukkit.block.property.CommonBlockProperties.UPDATE_BIT;
-
 public class BlockAzaleaLeaves extends BlockLeaves {
 
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:azalea_leaves",PERSISTENT_BIT, UPDATE_BIT);
+    public static final BlockProperties PROPERTIES = new BlockProperties(BlockLeaves.PERSISTENT, BlockLeaves.UPDATE);
 
     public BlockAzaleaLeaves() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockAzaleaLeaves(BlockState blockState) {
-        super(blockState);
+    public BlockAzaleaLeaves(int meta) {
+        super(meta);
+    }
+
+
+    @Override
+    public int getId() {
+        return AZALEA_LEAVES;
     }
 
     @Override
@@ -31,12 +35,15 @@ public class BlockAzaleaLeaves extends BlockLeaves {
         return false;
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean canHarvest(Item item) {
         return item.isShears();
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -45,8 +52,8 @@ public class BlockAzaleaLeaves extends BlockLeaves {
 
     /*这里写木质类型为OAK只是为了获取凋落物时的概率正确，并不代表真的就是橡木*/
     @Override
-    public OldLeafType getType() {
-        return OldLeafType.OAK;
+    public WoodType getType() {
+        return WoodType.OAK;
     }
 
     @Override

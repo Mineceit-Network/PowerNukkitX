@@ -1,16 +1,21 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitXOnly
+@Since("1.20.0-r2")
 public class BlockSlabCherry extends BlockSlab {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockSlabCherry() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockSlabCherry(int meta) {
         super(meta, DOUBLE_CHERRY_SLAB);
     }
@@ -20,13 +25,13 @@ public class BlockSlabCherry extends BlockSlab {
         return CHERRY_SLAB;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public String getSlabName() {
         return "Cherry";
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean isSameType(BlockSlab slab) {
         return slab.getId() == getId();

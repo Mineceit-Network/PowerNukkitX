@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.memory;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.ai.memory.codec.IMemoryCodec;
 import cn.nukkit.utils.Identifier;
@@ -15,13 +17,13 @@ import java.util.function.Supplier;
  * <p>
  * Entity memory is a class that stores entity data, and if {@link IMemoryCodec} is implemented, entity memory can also be persistently stored and linked entity metadata
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.50-r1")
 public final class MemoryType<Data> {
     /**
      * 可持久化的记忆类型
      */
-
+    @Since("1.19.63-r1")
     private static final Set<MemoryType<?>> PERSISTENT_MEMORIES = new HashSet<>();
 
     @Getter
@@ -60,7 +62,7 @@ public final class MemoryType<Data> {
         this.defaultData = defaultData;
     }
 
-
+    @Since("1.19.63-r1")
     public static Set<MemoryType<?>> getPersistentMemories() {
         return PERSISTENT_MEMORIES;
     }
@@ -69,14 +71,14 @@ public final class MemoryType<Data> {
         return defaultData.get();
     }
 
-
+    @Since("1.19.63-r1")
     public MemoryType<Data> withCodec(IMemoryCodec<Data> codec) {
         this.codec = codec;
         PERSISTENT_MEMORIES.add(this);
         return this;
     }
 
-
+    @Since("1.19.63-r1")
     public void encode(Entity entity, Data data) {
         if (codec != null) {
             codec.encode(data, entity.namedTag);
@@ -90,14 +92,14 @@ public final class MemoryType<Data> {
      * @param entity 目标实体
      * @param data   数据
      */
-
+    @Since("1.19.63-r1")
     public void forceEncode(Entity entity, Object data) {
         if (codec != null) {
             codec.encode((Data) data, entity.namedTag);
         }
     }
 
-
+    @Since("1.19.63-r1")
     @Nullable
     public Data decode(Entity entity) {
         if (codec != null) {

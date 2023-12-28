@@ -1,10 +1,13 @@
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.network.protocol.types.AbilityType;
 import cn.nukkit.network.protocol.types.PlayerAbility;
 import lombok.ToString;
 
-
+@Since("1.19.30-r1")
+@PowerNukkitXOnly
 @ToString
 public class RequestAbilityPacket extends DataPacket {
     public static final PlayerAbility[] ABILITIES = UpdateAbilitiesPacket.VALID_FLAGS;

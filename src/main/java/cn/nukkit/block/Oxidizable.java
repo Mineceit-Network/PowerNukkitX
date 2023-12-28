@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.value.OxidizationLevel;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.event.block.BlockFadeEvent;
@@ -18,15 +20,16 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author joserobjr
  * @since 2021-06-14
  */
-
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public interface Oxidizable {
-
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @NotNull
     Location getLocation();
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     default int onUpdate(int type) {
         if (type != Level.BLOCK_UPDATE_RANDOM) {
             return 0;
@@ -95,7 +98,8 @@ public interface Oxidizable {
         return type;
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     default boolean onActivate(@NotNull Item item, @Nullable Player player) {
         if (!item.isAxe()) {
             return false;
@@ -119,13 +123,16 @@ public interface Oxidizable {
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @NotNull
     OxidizationLevel getOxidizationLevel();
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     boolean setOxidizationLevel(@NotNull OxidizationLevel oxidizationLevel);
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     BlockState getStateWithOxidizationLevel(@NotNull OxidizationLevel oxidizationLevel);
 }

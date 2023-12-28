@@ -1,5 +1,7 @@
 package cn.nukkit.entity.ai.evaluator;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -9,8 +11,8 @@ import java.util.Set;
  * <br/>
  * Provide some utility method encapsulation
  */
-
-
+@PowerNukkitXOnly
+@Since("1.19.50-r3")
 public interface LogicalUtils {
 
     default IBehaviorEvaluator any(@NotNull Set<IBehaviorEvaluator> evaluators) {

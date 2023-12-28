@@ -1,5 +1,9 @@
 package cn.nukkit.level;
 
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.block.BlockTNT;
@@ -52,7 +56,8 @@ public class Explosion {
         this(center, size, (Object) what);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public Explosion(Position center, double size, Block what) {
         this(center, size, (Object) what);
     }
@@ -64,8 +69,8 @@ public class Explosion {
      * @param size the power of explosion
      * @param what the source object, used for tracking damage
      */
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     protected Explosion(Position center, double size, Object what) {
         this.level = center.getLevel();
         this.source = center;
@@ -73,22 +78,26 @@ public class Explosion {
         this.what = what;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public double getFireChance() {
         return fireChance;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setFireChance(double fireChance) {
         this.fireChance = fireChance;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isIncendiary() {
         return fireChance > 0;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setIncendiary(boolean incendiary) {
         if (!incendiary) {
             fireChance = 0;
@@ -202,8 +211,8 @@ public class Explosion {
      *
      * @return {@code false} if explosion was canceled, otherwise {@code true}
      */
-
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
+    @PowerNukkitXDifference(info = "Reduce explosion damage if entities behind blocks", since = "1.20.10-r1")
     public boolean explodeB() {
 
         LongArraySet updateBlocks = new LongArraySet();

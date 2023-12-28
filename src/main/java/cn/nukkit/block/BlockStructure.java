@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityStructBlock;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
@@ -14,24 +16,27 @@ import org.jetbrains.annotations.NotNull;
 /**
  * @author good777LUCKY
  */
-
-
+@Since("1.4.0.0-PN")
+@PowerNukkitOnly
 public class BlockStructure extends BlockSolidMeta implements BlockEntityHolder<BlockEntityStructBlock> {
-
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public static final BlockProperty<StructureBlockType> STRUCTURE_BLOCK_TYPE = new ArrayBlockProperty<>(
             "structure_block_type", true, StructureBlockType.class
     );
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public static final BlockProperties PROPERTIES = new BlockProperties(STRUCTURE_BLOCK_TYPE);
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public BlockStructure() {
         this(0);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public BlockStructure(int meta) {
         super(meta);
     }
@@ -41,19 +46,22 @@ public class BlockStructure extends BlockSolidMeta implements BlockEntityHolder<
         return STRUCTURE_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public StructureBlockType getStructureBlockType() {
         return getPropertyValue(STRUCTURE_BLOCK_TYPE);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setStructureBlockType(StructureBlockType type) {
         setPropertyValue(STRUCTURE_BLOCK_TYPE, type);
     }
@@ -114,19 +122,22 @@ public class BlockStructure extends BlockSolidMeta implements BlockEntityHolder<
     }
 
     @Override
-
+    @PowerNukkitOnly
     public boolean canBePulled() {
         return false;
     }
 
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityStructBlock> getBlockEntityClass() {
         return BlockEntityStructBlock.class;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public String getBlockEntityType() {

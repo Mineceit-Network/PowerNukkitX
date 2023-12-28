@@ -8,19 +8,19 @@ import java.util.List;
 
 public abstract class ItemBookWritable extends Item {
 
-    protected ItemBookWritable(String id) {
+    protected ItemBookWritable(int id) {
         super(id);
     }
 
-    protected ItemBookWritable(String id, Integer meta) {
+    protected ItemBookWritable(int id, Integer meta) {
         super(id, meta);
     }
 
-    protected ItemBookWritable(String id, Integer meta, int count) {
+    protected ItemBookWritable(int id, Integer meta, int count) {
         super(id, meta, count);
     }
 
-    protected ItemBookWritable(String id, Integer meta, int count, String name) {
+    protected ItemBookWritable(int id, Integer meta, int count, String name) {
         super(id, meta, count, name);
     }
 

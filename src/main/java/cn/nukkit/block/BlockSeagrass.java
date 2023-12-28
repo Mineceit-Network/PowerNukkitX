@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.ArrayBlockProperty;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.value.SeaGrassType;
@@ -12,21 +14,23 @@ import cn.nukkit.level.particle.BoneMealParticle;
 import cn.nukkit.math.BlockFace;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 public class BlockSeagrass extends BlockFlowable {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final ArrayBlockProperty<SeaGrassType> SEA_GRASS_TYPE = new ArrayBlockProperty<>("sea_grass_type", false, SeaGrassType.class);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(SEA_GRASS_TYPE);
 
-
+    @PowerNukkitOnly
     public BlockSeagrass() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockSeagrass(int meta) {
         super(meta);
     }
@@ -36,7 +40,8 @@ public class BlockSeagrass extends BlockFlowable {
         return SEAGRASS;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -139,8 +144,8 @@ public class BlockSeagrass extends BlockFlowable {
     public boolean canBeReplaced() {
         return true;
     }
-
-
+    
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 2;

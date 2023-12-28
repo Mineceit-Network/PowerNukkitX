@@ -1,5 +1,7 @@
 package cn.nukkit.level.biome.impl.extremehills;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.biome.type.CoveredBiome;
 
 /**
@@ -15,7 +17,8 @@ public class StoneBeachBiome extends CoveredBiome {
         this.setHeightVariation(0.8f);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public int getSurfaceDepth(int y) {
         if (useNewRakNetSurfaceDepth()) {
@@ -24,7 +27,8 @@ public class StoneBeachBiome extends CoveredBiome {
         return 0;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public int getSurfaceBlock(int y) {
         if (useNewRakNetSurface()) {
@@ -33,7 +37,8 @@ public class StoneBeachBiome extends CoveredBiome {
         return 0;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public int getGroundDepth(int y) {
         if (useNewRakNetGroundDepth()) {
@@ -42,7 +47,8 @@ public class StoneBeachBiome extends CoveredBiome {
         return 0;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public int getGroundBlock(int y) {
         if (useNewRakNetGround()) {

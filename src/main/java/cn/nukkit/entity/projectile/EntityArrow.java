@@ -1,9 +1,11 @@
 package cn.nukkit.entity.projectile;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.level.Sound;
-import cn.nukkit.level.format.IChunk;
+import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.nbt.tag.CompoundTag;
 import cn.nukkit.network.protocol.EntityEventPacket;
 
@@ -18,15 +20,15 @@ public class EntityArrow extends SlenderProjectile {
 
     protected int pickupMode;
 
-    public EntityArrow(IChunk chunk, CompoundTag nbt) {
+    public EntityArrow(FullChunk chunk, CompoundTag nbt) {
         this(chunk, nbt, null);
     }
 
-    public EntityArrow(IChunk chunk, CompoundTag nbt, Entity shootingEntity) {
+    public EntityArrow(FullChunk chunk, CompoundTag nbt, Entity shootingEntity) {
         this(chunk, nbt, shootingEntity, false);
     }
 
-    public EntityArrow(IChunk chunk, CompoundTag nbt, Entity shootingEntity, boolean critical) {
+    public EntityArrow(FullChunk chunk, CompoundTag nbt, Entity shootingEntity, boolean critical) {
         super(chunk, nbt, shootingEntity);
         this.setCritical(critical);
     }
@@ -51,7 +53,8 @@ public class EntityArrow extends SlenderProjectile {
         return 0.01f;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     protected void updateMotion() {
         if (!isInsideOfWater()) {
@@ -136,7 +139,8 @@ public class EntityArrow extends SlenderProjectile {
         return !hadCollision;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     protected void afterCollisionWithEntity(Entity entity) {
         if (hadCollision) {
@@ -146,7 +150,7 @@ public class EntityArrow extends SlenderProjectile {
         }
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected void addHitEffect() {
         this.level.addSound(this, Sound.RANDOM_BOWHIT);
@@ -174,7 +178,8 @@ public class EntityArrow extends SlenderProjectile {
         this.pickupMode = pickupMode;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.1.0-PN")
     @Override
     public String getOriginalName() {
         return "Arrow";

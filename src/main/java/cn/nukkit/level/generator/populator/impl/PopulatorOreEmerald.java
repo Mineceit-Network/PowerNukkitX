@@ -1,5 +1,7 @@
 package cn.nukkit.level.generator.populator.impl;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockstate.BlockState;
 import cn.nukkit.level.ChunkManager;
 import cn.nukkit.level.format.FullChunk;
@@ -10,14 +12,14 @@ import cn.nukkit.math.NukkitRandom;
 /**
  * @author GoodLucky777
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class PopulatorOreEmerald extends Populator {
 
     private static final BlockState STATE_STONE = BlockState.of(STONE);
     private static final BlockState STATE_EMERALD_ORE = BlockState.of(EMERALD_ORE);
 
-
+    @PowerNukkitOnly
     public PopulatorOreEmerald() {
         super();
     }

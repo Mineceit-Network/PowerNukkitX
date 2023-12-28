@@ -1,6 +1,9 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityDaylightDetector;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -18,11 +21,12 @@ import org.jetbrains.annotations.NotNull;
  * @author CreeperFace
  * @since 2015/11/22
  */
-
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
+@PowerNukkitDifference(info = "Implements RedstoneComponent and uses methods from it.", since = "1.4.0.0-PN")
 public class BlockDaylightDetector extends BlockTransparentMeta implements RedstoneComponent, BlockEntityHolder<BlockEntityDaylightDetector> {
 
-
+    @Since("1.5.0.0-PN")
+    @PowerNukkitOnly
     public static final BlockProperties PROPERTIES = CommonBlockProperties.REDSTONE_SIGNAL_BLOCK_PROPERTY;
 
     public BlockDaylightDetector() {
@@ -34,7 +38,8 @@ public class BlockDaylightDetector extends BlockTransparentMeta implements Redst
         return DAYLIGHT_DETECTOR;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -46,14 +51,16 @@ public class BlockDaylightDetector extends BlockTransparentMeta implements Redst
         return "Daylight Detector";
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
         return BlockEntity.DAYLIGHT_DETECTOR;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityDaylightDetector> getBlockEntityClass() {
@@ -65,7 +72,7 @@ public class BlockDaylightDetector extends BlockTransparentMeta implements Redst
         return 0.2;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -146,12 +153,12 @@ public class BlockDaylightDetector extends BlockTransparentMeta implements Redst
         return true;
     }
 
-
+    @PowerNukkitOnly
     public boolean isInverted() {
         return false;
     }
 
-
+    @PowerNukkitOnly
     public void updatePower() {
         int i;
         if (getLevel().getDimension() == Level.DIMENSION_OVERWORLD) {

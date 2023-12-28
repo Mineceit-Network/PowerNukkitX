@@ -1,15 +1,18 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.ItemTool;
 
 /**
  * @author good777LUCKY
  */
-
-
+@PowerNukkitOnly
+@Since("1.4.0.0-PN")
 public class BlockObsidianCrying extends BlockSolid {
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public BlockObsidianCrying() {
         // Does nothing
     }
@@ -44,7 +47,8 @@ public class BlockObsidianCrying extends BlockSolid {
         return 10;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_DIAMOND;
@@ -56,7 +60,7 @@ public class BlockObsidianCrying extends BlockSolid {
     }
     
     @Override
-
+    @PowerNukkitOnly
     public  boolean canBePulled() {
         return false;
     }

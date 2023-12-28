@@ -1,6 +1,8 @@
 package cn.nukkit.entity.ai.executor;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.entity.EntityIntelligent;
 import cn.nukkit.entity.passive.EntitySheep;
@@ -8,7 +10,8 @@ import cn.nukkit.level.GameRule;
 import cn.nukkit.level.particle.DestroyBlockParticle;
 import cn.nukkit.network.protocol.EntityEventPacket;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class EatGrassExecutor implements IBehaviorExecutor {
 
     protected int duration;
@@ -35,11 +38,11 @@ public class EatGrassExecutor implements IBehaviorExecutor {
                 }
             }
             if (entity instanceof EntitySheep sheep) {
-                if (sheep.sheared) {
+                if (sheep.isSheared()) {
                     sheep.growWool();
                     return false;
                 }
-                if (sheep.isBaby())
+                if (sheep.isBaby()) //TODO: Accelerated growth instead of instant growth
                     sheep.setBaby(false);
             }
             return false;

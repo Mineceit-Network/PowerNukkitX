@@ -3,6 +3,7 @@ package cn.nukkit.block;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityCauldron;
 import cn.nukkit.entity.Entity;
@@ -19,16 +20,16 @@ import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.potion.Effect;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 @Deprecated(since = "1.20.10-r1")
 @DeprecationDetails(since = "1.20.10-r1", reason = "Use BlockCauldron instead")
 public class BlockCauldronLava extends BlockCauldron {
-
+    @PowerNukkitOnly
     public BlockCauldronLava() {
         this(0x8);
     }
 
-
+    @PowerNukkitOnly
     public BlockCauldronLava(int meta) {
         super(meta);
     }
@@ -58,7 +59,7 @@ public class BlockCauldronLava extends BlockCauldron {
         return shrink(0.3, 0.3, 0.3);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void setFillLevel(int fillLevel) {
         super.setFillLevel(fillLevel);
@@ -98,7 +99,7 @@ public class BlockCauldronLava extends BlockCauldron {
                 if (bucket.getFishEntityId() != null) {
                     break;
                 }
-                if (item.getAux() == 0) { //empty
+                if (item.getDamage() == 0) { //empty
                     if (!isFull() || cauldron.isCustomColor() || cauldron.hasPotion()) {
                         break;
                     }
@@ -113,7 +114,7 @@ public class BlockCauldronLava extends BlockCauldron {
                         this.getLevel().addSound(this.add(0.5, 1, 0.5), Sound.BUCKET_FILL_LAVA);
                     }
                 } else if (bucket.isWater() || bucket.isLava()) { //water or lava bucket
-                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getAux() == 10) {
+                    if (isFull() && !cauldron.isCustomColor() && !cauldron.hasPotion() && item.getDamage() == 10) {
                         break;
                     }
     
@@ -144,7 +145,7 @@ public class BlockCauldronLava extends BlockCauldron {
             case Item.POTION:
             case Item.SPLASH_POTION:
             case Item.LINGERING_POTION:
-                if (!isEmpty() && (cauldron.hasPotion() ? cauldron.getPotionId() != item.getAux() : item.getAux() != 0)) {
+                if (!isEmpty() && (cauldron.hasPotion()? cauldron.getPotionId() != item.getDamage() : item.getDamage() != 0)) {
                     clearWithFizz(cauldron);
                     break;
                 }

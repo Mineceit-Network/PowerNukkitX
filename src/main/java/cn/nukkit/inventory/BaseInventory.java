@@ -2,6 +2,10 @@ package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntity;
@@ -110,7 +114,8 @@ public abstract class BaseInventory implements Inventory {
         return this.slots.containsKey(index) ? this.slots.get(index).clone() : AIR_ITEM.clone();
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     @Override
     public Item getUnclonedItem(int index) {
         return this.slots.getOrDefault(index, AIR_ITEM);
@@ -189,7 +194,7 @@ public abstract class BaseInventory implements Inventory {
     @Override
     public boolean contains(Item item) {
         int count = Math.max(1, item.getCount());
-        boolean checkDamage = item.hasMeta() && item.getAux() >= 0;
+        boolean checkDamage = item.hasMeta() && item.getDamage() >= 0;
         boolean checkTag = item.getCompoundTag() != null;
         for (Item i : this.getContents().values()) {
             if (item.equals(i, checkDamage, checkTag)) {
@@ -206,7 +211,7 @@ public abstract class BaseInventory implements Inventory {
     @Override
     public Map<Integer, Item> all(Item item) {
         Map<Integer, Item> slots = new HashMap<>();
-        boolean checkDamage = item.hasMeta() && item.getAux() >= 0;
+        boolean checkDamage = item.hasMeta() && item.getDamage() >= 0;
         boolean checkTag = item.getCompoundTag() != null;
         for (Map.Entry<Integer, Item> entry : this.getContents().entrySet()) {
             if (item.equals(entry.getValue(), checkDamage, checkTag)) {
@@ -264,7 +269,7 @@ public abstract class BaseInventory implements Inventory {
         }
     }
 
-    @
+    @PowerNukkitXDifference(info = "Using BaseInventory::getUnclonedItem() to improve performance", since = "1.19.60-r1")
     @Override
     public boolean canAddItem(Item item) {
         item = item.clone();
@@ -610,7 +615,7 @@ public abstract class BaseInventory implements Inventory {
         this.sendSlot(index, players.toArray(Player.EMPTY_ARRAY));
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void addListener(InventoryListener listener) {
         if (this.listeners == null) {
@@ -620,7 +625,7 @@ public abstract class BaseInventory implements Inventory {
         this.listeners.add(listener);
     }
 
-
+    @PowerNukkitOnly
     @Override
     public void removeListener(InventoryListener listener) {
         if (this.listeners != null) {

@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.blockproperty.IntBlockProperty;
@@ -15,24 +17,27 @@ import cn.nukkit.math.SimpleAxisAlignedBB;
 import cn.nukkit.nbt.tag.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 public class BlockScaffolding extends BlockFallableMeta {
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BooleanBlockProperty STABILITY_CHECK = new BooleanBlockProperty("stability_check", false);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final IntBlockProperty STABILITY = new IntBlockProperty("stability", false, 7);
 
-
+    @PowerNukkitOnly
+    @Since("1.5.0.0-PN")
     public static final BlockProperties PROPERTIES = new BlockProperties(STABILITY, STABILITY_CHECK);
 
-
+    @PowerNukkitOnly
     public BlockScaffolding() {
         // Does nothing
     }
 
-
+    @PowerNukkitOnly
     public BlockScaffolding(int meta) {
         super(meta);
     }
@@ -42,7 +47,8 @@ public class BlockScaffolding extends BlockFallableMeta {
         return SCAFFOLDING;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -54,22 +60,22 @@ public class BlockScaffolding extends BlockFallableMeta {
         return "Scaffolding";
     }
 
-
+    @PowerNukkitOnly
     public int getStability() {
         return getDamage() & 0x7;
     }
 
-
+    @PowerNukkitOnly
     public void setStability(int stability) {
         setDamage(stability & 0x7 | (getDamage() & 0x8));
     }
 
-
+    @PowerNukkitOnly
     public boolean getStabilityCheck() {
         return (getDamage() & 0x8) > 0;
     }
 
-
+    @PowerNukkitOnly
     public void setStabilityCheck(boolean check) {
         if (check) {
             setDamage(getDamage() | 0x8);
@@ -165,7 +171,7 @@ public class BlockScaffolding extends BlockFallableMeta {
         return 0;
     }
 
-
+    @PowerNukkitOnly
     @Override
     protected EntityFallingBlock createFallingEntity(CompoundTag customNbt) {
         setDamage(0);
@@ -193,7 +199,7 @@ public class BlockScaffolding extends BlockFallableMeta {
         return 60;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -264,7 +270,8 @@ public class BlockScaffolding extends BlockFallableMeta {
         return false;
     }
 
-
+    @Since("1.3.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isSolid(BlockFace side) {
         return side == BlockFace.UP;

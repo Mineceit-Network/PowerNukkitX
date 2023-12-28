@@ -1,6 +1,10 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.blockentity.BlockEntityFlowerPot;
 import cn.nukkit.blockproperty.BlockProperties;
@@ -21,10 +25,10 @@ import static cn.nukkit.block.BlockLeaves.UPDATE;
 /**
  * @author Nukkit Project Team
  */
-
+@PowerNukkitDifference(since = "1.4.0.0-PN", info = "Implements BlockEntityHolder only in PowerNukkit")
 public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<BlockEntityFlowerPot> {
-
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static BlockProperties PROPERTIES = new BlockProperties(UPDATE);
 
     public BlockFlowerPot() {
@@ -35,14 +39,15 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         super(meta);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -58,14 +63,16 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return FLOWER_POT_BLOCK;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public Class<? extends BlockEntityFlowerPot> getBlockEntityClass() {
         return BlockEntityFlowerPot.class;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     @Override
     public String getBlockEntityType() {
@@ -82,7 +89,7 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return 0;
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed support logic")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -94,7 +101,7 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return 0;
     }
 
-
+    @PowerNukkitDifference(since = "1.4.0.0-PN", info = "Fixed support logic")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         if (!BlockLever.isSupportValid(down(), BlockFace.UP)) {
@@ -111,7 +118,8 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return BlockEntityHolder.setBlockAndCreateEntity(this, true, true, nbt) != null;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @NotNull
     public Item getFlower() {
         BlockEntityFlowerPot blockEntity = getBlockEntity();
@@ -124,14 +132,15 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return Item.get(id, meta);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean setFlower(@Nullable Item item) {
         if (item == null || item.getId() == AIR) {
             removeFlower();
             return true;
         }
 
-        if (item.getBlockItem() instanceof FlowerPotBlock potBlock && potBlock.isPotBlockState()) {
+        if (item.getBlock() instanceof FlowerPotBlock potBlock && potBlock.isPotBlockState()) {
             BlockEntityFlowerPot blockEntity = getOrCreateBlockEntity();
             blockEntity.namedTag.putCompound("PlantBlock", potBlock.getPlantBlockTag());
 
@@ -144,7 +153,8 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
         return false;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void removeFlower() {
         BlockEntityFlowerPot blockEntity = getOrCreateBlockEntity();
         blockEntity.namedTag.remove("PlantBlock");
@@ -157,8 +167,8 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
     /**
      * @return 花盆是否有花
      */
-
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     public boolean hasFlower() {
         var blockEntity = getBlockEntity();
         if (blockEntity == null) return false;
@@ -300,7 +310,7 @@ public class BlockFlowerPot extends BlockFlowable implements BlockEntityHolder<B
             var item = block.toItem();
             //only exist in PNX
             tag.putInt("itemId", item.getId());
-            tag.putInt("itemMeta", item.getAux());
+            tag.putInt("itemMeta", item.getDamage());
             return tag;
         }
 

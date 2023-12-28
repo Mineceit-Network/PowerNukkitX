@@ -1,5 +1,7 @@
 package cn.nukkit.event.scoreboard;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.event.HandlerList;
 import cn.nukkit.scoreboard.scoreboard.IScoreboard;
 import cn.nukkit.scoreboard.scoreboard.IScoreboardLine;
@@ -8,7 +10,8 @@ import lombok.Setter;
 
 import javax.annotation.Nullable;
 
-
+@PowerNukkitXOnly
+@Since("1.19.30-r2")
 @Getter
 @Setter
 public class ScoreboardLineChangeEvent extends ScoreboardEvent {

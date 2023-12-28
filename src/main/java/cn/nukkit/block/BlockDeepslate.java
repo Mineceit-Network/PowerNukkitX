@@ -1,25 +1,42 @@
 package cn.nukkit.block;
 
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.item.Item;
-import cn.nukkit.item.ItemTool;;
+import cn.nukkit.item.ItemTool;
+import cn.nukkit.item.MinecraftItemID;
 import org.jetbrains.annotations.NotNull;
 
+import static cn.nukkit.blockproperty.CommonBlockProperties.PILLAR_AXIS;
+
+/**
+ * @author LoboMetalurgico
+ * @since 08/06/2021
+ */
+
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockDeepslate extends BlockSolid {
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    public static final BlockProperties PROPERTIES = new BlockProperties(PILLAR_AXIS);
 
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:deepslate", CommonBlockProperties.PILLAR_AXIS);
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockDeepslate() {
-        super(PROPERTIES.getDefaultState());
-    }
-
-    public BlockDeepslate(BlockState blockState) {
-        super(blockState);
+        // Does nothing
     }
 
     @Override
     public String getName() {
         return "Deepslate";
+    }
+
+    @Override
+    public int getId() {
+        return DEEPSLATE;
     }
 
     @Override
@@ -37,7 +54,8 @@ public class BlockDeepslate extends BlockSolid {
         return ItemTool.TYPE_PICKAXE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
@@ -54,7 +72,7 @@ public class BlockDeepslate extends BlockSolid {
             return Item.EMPTY_ARRAY;
         }
 
-        return new Item[]{Item.getBlockItem(BlockID.COBBLED_DEEPSLATE)};
+        return new Item[]{MinecraftItemID.COBBLED_DEEPSLATE.get(1)};
     }
 
     @Override
@@ -62,7 +80,8 @@ public class BlockDeepslate extends BlockSolid {
         return true;
     }
 
-
+    @Since("1.6.0.0-PNX")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

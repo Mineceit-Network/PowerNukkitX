@@ -1,5 +1,7 @@
 package cn.nukkit.block.customblock.data;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.math.Vector3f;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -8,7 +10,8 @@ import lombok.Getter;
 
 import javax.annotation.Nullable;
 
-
+@Since("1.19.60-r1")
+@PowerNukkitXOnly
 @Builder
 @Getter
 public class Component implements NBTData {
@@ -41,7 +44,7 @@ public class Component implements NBTData {
     Boolean unitCube;
     @Nullable
     Vector3f rotation;
-
+    @Since("1.20.0-r2")
     @Nullable
     Float clientFriction;
 

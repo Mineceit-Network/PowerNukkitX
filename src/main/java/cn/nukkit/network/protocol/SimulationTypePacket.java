@@ -18,24 +18,27 @@
 
 package cn.nukkit.network.protocol;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author joserobjr
  * @since 2021-07-06
  */
-
-
+@PowerNukkitOnly
+@Since("1.5.2.0-PN")
 public class SimulationTypePacket extends DataPacket {
-
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public static final byte NETWORK_ID = ProtocolInfo.NPC_DIALOGUE_PACKET;
-
+    
     private static final SimulationType[] TYPES = SimulationType.values();
-
+    
     private SimulationType type;
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public SimulationTypePacket() {
         type = SimulationType.GAME;
     }
@@ -56,21 +59,24 @@ public class SimulationTypePacket extends DataPacket {
         putByte((byte) type.ordinal());
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     @NotNull
     public SimulationType getSimulationType() {
         return type;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public void setSimulationType(@NotNull SimulationType type) {
         this.type = type;
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.5.2.0-PN")
     public enum SimulationType {
-        GAME,
-        EDITOR,
-        TEST
-    }
+        @PowerNukkitOnly @Since("1.5.2.0-PN") GAME,
+        @PowerNukkitOnly @Since("1.5.2.0-PN") EDITOR,
+        @PowerNukkitOnly @Since("1.5.2.0-PN") TEST
+    } 
 }

@@ -1,6 +1,8 @@
 package cn.nukkit.item;
 
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.experimental.UtilityClass;
@@ -17,7 +19,7 @@ import java.util.Map;
 public class RuntimeItems {
 
     private static final Map<String, Integer> legacyString2LegacyInt = new HashMap<>();
-    private static final RuntimeItemMapping itemPalette;
+    private static RuntimeItemMapping itemPalette;
     private static boolean initialized;
 
     static {
@@ -67,27 +69,32 @@ public class RuntimeItems {
         return itemPalette;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static RuntimeItemMapping getRuntimeMapping() {
         return itemPalette;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static int getId(int fullId) {
         return (short) (fullId >> 16);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static int getData(int fullId) {
         return ((fullId >> 1) & 0x7fff);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static int getFullId(int id, int data) {
         return (((short) id) << 16) | ((data & 0x7fff) << 1);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static boolean hasData(int id) {
         return getData(id) != 0;
     }

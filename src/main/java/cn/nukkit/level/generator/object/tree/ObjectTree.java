@@ -1,6 +1,8 @@
 package cn.nukkit.level.generator.object.tree;
 
 import cn.nukkit.api.DeprecationDetails;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockSapling;
 import cn.nukkit.blockproperty.value.WoodType;
@@ -44,7 +46,8 @@ public abstract class ObjectTree {
         growTree(level, x, y, z, random, woodType, tall);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public static void growTree(ChunkManager level, int x, int y, int z, NukkitRandom random, WoodType type, boolean tall) {
         ObjectTree tree;
         switch (type) {

@@ -2,13 +2,17 @@ package cn.nukkit.item;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.level.Sound;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.plugin.InternalPlugin;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ItemGoatHorn extends Item {
+@PowerNukkitXOnly
+@Since("1.19.80-r3")
+public class ItemGoatHorn extends StringItemBase {
     protected int coolDownTick = 140;
     private final AtomicBoolean banUse = new AtomicBoolean(false);
 
@@ -20,9 +24,9 @@ public class ItemGoatHorn extends Item {
         this(0, 1);
     }
 
-    public ItemGoatHorn(Integer aux, int count) {
-        super(GOAT_HORN);
-        this.aux = aux;
+    public ItemGoatHorn(Integer meta, int count) {
+        super(MinecraftItemID.GOAT_HORN.getNamespacedId(), "Goat Horn");
+        this.meta = meta;
         this.count = count;
     }
 
@@ -51,7 +55,7 @@ public class ItemGoatHorn extends Item {
     }
 
     public void playSound(Player player) {
-        switch (this.aux) {
+        switch (this.getDamage()) {
             case 0 -> player.getLevel().addSound(player, Sound.HORN_CALL_0);
             case 1 -> player.getLevel().addSound(player, Sound.HORN_CALL_1);
             case 2 -> player.getLevel().addSound(player, Sound.HORN_CALL_2);

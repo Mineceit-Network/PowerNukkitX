@@ -5,6 +5,7 @@ package cn.nukkit.item;
  * @since 2016/1/14
  */
 public class ItemPufferfish extends ItemFish {
+
     public ItemPufferfish() {
         this(0, 1);
     }
@@ -14,6 +15,7 @@ public class ItemPufferfish extends ItemFish {
     }
 
     public ItemPufferfish(Integer meta, int count) {
-        super(PUFFERFISH, meta, count);
+        super(PUFFERFISH, meta, count, "Pufferfish");
     }
+
 }

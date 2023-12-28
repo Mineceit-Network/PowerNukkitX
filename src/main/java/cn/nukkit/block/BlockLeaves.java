@@ -3,8 +3,12 @@ package cn.nukkit.block;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.api.DeprecationDetails;
-import cn.nukkit.block.property.CommonBlockProperties;
-import cn.nukkit.block.property.enums.OldLeafType;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.ArrayBlockProperty;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BooleanBlockProperty;
+import cn.nukkit.blockproperty.value.WoodType;
 import cn.nukkit.event.block.LeavesDecayEvent;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemID;
@@ -22,33 +26,56 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static cn.nukkit.block.property.CommonBlockProperties.*;
-
 /**
  * @author Angelic47 (Nukkit Project)
  */
-public class BlockLeaves extends BlockTransparent {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:leaves",
-            OLD_LEAF_TYPE,
-            PERSISTENT_BIT,
-            UPDATE_BIT
-    );
+public class BlockLeaves extends BlockTransparentMeta {
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public static final ArrayBlockProperty<WoodType> OLD_LEAF_TYPE = new ArrayBlockProperty<>("old_leaf_type", true, new WoodType[]{
+            WoodType.OAK, WoodType.SPRUCE, WoodType.BIRCH, WoodType.JUNGLE
+    });
+    
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public static final BooleanBlockProperty PERSISTENT = new BooleanBlockProperty("persistent_bit", false);
+    
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public static final BooleanBlockProperty UPDATE = new BooleanBlockProperty("update_bit", false);
 
-    @Override
-    public @NotNull BlockProperties getProperties() {
-        return PROPERTIES;
-    }
-
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public static final BlockProperties OLD_LEAF_PROPERTIES = new BlockProperties(OLD_LEAF_TYPE, PERSISTENT, UPDATE);
+    
     private static final BlockFace[] VISIT_ORDER = new BlockFace[]{
             BlockFace.NORTH, BlockFace.SOUTH, BlockFace.EAST, BlockFace.WEST, BlockFace.DOWN, BlockFace.UP
     };
     
+    @Deprecated @DeprecationDetails(since = "1.4.0.0-PN", reason = "Magic value. Use the accessors instead")
+    public static final int OAK = 0;
+    @Deprecated @DeprecationDetails(since = "1.4.0.0-PN", reason = "Magic value. Use the accessors instead")
+    public static final int SPRUCE = 1;
+    @Deprecated @DeprecationDetails(since = "1.4.0.0-PN", reason = "Magic value. Use the accessors instead")
+    public static final int BIRCH = 2;
+    @Deprecated @DeprecationDetails(since = "1.4.0.0-PN", reason = "Magic value. Use the accessors instead")
+    public static final int JUNGLE = 3;
+
     public BlockLeaves() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockLeaves(BlockState blockState) {
-        super(blockState);
+    public BlockLeaves(int meta) {
+        super(meta);
+    }
+
+    @Override
+    public int getId() {
+        return LEAVES;
+    }
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    @NotNull
+    @Override
+    public BlockProperties getProperties() {
+        return OLD_LEAF_PROPERTIES;
     }
 
     @Override
@@ -60,20 +87,20 @@ public class BlockLeaves extends BlockTransparent {
     public int getToolType() {
         return ItemTool.TYPE_HOE;
     }
-
-
-    public OldLeafType getType() {
+    
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public WoodType getType() {
         return getPropertyValue(OLD_LEAF_TYPE);
     }
 
-
-    public void setType(OldLeafType type) {
+    @PowerNukkitOnly @Since("1.4.0.0-PN")
+    public void setType(WoodType type) {
         setPropertyValue(OLD_LEAF_TYPE, type);
     }
 
     @Override
     public String getName() {
-        return getType().name() + " Leaves";
+        return getType().getEnglishName() + " Leaves";
     }
 
     @Override
@@ -81,7 +108,7 @@ public class BlockLeaves extends BlockTransparent {
         return 30;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -118,22 +145,22 @@ public class BlockLeaves extends BlockTransparent {
             case 0 -> {
                 appleOdds = 200;
                 stickOdds = 50;
-                saplingOdds = getType() == OldLeafType.JUNGLE ? 40 : 20;
+                saplingOdds = getType() == WoodType.JUNGLE ? 40 : 20;
             }
             case 1 -> {
                 appleOdds = 180;
                 stickOdds = 45;
-                saplingOdds = getType() == OldLeafType.JUNGLE ? 36 : 16;
+                saplingOdds = getType() == WoodType.JUNGLE ? 36 : 16;
             }
             case 2 -> {
                 appleOdds = 160;
                 stickOdds = 40;
-                saplingOdds = getType() == OldLeafType.JUNGLE ? 32 : 12;
+                saplingOdds = getType() == WoodType.JUNGLE ? 32 : 12;
             }
             default -> {
                 appleOdds = 120;
                 stickOdds = 30;
-                saplingOdds = getType() == OldLeafType.JUNGLE ? 24 : 10;
+                saplingOdds = getType() == WoodType.JUNGLE ? 24 : 10;
             }
         }
 
@@ -212,19 +239,19 @@ public class BlockLeaves extends BlockTransparent {
     }
     
     public boolean isCheckDecay() {
-        return getPropertyValue(UPDATE_BIT);
+        return getBooleanValue(UPDATE);
     }
 
     public void setCheckDecay(boolean checkDecay) {
-        setPropertyValue(UPDATE_BIT, checkDecay);
+        setBooleanValue(UPDATE, checkDecay);
     }
 
     public boolean isPersistent() {
-        return getPropertyValue(PERSISTENT_BIT);
+        return getBooleanValue(PERSISTENT);
     }
 
     public void setPersistent(boolean persistent) {
-        setPropertyValue(PERSISTENT_BIT, persistent);
+        setBooleanValue(PERSISTENT, persistent);
     }
 
     @Override
@@ -233,26 +260,28 @@ public class BlockLeaves extends BlockTransparent {
     }
 
     protected boolean canDropApple() {
-        return getType() == OldLeafType.OAK;
+        return getType() == WoodType.OAK;
     }
 
     protected Item getSapling() {
-        return Item.get(BlockID.SAPLING, getPropertyValue(OLD_LEAF_TYPE).ordinal());
+        return Item.get(BlockID.SAPLING, getIntValue(OLD_LEAF_TYPE));
     }
 
+    @PowerNukkitOnly
     @Override
     public boolean diffusesSkyLight() {
         return true;
     }
 
-    @Override
 
+    @Override
+    @PowerNukkitOnly
     public boolean breaksWhenMoved() {
         return true;
     }
 
     @Override
-
+    @PowerNukkitOnly
     public  boolean sticksToPiston() {
         return false;
     }

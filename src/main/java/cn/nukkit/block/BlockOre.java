@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.item.Item;
 import cn.nukkit.item.ItemTool;
 import cn.nukkit.item.MinecraftItemID;
@@ -13,11 +15,11 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author joserobjr
  * @since 2021-06-13
  */
-
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public abstract class BlockOre extends BlockSolid {
-
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockOre() {
     }
 
@@ -44,11 +46,13 @@ public abstract class BlockOre extends BlockSolid {
         return new Item[]{ rawMaterial.get(amount) };
     }
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     @Nullable
     protected abstract MinecraftItemID getRawMaterial();
 
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     protected float getDropMultiplier() {
         return 1;
     }

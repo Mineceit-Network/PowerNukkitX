@@ -1,5 +1,7 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.value.OxidizationLevel;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,10 +12,11 @@ import javax.annotation.Nullable;
  * @since 11/06/2021
  */
 
-
+@PowerNukkitOnly
+@Since("FUTURE")
 public class BlockCopperCut extends BlockCopperBase {
-
-
+    @PowerNukkitOnly
+    @Since("FUTURE")
     public BlockCopperCut() {
         // Does nothing
     }
@@ -28,14 +31,16 @@ public class BlockCopperCut extends BlockCopperBase {
         return CUT_COPPER;
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public OxidizationLevel getOxidizationLevel() {
         return OxidizationLevel.UNAFFECTED;
     }
 
-
+    @Since("FUTURE")
+    @PowerNukkitOnly
     @Override
     protected int getCopperId(boolean waxed, @Nullable OxidizationLevel oxidizationLevel) {
         if (oxidizationLevel == null) {

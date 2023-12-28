@@ -1,6 +1,8 @@
 package cn.nukkit.command.defaults;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockEntityHolder;
 import cn.nukkit.command.CommandSender;
@@ -18,7 +20,8 @@ import cn.nukkit.level.Position;
 import java.util.List;
 import java.util.Map;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class ReplaceItemCommand extends VanillaCommand {
     public ReplaceItemCommand(String name) {
         super(name, "commands.replaceitem.description");
@@ -83,7 +86,7 @@ public class ReplaceItemCommand extends VanillaCommand {
         this.enableParamTree();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         var list = result.getValue();
@@ -126,7 +129,7 @@ public class ReplaceItemCommand extends VanillaCommand {
                 }
                 if (list.hasResult(notOldItemHandling ? 6 : 7)) {
                     int data = list.getResult(notOldItemHandling ? 6 : 7);
-                    item.setAux(data);
+                    item.setDamage(data);
                 }
                 if (list.hasResult(notOldItemHandling ? 7 : 8)) {
                     String components = list.getResult(notOldItemHandling ? 7 : 8);
@@ -165,7 +168,7 @@ public class ReplaceItemCommand extends VanillaCommand {
         }
         if (list.hasResult(notOldItemHandling ? 6 : 7)) {
             int data = list.getResult(notOldItemHandling ? 6 : 7);
-            item.setAux(data);
+            item.setDamage(data);
         }
         if (list.hasResult(notOldItemHandling ? 7 : 8)) {
             String components = list.getResult(notOldItemHandling ? 7 : 8);

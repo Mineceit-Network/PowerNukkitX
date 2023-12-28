@@ -1,6 +1,8 @@
 package cn.nukkit.item;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockWater;
 import cn.nukkit.entity.Entity;
@@ -27,22 +29,24 @@ public class ItemBoat extends Item {
     }
 
     public ItemBoat(Integer meta, int count) {
-        super(BOAT, meta, count);
+        this(BOAT, meta, count, "Boat");
+    }
+
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    protected ItemBoat(int id, Integer meta, int count, String name) {
+        super(id, meta, count, name);
         adjustName();
     }
 
-    public ItemBoat(String id) {
-        super(id);
-    }
-
     @Override
-    public void setAux(Integer aux) {
-        super.setAux(aux);
+    public void setDamage(Integer meta) {
+        super.setDamage(meta);
         adjustName();
     }
 
     private void adjustName() {
-        switch (getAux()) {
+        switch (getDamage()) {
             case 0:
                 name = "Oak Boat";
                 return;
@@ -80,27 +84,23 @@ public class ItemBoat extends Item {
         return true;
     }
 
-    public int getBoatId() {
-        return this.aux;
-    }
-
     @Override
     public boolean onActivate(Level level, Player player, Block block, Block target, BlockFace face, double fx, double fy, double fz) {
         if (face != BlockFace.UP || block instanceof BlockWater) return false;
         EntityBoat boat = (EntityBoat) Entity.createEntity("Boat",
                 level.getChunk(block.getFloorX() >> 4, block.getFloorZ() >> 4), new CompoundTag("")
-                        .putList(new ListTag<DoubleTag>("Pos")
-                                .add(new DoubleTag("", block.getX() + 0.5))
-                                .add(new DoubleTag("", block.getY() - (target instanceof BlockWater ? 0.375 : 0)))
-                                .add(new DoubleTag("", block.getZ() + 0.5)))
-                        .putList(new ListTag<DoubleTag>("Motion")
-                                .add(new DoubleTag("", 0))
-                                .add(new DoubleTag("", 0))
-                                .add(new DoubleTag("", 0)))
-                        .putList(new ListTag<FloatTag>("Rotation")
-                                .add(new FloatTag("", (float) ((player.yaw + 90f) % 360)))
-                                .add(new FloatTag("", 0)))
-                        .putInt("Variant", getBoatId())
+                .putList(new ListTag<DoubleTag>("Pos")
+                        .add(new DoubleTag("", block.getX() + 0.5))
+                        .add(new DoubleTag("", block.getY() - (target instanceof BlockWater ? 0.375 : 0)))
+                        .add(new DoubleTag("", block.getZ() + 0.5)))
+                .putList(new ListTag<DoubleTag>("Motion")
+                        .add(new DoubleTag("", 0))
+                        .add(new DoubleTag("", 0))
+                        .add(new DoubleTag("", 0)))
+                .putList(new ListTag<FloatTag>("Rotation")
+                        .add(new FloatTag("", (float) ((player.yaw + 90f) % 360)))
+                        .add(new FloatTag("", 0)))
+                .putInt("Variant", getDamage())
         );
 
         if (boat == null) {

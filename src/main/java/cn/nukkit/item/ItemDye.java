@@ -1,13 +1,55 @@
 package cn.nukkit.item;
 
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.block.BlockID;
+import cn.nukkit.utils.BlockColor;
 import cn.nukkit.utils.DyeColor;
 
 /**
  * @author MagicDroidX (Nukkit Project)
  */
 public class ItemDye extends Item {
+
+    @Deprecated
+    public static final int WHITE = DyeColor.WHITE.getItemDyeMeta();
+    @Deprecated
+    public static final int ORANGE = DyeColor.ORANGE.getItemDyeMeta();
+    @Deprecated
+    public static final int MAGENTA = DyeColor.MAGENTA.getItemDyeMeta();
+    @Deprecated
+    public static final int LIGHT_BLUE = DyeColor.LIGHT_BLUE.getItemDyeMeta();
+    @Deprecated
+    public static final int YELLOW = DyeColor.YELLOW.getItemDyeMeta();
+    @Deprecated
+    public static final int LIME = DyeColor.LIME.getItemDyeMeta();
+    @Deprecated
+    public static final int PINK = DyeColor.PINK.getItemDyeMeta();
+    @Deprecated
+    public static final int GRAY = DyeColor.GRAY.getItemDyeMeta();
+    @Deprecated
+    public static final int LIGHT_GRAY = DyeColor.LIGHT_GRAY.getItemDyeMeta();
+    @Deprecated
+    public static final int CYAN = DyeColor.CYAN.getItemDyeMeta();
+    @Deprecated
+    public static final int PURPLE = DyeColor.PURPLE.getItemDyeMeta();
+    @Deprecated
+    public static final int BLUE = DyeColor.BLUE.getItemDyeMeta();
+    @Deprecated
+    public static final int BROWN = DyeColor.BROWN.getItemDyeMeta();
+    @Deprecated
+    public static final int GREEN = DyeColor.GREEN.getItemDyeMeta();
+    @Deprecated
+    public static final int RED = DyeColor.RED.getItemDyeMeta();
+    @Deprecated
+    public static final int BLACK = DyeColor.BLACK.getItemDyeMeta();
+    @Deprecated
+    @PowerNukkitXOnly
+    @Since("1.6.0.0-PNX")
+    public static final int BONE_MEAL = DyeColor.BONE_MEAL.getItemDyeMeta();
+
     public ItemDye() {
         this(0, 1);
     }
@@ -27,29 +69,47 @@ public class ItemDye extends Item {
     public ItemDye(Integer meta, int amount) {
         super(DYE, meta, amount, meta <= 15 ? DyeColor.getByDyeData(meta).getDyeName() : DyeColor.getByDyeData(meta).getName() + " Dye");
 
-        if (this.aux == DyeColor.BROWN.getDyeData()) {
+        if (this.meta == DyeColor.BROWN.getDyeData()) {
             this.block = Block.get(BlockID.COCOA);
         }
     }
 
-    public ItemDye(String id) {
-        super(id);
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
+    protected ItemDye(int id, Integer meta, int count, String name) {
+        super(id, meta, count, name);
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public boolean isFertilizer() {
-        return getDyeColor().equals(DyeColor.BONE_MEAL);
+        return getId() == DYE && getDyeColor().equals(DyeColor.BONE_MEAL);
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public boolean isLapisLazuli() {
-        return getDyeColor().equals(DyeColor.BLUE);
+        return getId() == DYE && getDyeColor().equals(DyeColor.BLUE);
     }
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     public boolean isCocoaBeans() {
-        return getDyeColor().equals(DyeColor.BROWN);
+        return getId() == DYE && getDyeColor().equals(DyeColor.BROWN);
+    }
+
+    @Deprecated
+    public static BlockColor getColor(int meta) {
+        return DyeColor.getByDyeData(meta).getColor();
     }
 
     public DyeColor getDyeColor() {
-        return DyeColor.getByDyeData(aux);
+        return DyeColor.getByDyeData(meta);
+    }
+
+    @Deprecated
+    public static String getColorName(int meta) {
+        return DyeColor.getByDyeData(meta).getName();
     }
 }

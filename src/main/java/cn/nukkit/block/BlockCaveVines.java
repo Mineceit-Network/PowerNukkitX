@@ -2,6 +2,9 @@ package cn.nukkit.block;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.IntBlockProperty;
 import cn.nukkit.event.block.BlockGrowEvent;
@@ -15,7 +18,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class BlockCaveVines extends BlockTransparentMeta {
     public static final IntBlockProperty AGE_PROPERTY = new IntBlockProperty("growing_plant_age", false, 25, 0);
     public static final BlockProperties PROPERTIES = new BlockProperties(AGE_PROPERTY);
@@ -30,7 +34,8 @@ public class BlockCaveVines extends BlockTransparentMeta {
         return CAVE_VINES;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {

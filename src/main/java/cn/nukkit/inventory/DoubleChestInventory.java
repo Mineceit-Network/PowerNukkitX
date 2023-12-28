@@ -1,6 +1,9 @@
 package cn.nukkit.inventory;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockentity.BlockEntityChest;
 import cn.nukkit.item.Item;
 import cn.nukkit.level.Level;
@@ -63,7 +66,8 @@ public class DoubleChestInventory extends ContainerInventory implements Inventor
         return index < this.left.getSize() ? this.left.getItem(index) : this.right.getItem(index - this.right.getSize());
     }
 
-
+    @PowerNukkitXOnly
+    @Since("1.19.60-r1")
     @Override
     public Item getUnclonedItem(int index) {
         return index < this.left.getSize() ? this.left.getUnclonedItem(index) : this.right.getUnclonedItem(index - this.right.getSize());
@@ -113,7 +117,7 @@ public class DoubleChestInventory extends ContainerInventory implements Inventor
         }
     }
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onOpen(Player who) {
         super.onOpen(who);
@@ -148,7 +152,7 @@ public class DoubleChestInventory extends ContainerInventory implements Inventor
         }
     }
 
-
+    @PowerNukkitDifference(info = "Using new method to play sounds", since = "1.4.0.0-PN")
     @Override
     public void onClose(Player who) {
         if (this.getViewers().size() == 1) {

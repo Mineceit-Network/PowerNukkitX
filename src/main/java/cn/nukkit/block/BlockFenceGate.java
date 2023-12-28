@@ -2,7 +2,11 @@ package cn.nukkit.block;
 
 import cn.nukkit.AdventureSettings;
 import cn.nukkit.Player;
-import cn.nukkit.block.property.CommonBlockProperties;
+import cn.nukkit.api.PowerNukkitDifference;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
+import cn.nukkit.blockproperty.BlockProperties;
+import cn.nukkit.blockproperty.BooleanBlockProperty;
 import cn.nukkit.event.block.BlockRedstoneEvent;
 import cn.nukkit.event.block.DoorToggleEvent;
 import cn.nukkit.item.Item;
@@ -15,33 +19,50 @@ import cn.nukkit.level.vibration.VibrationType;
 import cn.nukkit.math.BlockFace;
 import cn.nukkit.utils.Faceable;
 import cn.nukkit.utils.RedstoneComponent;
-import com.google.common.collect.Sets;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
+import static cn.nukkit.blockproperty.CommonBlockProperties.DIRECTION;
+import static cn.nukkit.blockproperty.CommonBlockProperties.OPEN;
 
 /**
  * @author xtypr
  * @since 2015/11/23
  */
-public class BlockFenceGate extends BlockTransparent implements RedstoneComponent, Faceable {
-    public static final BlockProperties PROPERTIES = new BlockProperties("minecraft:fence_gate", CommonBlockProperties.DIRECTION, CommonBlockProperties.IN_WALL_BIT, CommonBlockProperties.OPEN_BIT);
-
+@PowerNukkitDifference(info = "Implements RedstoneComponent.", since = "1.4.0.0-PN")
+public class BlockFenceGate extends BlockTransparentMeta implements RedstoneComponent, Faceable {
     // Contains a list of positions of fence gates, which have been opened by hand (by a player).
     // It is used to detect on redstone update, if the gate should be closed if redstone is off on the update,
     // previously the gate always closed, when placing an unpowered redstone at the gate, this fixes it
     // and gives the vanilla behavior; no idea how to make this better :d
-    private static final Set<Location> manualOverrides = Sets.newConcurrentHashSet();
+    private static final List<Location> manualOverrides = new ArrayList<>();
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    public static final BooleanBlockProperty IN_WALL = new BooleanBlockProperty("in_wall_bit", false);
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
+    public static final BlockProperties PROPERTIES = new BlockProperties(DIRECTION, OPEN, IN_WALL);
 
     public BlockFenceGate() {
-        this(PROPERTIES.getDefaultState());
+        this(0);
     }
 
-    public BlockFenceGate(BlockState blockState) {
-        super(blockState);
+    public BlockFenceGate(int meta) {
+        super(meta);
     }
 
+    @Override
+    public int getId() {
+        return FENCE_GATE;
+    }
+
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
@@ -63,6 +84,7 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return 15;
     }
 
+    @PowerNukkitOnly
     @Override
     public int getWaterloggingLevel() {
         return 1;
@@ -96,10 +118,13 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
     }
 
     private int getOffsetIndex() {
-        return switch (getBlockFace()) {
-            case SOUTH, NORTH -> 0;
-            default -> 1;
-        };
+        switch (getBlockFace()) {
+            case SOUTH:
+            case NORTH:
+                return 0;
+            default:
+                return 1;
+        }
     }
 
     @Override
@@ -122,8 +147,8 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return this.z + offMaxZ[getOffsetIndex()];
     }
 
-
-
+    @PowerNukkitDifference(info = "InWall property is now properly set, returns false if setBlock fails", since = "1.4.0.0-PN")
+    @PowerNukkitDifference(info = "Open door if redstone signal is detected.", since = "1.4.0.0-PN")
     @Override
     public boolean place(@NotNull Item item, @NotNull Block block, @NotNull Block target, @NotNull BlockFace face, double fx, double fy, double fz, Player player) {
         BlockFace direction = player.getDirection();
@@ -150,14 +175,15 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return toggle(player);
     }
 
-
+    @PowerNukkitDifference(info = "Just call the #setOpen() method.", since = "1.4.0.0-PN")
     public boolean toggle(Player player) {
         if (!player.getAdventureSettings().get(AdventureSettings.Type.DOORS_AND_SWITCHED))
             return false;
         return this.setOpen(player, !this.isOpen());
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean setOpen(@Nullable Player player, boolean open) {
         if (open == this.isOpen()) {
             return false;
@@ -207,7 +233,7 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         }
         
         setBlockFace(direction);
-        setPropertyValue(CommonBlockProperties.OPEN_BIT,!getPropertyValue(CommonBlockProperties.OPEN_BIT));
+        toggleBooleanProperty(OPEN);
         this.level.setBlock(this, this, false, false);
 
         if (player != null) {
@@ -222,7 +248,8 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return true;
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playOpenCloseSound() {
         if (this.isOpen()) {
             this.playOpenSound();
@@ -231,26 +258,29 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playOpenSound() {
         level.addSound(this, Sound.RANDOM_DOOR_OPEN);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void playCloseSound() {
         level.addSound(this, Sound.RANDOM_DOOR_CLOSE);
     }
 
     public boolean isOpen() {
-        return getPropertyValue(CommonBlockProperties.OPEN_BIT);
+        return getBooleanValue(OPEN);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setOpen(boolean open) {
-        setPropertyValue(CommonBlockProperties.OPEN_BIT,open);
+        setBooleanValue(OPEN, open);
     }
 
-
+    @PowerNukkitDifference(info = "Will connect to walls correctly", since = "1.4.0.0-PN")
     @Override
     public int onUpdate(int type) {
         if (type == Level.BLOCK_UPDATE_NORMAL) {
@@ -269,7 +299,7 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return 0;
     }
 
-
+    @PowerNukkitDifference(info = "Checking if the door was opened/closed manually.", since = "1.4.0.0-PN")
     private void onRedstoneUpdate() {
         if ((this.isOpen() != this.isGettingPower()) && !this.getManualOverride()) {
             if (this.isOpen() != this.isGettingPower()) {
@@ -282,7 +312,8 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setManualOverride(boolean val) {
         if (val) {
             manualOverrides.add(this.getLocation());
@@ -291,7 +322,8 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         }
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean getManualOverride() {
         return manualOverrides.contains(this.getLocation());
     }
@@ -302,24 +334,27 @@ public class BlockFenceGate extends BlockTransparent implements RedstoneComponen
         return super.onBreak(item);
     }
 
-
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public boolean isInWall() {
-        return getPropertyValue(CommonBlockProperties.IN_WALL_BIT);
+        return getBooleanValue(IN_WALL);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     public void setInWall(boolean inWall) {
-        setPropertyValue(CommonBlockProperties.IN_WALL_BIT,inWall);
+        setBooleanValue(IN_WALL, inWall);
     }
     
     @Override
     public BlockFace getBlockFace() {
-        return BlockFace.fromHorizontalIndex(getPropertyValue(CommonBlockProperties.DIRECTION));
+        return getPropertyValue(DIRECTION);
     }
-
-
+    
+    @PowerNukkitOnly
+    @Since("1.4.0.0-PN")
     @Override
     public void setBlockFace(BlockFace face) {
-        setPropertyValue(CommonBlockProperties.DIRECTION,face.getHorizontalIndex());
+        setPropertyValue(DIRECTION, face);
     }
 }

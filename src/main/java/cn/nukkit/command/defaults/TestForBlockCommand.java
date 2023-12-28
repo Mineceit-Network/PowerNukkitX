@@ -1,5 +1,7 @@
 package cn.nukkit.command.defaults;
 
+import cn.nukkit.api.PowerNukkitXOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.block.Block;
 import cn.nukkit.command.CommandSender;
 import cn.nukkit.command.data.CommandEnum;
@@ -7,13 +9,15 @@ import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.command.tree.ParamList;
 import cn.nukkit.command.utils.CommandLogger;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.level.Level;
 import cn.nukkit.level.Position;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-
+@PowerNukkitXOnly
+@Since("1.6.0.0-PNX")
 public class TestForBlockCommand extends VanillaCommand {
 
     public TestForBlockCommand(String name) {
@@ -28,7 +32,7 @@ public class TestForBlockCommand extends VanillaCommand {
         this.enableParamTree();
     }
 
-
+    @Since("1.19.60-r1")
     @Override
     public int execute(CommandSender sender, String commandLabel, Map.Entry<String, ParamList> result, CommandLogger log) {
         var list = result.getValue();

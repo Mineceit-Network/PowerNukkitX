@@ -1,6 +1,8 @@
 package cn.nukkit.block;
 
 import cn.nukkit.Player;
+import cn.nukkit.api.PowerNukkitOnly;
+import cn.nukkit.api.Since;
 import cn.nukkit.blockproperty.BlockProperties;
 import cn.nukkit.blockproperty.CommonBlockProperties;
 import cn.nukkit.blockproperty.value.SmallFlowerType;
@@ -11,14 +13,14 @@ import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.potion.Effect;
 import org.jetbrains.annotations.NotNull;
 
-
+@PowerNukkitOnly
 public class BlockWitherRose extends BlockFlower {
-
+    @PowerNukkitOnly
     public BlockWitherRose() {
         this(0);
     }
 
-
+    @PowerNukkitOnly
     public BlockWitherRose(int meta) {
         super(0);
     }
@@ -28,14 +30,15 @@ public class BlockWitherRose extends BlockFlower {
         return WITHER_ROSE;
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @NotNull
     @Override
     public BlockProperties getProperties() {
         return CommonBlockProperties.EMPTY_PROPERTIES;
     }
 
-
+    @PowerNukkitOnly
     @Override
     public boolean canPlantOn(Block block) {
         return super.canPlantOn(block) || block.getId() == BlockID.NETHERRACK || block.getId() == BlockID.SOUL_SAND;
@@ -71,12 +74,15 @@ public class BlockWitherRose extends BlockFlower {
     }
 
 
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public void setFlowerType(SmallFlowerType flowerType) {
         setOnSingleFlowerType(SmallFlowerType.WITHER_ROSE, flowerType);
     }
 
-
+    @Since("1.4.0.0-PN")
+    @PowerNukkitOnly
     @Override
     public SmallFlowerType getFlowerType() {
         return SmallFlowerType.WITHER_ROSE;

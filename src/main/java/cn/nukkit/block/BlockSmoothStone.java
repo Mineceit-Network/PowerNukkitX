@@ -1,11 +1,12 @@
 package cn.nukkit.block;
 
+import cn.nukkit.api.PowerNukkitOnly;
 import cn.nukkit.item.ItemTool;
 
-
+@PowerNukkitOnly
 public class BlockSmoothStone extends BlockSolid {
 
-
+    @PowerNukkitOnly
     public BlockSmoothStone() {
     }
     
@@ -35,7 +36,7 @@ public class BlockSmoothStone extends BlockSolid {
     }
 
     @Override
-
+    @PowerNukkitOnly
     public int getToolTier() {
         return ItemTool.TIER_WOODEN;
     }
